@@ -1,0 +1,2 @@
+# lava
+a simple language
