@@ -1,0 +1,10 @@
+(def out (. java.lang.System out))
+
+(/println 
+	'same like System.out.println'
+	(.println out $0))
+	
+
+(/print 
+	'same like System.out.print'
+	(.print out $0))
