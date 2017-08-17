@@ -257,7 +257,7 @@ public class Code {
 
 	public String see() {
 		String seeSource = this.source;
-		String temp = null;
+		String temp;
 		String innerId = StringUtil.getFirstMatch(RegexConstants.extractFormId, seeSource);
 
 		while (innerId != null) {

@@ -14,7 +14,7 @@ public class Sub {
 	private Code				inCode;
 	private Form				asForm;
 	private String				idName;
-	private List<Sub.Instance>	instancePool	= new ArrayList<Sub.Instance>();
+	private List<Instance>	instancePool	= new ArrayList<Instance>();
 	private DataMap				closure			= new DataMap();
 
 	public Sub newSub() {
@@ -87,7 +87,7 @@ public class Sub {
 	}
 
 	public void run() throws Exception {
-		Sub.Instance ins = new Sub.Instance(this);
+		Instance ins = new Instance(this);
 		instancePool.add(ins);
 
 		ins.run();

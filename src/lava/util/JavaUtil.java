@@ -79,7 +79,7 @@ public class JavaUtil {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static Object processNew(Form form, List<DataMap.DataInfo> args) throws Exception {
+	public static Object processNew(Form form, List<DataInfo> args) throws Exception {
 		List<Object> values = new ArrayList<Object>();
 		List<Class> types = new ArrayList<Class>();
 

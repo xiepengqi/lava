@@ -8,7 +8,6 @@ import lava.constant.Constants;
 import lava.constant.RegexConstants;
 import lava.core.DataMap.DataInfo;
 import lava.core.keyword.FnForm;
-import lava.core.keyword.GsForm;
 import lava.core.keyword.JavaForm;
 import lava.core.keyword.ListForm;
 import lava.core.keyword.MapForm;
@@ -225,17 +224,6 @@ public class Form {
 			form = new JavaForm();
 		} else if (elems.get(0).startsWith(Constants.subPrefix)) {
 			form = new SubForm();
-		} else if (elems.get(0).contains(Constants.gsChar)) {
-			form = new GsForm();
-			List<String> gsElems = new ArrayList<String>();
-			gsElems.addAll(Arrays.asList(elems.get(0).split(Constants.gsChar)));
-			gsElems.addAll(elems.subList(1, elems.size()));
-
-			form.setElems(gsElems);
-			form.setFnName(elems.get(0));
-			form.setArgs(elems.subList(1, elems.size()));
-
-			return form;
 		} else {
 			form = new FnForm();
 		}

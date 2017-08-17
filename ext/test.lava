@@ -1,7 +1,0 @@
-(load 'E:\Èí¼þ\workspace\lava\src\ext')
-(use core.output)
-
-([xie peng qi]:/println)
-
-(: [xie peng qi]
-	/println)

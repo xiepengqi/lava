@@ -42,7 +42,6 @@ public class Constants {
 
 	public static String					subPrefix			= "/";
 	public static String					javaChar			= ".";
-	public static String					gsChar				= ":";
 
 	public static String					configSplit			= "=";
 	public static String					empty				= "";

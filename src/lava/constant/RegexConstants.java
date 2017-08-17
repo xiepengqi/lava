@@ -5,7 +5,7 @@ public class RegexConstants {
 	public static String	numberSuffix	= "[ilfdILFD]";
 	public static String	number			= "-?\\d+\\.?[\\d+]?" + numberSuffix + "?";
 
-	public static String	avoidsChars		= Constants.javaChar + Constants.subPrefix + Constants.gsChar;
+	public static String	avoidsChars		= Constants.javaChar + Constants.subPrefix;
 	static {
 		avoidsChars = avoidsChars.replaceAll("\\.", "\\\\.");
 	}
@@ -18,8 +18,8 @@ public class RegexConstants {
 		dataMapKey = dataMapKey.replaceFirst(Constants.subPrefix, "");
 	}
 
-	public static String	elemLeftBorder	= "(?<=[:\\s\\(\\[\\{]|^)";
-	public static String	elemRightBorder	= "(?=[:\\s\\)\\]\\}]|$)";
+	public static String	elemLeftBorder	= "(?<=[\\s\\(\\[\\{]|^)";
+	public static String	elemRightBorder	= "(?=[\\s\\)\\]\\}]|$)";
 
 	public static String	extractString	= "`[^`]*`|'[^']*'|\"[^\"]*\"";
 	public static String	extractNumber		= elemLeftBorder + RegexConstants.number + elemRightBorder;

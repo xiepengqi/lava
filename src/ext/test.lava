@@ -1,0 +1,5 @@
+(load 'D:\xpq\workspace\lava\src\ext\core.output.lava')
+(use core.output)
+
+(print xie)
+
