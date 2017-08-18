@@ -2,9 +2,11 @@
 
 (/println 
 	'same like System.out.println'
+	(as java.lang.Object $0)
 	(.println out $0))
 	
 
 (/print 
 	'same like System.out.print'
+	(as java.lang.Object $0)
 	(.print out $0))

@@ -41,13 +41,15 @@ public class Main {
 		}
 
 		Map<String, String> envs = System.getenv();
-		List<String> initPathFromEnv = new ArrayList<String>();
+		List<String> initSourcePath = new ArrayList<String>();
+		initSourcePath.add("/ext/lava");
 		for (String key : envs.keySet()) {
 			if (key.toLowerCase().startsWith("lavapath")) {
-				initPathFromEnv.add(envs.get(key));
+				initSourcePath.add(envs.get(key));
 			}
 		}
-		initSource(initPathFromEnv);
+
+		initSource(initSourcePath);
 
 		if (codePaths.size() == 0) {
 			startRepl();
@@ -117,7 +119,7 @@ public class Main {
 		FileUtil.Action action = new FileUtil.Action() {
 
 			@Override
-			public void action(String path, File file) {
+			public void action(File topFile, File file) {
 				if (file.getName().endsWith(".jar")) {
 					JavaUtil.loadjar(file);
 					return;
@@ -126,9 +128,8 @@ public class Main {
 					return;
 				}
 				String idName;
-				File topFile = new File(path);
 				if (topFile.isDirectory()) {
-					idName = getIdName(path, file.getAbsolutePath());
+					idName = getIdName(topFile.getPath(), file.getAbsolutePath());
 				} else {
 					idName = topFile.getName().replaceFirst("\\.lava$",
 							Constants.empty);
@@ -144,14 +145,7 @@ public class Main {
 			}
 
 			private String getIdName(String homePath, String filePath) {
-				String idName = null;
-				homePath = homePath.replaceAll("/+|\\\\+", "/").replaceAll(
-						"/$", "");
-				idName = filePath.replaceAll("/+|\\\\+", "/")
-						.replaceAll("\\.[^/\\.]+$", "")
-						.substring(homePath.length()).replaceAll("/", ".")
-						.replaceAll("\\.$|^\\.", "");
-				return idName;
+				return filePath.substring(homePath.length()+1).replaceAll("\\.[^/\\.]+$", "");
 			}
 
 		};

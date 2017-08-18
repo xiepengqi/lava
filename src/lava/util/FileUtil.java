@@ -1,5 +1,7 @@
 package lava.util;
 
+import lava.Main;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,7 +15,7 @@ import java.util.LinkedList;
 public class FileUtil {
 
 	public static class Action {
-		public void action(String path, File file) {
+		public void action(File topFile, File file) {
 
 		}
 	}
@@ -44,7 +46,12 @@ public class FileUtil {
 	}
 
 	public static void traverseFolder(String path, Action action) {
-		File file = new File(path);
+		File file;
+		try{
+			file=new File(Main.class.getResource(path).getFile());
+		}catch(Exception e){
+			file = new File(path);
+		}
 		if (file.exists()) {
 			LinkedList<File> list = new LinkedList<File>();
 			File[] files = file.listFiles();
@@ -55,7 +62,7 @@ public class FileUtil {
 				if (file2.isDirectory()) {
 					list.add(file2);
 				} else {
-					action.action(path, file2);
+					action.action(file, file2);
 				}
 			}
 			File temp_file;
@@ -66,7 +73,7 @@ public class FileUtil {
 					if (file2.isDirectory()) {
 						list.add(file2);
 					} else {
-						action.action(path, file2);
+						action.action(file, file2);
 					}
 				}
 			}
