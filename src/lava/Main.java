@@ -22,7 +22,7 @@ public class Main {
 	public static boolean syntaxError = false;
 	public static final List<String> ARGS = new ArrayList<String>();
 	public static final Map<String, Sub> subs = new HashMap<String, Sub>();
- 
+
 	public static boolean repl = false;
 
 	public static void main(String[] args) throws Exception {
@@ -136,12 +136,12 @@ public class Main {
 				}
 
 				if (codes.containsKey(idName)) {
-					list.add(codes.get(idName));
-				} else {
-					Code code = new Code(idName, file.getAbsolutePath());
-					codes.put(idName, code);
-					list.add(code);
+					list.remove(codes.get(idName));
 				}
+				Code code = new Code(idName, file.getAbsolutePath());
+				codes.put(idName, code);
+				list.add(code);
+
 			}
 
 			private String getIdName(String homePath, String filePath) {

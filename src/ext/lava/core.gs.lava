@@ -1,3 +1,0 @@
-(/:
-    "类似 get set 方法"
-    (.forName java.lang.Class 'java.util.Map'))

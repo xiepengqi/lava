@@ -1,4 +1,18 @@
 (use core)
 
-(print xie)
+(def map
+    {
+        name xiepengqi
+        sex 男
+
+    })
+
+
+(: map /println)
+
+
+(def list [ xie peng qi])
+(: list (/
+    ))
+(foreach list /println)
 

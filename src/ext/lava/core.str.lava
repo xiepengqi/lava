@@ -1,0 +1,3 @@
+(/join
+    ()
+    (forearch $args /append))

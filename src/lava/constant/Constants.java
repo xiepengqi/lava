@@ -4,25 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
-import lava.core.keyword.AndForm;
-import lava.core.keyword.AsForm;
-import lava.core.keyword.AssignForm;
-import lava.core.keyword.DebugForm;
-import lava.core.keyword.DefForm;
-import lava.core.keyword.EvalForm;
-import lava.core.keyword.ForForm;
-import lava.core.keyword.ForeachForm;
-import lava.core.keyword.IfForm;
-import lava.core.keyword.LoadForm;
-import lava.core.keyword.NewForm;
-import lava.core.keyword.OrForm;
-import lava.core.keyword.QDefForm;
-import lava.core.keyword.QEqForm;
-import lava.core.keyword.ReturnForm;
-import lava.core.keyword.TypeForm;
-import lava.core.keyword.UndefForm;
-import lava.core.keyword.UseForm;
-import lava.core.keyword.WhileForm;
+import lava.core.keyword.*;
 
 @SuppressWarnings("rawtypes")
 public class Constants {
@@ -71,6 +53,7 @@ public class Constants {
 		keywords.put("&&", AndForm.class);
 		keywords.put("debug", DebugForm.class);
 		keywords.put("eval", EvalForm.class);
+		keywords.put(":", GsForm.class);
 	}
 
 	static {
