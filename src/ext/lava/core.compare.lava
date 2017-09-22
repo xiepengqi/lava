@@ -1,0 +1,31 @@
+(use core.constant)
+(/compare
+    "in fact is bigdecmal.comareTo
+    return -1,0,1
+    the args with be to string as java method args"
+    (ext.java.Util.compare (.toString $0) (.toString $1)))
+
+(/>
+    (def key (compare $0 $1))
+    (if (.equals "1" (as java.lang.Object (.toString key)))
+        true
+        false))
+
+(/<
+    (def key (compare $0 $1))
+    (if (.equals "-1" (as java.lang.Object (.toString key)))
+        true
+        false))
+
+(/=?
+    (def key (compare $0 $1))
+    (if (.equals "0" (as java.lang.Object (.toString key)))
+        true
+        false))
+
+(/>=
+    (not (< $0 $1)))
+
+(/<=
+    (not (> $0 $1)))
+

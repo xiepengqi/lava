@@ -1,3 +1,7 @@
 (use core.output)
 (use core.inf)
 (use core.keyword)
+(use core.bean)
+(use core.str)
+(use core.constant)
+(use core.compare)

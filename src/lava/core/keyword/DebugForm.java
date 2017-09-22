@@ -13,7 +13,7 @@ public class DebugForm extends Form {
 	public void parse() throws Exception {
 		super.parse();
 
-		Form form = null;
+		Form form;
 		for (String arg : this.args.subList(1, this.args.size())) {
 			form = this.inCode.getFormMap().get(arg);
 			if (null != form) {

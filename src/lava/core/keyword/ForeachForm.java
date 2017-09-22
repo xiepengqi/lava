@@ -2,6 +2,7 @@ package lava.core.keyword;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
@@ -33,7 +34,11 @@ public class ForeachForm extends Form {
 			Sub sub = (Sub) parseArgs.get(parseArgs.size() - 1).getValue();
 
 			for (int i = 0; i < parseArgs.size() - 1; i++) {
-				for (Object j : (Iterable) parseArgs.get(i).getValue()) {
+				Object elems=parseArgs.get(i).getValue();
+				if(elems instanceof Map){
+					elems=((Map)elems).entrySet();
+				}
+				for (Object j : (Iterable) elems) {
 					List<Object> values = new ArrayList<Object>();
 					values.add(j);
 					sub.getDataMap().put("$args", values);

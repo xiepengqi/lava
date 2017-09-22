@@ -28,7 +28,7 @@ public class Constants {
 	public static String					configSplit			= "=";
 	public static String					empty				= "";
 	public static String					privatePrefix		= "-";
-	public static String					privateSubPrefix	= subPrefix + "-";
+	public static String					privateSubPrefix	= subPrefix + privatePrefix;
 	public static String					systemVarPrefix		= "$";
 
 	public static String					replPrefix			= ">";
@@ -53,7 +53,8 @@ public class Constants {
 		keywords.put("&&", AndForm.class);
 		keywords.put("debug", DebugForm.class);
 		keywords.put("eval", EvalForm.class);
-		keywords.put(":", GsForm.class);
+		keywords.put("gs", GsForm.class);
+		keywords.put("catch", CatchForm.class);
 	}
 
 	static {

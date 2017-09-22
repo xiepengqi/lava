@@ -1,0 +1,4 @@
+(def true
+    (. java.lang.Boolean TRUE))
+(def false
+    (. java.lang.Boolean FALSE))

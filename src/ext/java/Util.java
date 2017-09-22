@@ -15,6 +15,10 @@ import lava.util.StringUtil;
 
 public class Util {
 
+	public static int compare(String a,String b){
+		return new BigDecimal(a).compareTo(new BigDecimal(b));
+	}
+
 	public static int add(int a, int b) {
 		return a + b;
 	}

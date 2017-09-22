@@ -32,7 +32,7 @@ example:
 
 
 (/keyword
-    (: -doc
+    (foreach -doc
        (/
             (def key (.getKey $0))
             (def value (.getValue $0))

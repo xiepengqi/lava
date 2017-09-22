@@ -1,13 +1,11 @@
 package lava.core.keyword;
 
+import lava.constant.Constants;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
-import lava.core.Sub;
 import lava.util.Util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GsForm extends Form {
     @Override
@@ -36,7 +34,6 @@ public class GsForm extends Form {
             keyArg = parseFormArg(keys[i].toString());
             boolean isMap = main instanceof Map;
             boolean isList = main instanceof List;
-            boolean isKeySub = keyArg.getValue() instanceof Sub;
             boolean isKeyMap = keyArg.getValue() instanceof Map;
             boolean isKeyList = keyArg.getValue() instanceof List;
 
@@ -57,62 +54,21 @@ public class GsForm extends Form {
                 } else {
                     ((List) main).addAll(keyList);
                 }
-            }
-
-            if (isKeySub) {
-                Sub sub = (Sub) keyArg.getValue();
-                List result = new ArrayList();
-                Iterable it;
-                if (isList) {
-                    it = (Iterable) main;
-                } else {
-                    it = ((Map) main).entrySet();
-                }
-
-                for (Object obj : it) {
-                    List args = new ArrayList();
-                    args.add(obj);
-
-                    sub.getDataMap().put("$args", args);
-                    sub.getDataMap().put("$0", obj);
-                    sub.getDataMap().put("$-1", obj);
-
-                    sub.run();
-
-                    result.add(sub.getAsForm().getValue());
-                }
-                main=result;
                 continue;
             }
+
             if (isKeyMap) {
                 Map keyMap = (Map) keyArg.getValue();
                 List result=new ArrayList();
                 for (Object key : keyMap.keySet()) {
                     Object value = keyMap.get(key);
-                    Object resultValue;
-                    if (value instanceof Sub) {
-                        Sub sub = (Sub) value;
-                        Object oriValue = isMap ? ((Map) main).get(key) : ((List) main).get(Integer.parseInt(key
-                                .toString()));
-                        List args = new ArrayList();
-                        args.add(oriValue);
 
-                        sub.getDataMap().put("$args", args);
-                        sub.getDataMap().put("$0", oriValue);
-                        sub.getDataMap().put("$-1", oriValue);
-
-                        sub.run();
-
-                        resultValue = sub.getAsForm().getValue();
-                    } else {
-                        resultValue = value;
-                    }
                     if (isMap) {
-                        ((Map) main).put(key, resultValue);
+                        ((Map) main).put(key, value);
                     } else {
-                        ((List) main).set(Integer.parseInt(key.toString()), resultValue);
+                        ((List) main).set(Integer.parseInt(key.toString()), value);
                     }
-                    result.add(resultValue);
+                    result.add(value);
                 }
                 main=result;
                 continue;
@@ -124,11 +80,48 @@ public class GsForm extends Form {
             }
 
             if (isList) {
-                main = ((List) main).get(Integer.parseInt(keyArg.getValue().toString()));
-                continue;
+                List list=new ArrayList();
+                String indexStr=keyArg.getValue().toString();
+                String[] indexs=indexStr.split(",");
+                for(String index:indexs){
+                    fillList(index,main,list);
+                }
+                main=list;
             }
         }
         this.value = main;
         this.type = main==null? void.class:main.getClass();
+    }
+
+    private int prepareIndex(String index,int size){
+        int result;
+        if(Constants.empty.equals(index)){
+            result=0;
+        }else{
+            result=Integer.parseInt(index);
+        }
+        if(result<0){
+            result+=size;
+        }
+
+        return result;
+    }
+
+    private void fillList(String index,Object main, List list){
+        if(index.contains(":")){
+            String[] elems=index.split(":",2);
+            int fromIndex=prepareIndex(elems[0],((List) main).size());
+            int toIndex=prepareIndex(elems[1],((List) main).size());
+
+            if(fromIndex>toIndex){
+                List temp=((List) main).subList(toIndex,fromIndex+1);
+                Collections.reverse(temp);
+                list.addAll(temp);
+            }else{
+                list.addAll(((List) main).subList(fromIndex,toIndex+1));
+            }
+        }else{
+            list.add(((List) main).get(Integer.parseInt(index)));
+        }
     }
 }
