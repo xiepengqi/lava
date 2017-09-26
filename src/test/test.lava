@@ -1,6 +1,24 @@
 (use core)
 
+(foreach (lvar $codeId) /println)
+
+"
+(def list
+    [
+    xie peng qi
+
+    ])
+
+(gs list [1 2 3])
+
+(foreach list /println)
+
+(while (/ true)
+    (/ (println y) false))
+
+
 (debug [test]
-    (/test
-        (print xie))
-     (test))
+     (/test
+         (print xie))
+      (test))
+"

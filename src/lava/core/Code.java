@@ -85,7 +85,6 @@ public class Code {
 	}
 
 	public DataInfo eval(String codeSource) throws Exception {
-
 		int index = this.formSeq.size();
 
 		codeSource = extractString(codeSource);

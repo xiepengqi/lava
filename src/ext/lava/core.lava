@@ -5,3 +5,7 @@
 (use core.str)
 (use core.constant)
 (use core.compare)
+
+
+(/lvar
+    (ext.java.Util.lvar $0))

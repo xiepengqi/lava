@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import lava.Main;
 import lava.util.StringUtil;
 
 public class Util {
@@ -177,6 +178,10 @@ public class Util {
 		}
 
 		return result;
+	}
+
+	public static List<Object> lvar(String codeId){
+		return Arrays.asList(Main.codes.get(codeId).getDataMap().getMap().keySet().toArray());
 	}
 
 }

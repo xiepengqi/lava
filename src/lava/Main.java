@@ -21,7 +21,8 @@ public class Main {
 	public static final Map<String, String> config = new HashMap<String, String>();
 	public static boolean syntaxError = false;
 	public static final List<String> ARGS = new ArrayList<String>();
-	public static final Map<String, Sub> subs = new HashMap<String, Sub>();
+	public static final Map<String, Map<String,Sub>> subs = new HashMap<String, Map<String,Sub>>();
+	public static final Map<Sub,List<Sub>> subLink=new HashMap<Sub,List<Sub>>();
 
 	public static boolean repl = false;
 
@@ -77,15 +78,22 @@ public class Main {
 		while (line != null) {
 			System.out.print(Constants.replPrefix);
 			line = scanner.nextLine();
-			while (line.endsWith(Constants.replPrefix)) {
-				line += scanner.nextLine();
+			String eof=null;
+			while (line.endsWith(Constants.replPrefix)||(eof!=null&&!line.trim().endsWith(eof))) {
+				if(eof==null){
+					eof=line.substring(0,line.length()-1).trim();
+					line=Constants.empty;
+				}
+				line += scanner.nextLine()+Constants.newLine;
+			}
+			if(eof!=null){
+				line=line.substring(0,line.lastIndexOf(eof));
 			}
 			if (line.length() == 0) {
 				continue;
 			}
 			try {
-				System.out
-						.println(code.eval("(repl " + line + " )").getValue());
+				System.out.println(code.eval("(repl " + line + " )").getValue());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -137,6 +145,7 @@ public class Main {
 
 				if (codes.containsKey(idName)) {
 					list.remove(codes.get(idName));
+					subs.remove(idName);
 				}
 				Code code = new Code(idName, file.getAbsolutePath());
 				codes.put(idName, code);
@@ -154,5 +163,38 @@ public class Main {
 			FileUtil.traverseFolder(path, action);
 		}
 		return list;
+	}
+
+	public static void putSub(Sub sub){
+		String subId=sub.getIdName();
+		String[] elems=subId.split(Constants.subPrefix);
+		String codeId;
+		String subName;
+		if(elems.length!=2){
+			return;
+		}
+		codeId=elems[0];
+		subName=elems[1];
+
+		Map<String,Sub> subMap=subs.get(codeId);
+		if(subMap==null){
+			subMap=new HashMap<String,Sub>();
+			subs.put(codeId,subMap);
+		}
+		subMap.put(subName,sub);
+	}
+
+	public static Sub getSub(String subId){
+		String[] elems=subId.split(Constants.subPrefix);
+		String codeId;
+		String subName;
+		if(elems.length!=2){
+			return null;
+		}
+		codeId=elems[0];
+		subName=elems[1];
+
+		Map<String,Sub> subMap=subs.get(codeId);
+		return subMap==null ? null:subMap.get(subName);
 	}
 }

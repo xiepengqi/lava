@@ -40,7 +40,7 @@ public class SubForm extends Form {
 			return;
 		}
 
-		Main.subs.put(this.asSub.getIdName(), this.asSub);
+		Main.putSub(this.asSub);
 
 		if (this.inSubSeq.size() > 0) {
 			this.inSubSeq.get(0).getDataMap().put(this.fnName, this.asSub);
