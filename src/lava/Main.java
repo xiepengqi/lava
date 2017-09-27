@@ -1,28 +1,21 @@
 package lava;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-
 import lava.constant.Constants;
 import lava.core.Code;
-import lava.core.Sub;
 import lava.util.FileUtil;
 import lava.util.JavaUtil;
 import lava.util.Util;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 public class Main {
 	public static final Map<String, Code> codes = new HashMap<String, Code>();
 	public static final Map<String, String> config = new HashMap<String, String>();
 	public static boolean syntaxError = false;
 	public static final List<String> ARGS = new ArrayList<String>();
-	public static final Map<String, Map<String,Sub>> subs = new HashMap<String, Map<String,Sub>>();
-	public static final Map<Sub,List<Sub>> subLink=new HashMap<Sub,List<Sub>>();
+	public static final Map<String,List<String>> subLinks=new HashMap<String,List<String>>();
 
 	public static boolean repl = false;
 
@@ -145,7 +138,6 @@ public class Main {
 
 				if (codes.containsKey(idName)) {
 					list.remove(codes.get(idName));
-					subs.remove(idName);
 				}
 				Code code = new Code(idName, file.getAbsolutePath());
 				codes.put(idName, code);
@@ -165,36 +157,4 @@ public class Main {
 		return list;
 	}
 
-	public static void putSub(Sub sub){
-		String subId=sub.getIdName();
-		String[] elems=subId.split(Constants.subPrefix);
-		String codeId;
-		String subName;
-		if(elems.length!=2){
-			return;
-		}
-		codeId=elems[0];
-		subName=elems[1];
-
-		Map<String,Sub> subMap=subs.get(codeId);
-		if(subMap==null){
-			subMap=new HashMap<String,Sub>();
-			subs.put(codeId,subMap);
-		}
-		subMap.put(subName,sub);
-	}
-
-	public static Sub getSub(String subId){
-		String[] elems=subId.split(Constants.subPrefix);
-		String codeId;
-		String subName;
-		if(elems.length!=2){
-			return null;
-		}
-		codeId=elems[0];
-		subName=elems[1];
-
-		Map<String,Sub> subMap=subs.get(codeId);
-		return subMap==null ? null:subMap.get(subName);
-	}
 }

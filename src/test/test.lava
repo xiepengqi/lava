@@ -1,8 +1,21 @@
 (use core)
 
-(foreach (lvar $codeId) /println)
+
+(/run/test
+    (print xie))
+
+
+(/run
+    ($0)
+    (println 'run test success'))
+
+(test)
+
 
 "
+(foreach (lvar $codeId) /println)
+
+
 (def list
     [
     xie peng qi

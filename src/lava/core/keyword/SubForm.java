@@ -6,15 +6,40 @@ import lava.core.Form;
 import lava.core.Sub;
 import lava.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SubForm extends Form {
 
 	@Override
 	public void parse() throws Exception {
 		super.parse();
 
-		Sub sub = new Sub();
+		String[] subNames=this.fnName.split(Constants.subPrefix);
+		List<String> subNameList=new ArrayList<String>();
+		for(String subName:subNames){
+			if(subName!=null&&subName.length()>0){
+				subNameList.add(subName);
+			}
+		}
+		String subName=Constants.empty;
+		if(subNameList.size()>0){
+			subName=subNameList.remove(subNameList.size()-1);
+		}
 
-		sub.setName(this.fnName.replaceFirst(Constants.subPrefix, Constants.empty));
+		if(subNameList.size()>0){
+			List<String> subLink=Main.subLinks.get(subName);
+			if(subLink==null){
+				Main.subLinks.put(subName,subNameList);
+			}else{
+				subLink.addAll(subNameList);
+			}
+		}
+
+		this.fnName=Constants.subPrefix+subName;
+
+		Sub sub = new Sub();
+		sub.setName(subName);
 		sub.setInCode(this.inCode);
 		sub.setAsForm(this);
 		this.asSub = sub;
@@ -39,8 +64,6 @@ public class SubForm extends Form {
 		if (StringUtil.isEmpty(this.asSub.getName())) {
 			return;
 		}
-
-		Main.putSub(this.asSub);
 
 		if (this.inSubSeq.size() > 0) {
 			this.inSubSeq.get(0).getDataMap().put(this.fnName, this.asSub);
