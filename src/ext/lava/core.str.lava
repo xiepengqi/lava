@@ -7,7 +7,7 @@
               ""))
     (foreach $args /append)
     (/append
-        (if (> (.size sb) 0)
+        (if (> (.length sb) 0)
             (.append sb joinStr))
         (.append sb $0))
     (.toString sb))

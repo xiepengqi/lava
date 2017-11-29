@@ -7,7 +7,6 @@ import lava.util.JavaUtil;
 import lava.util.Util;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 public class Main {
@@ -59,7 +58,7 @@ public class Main {
 		}
 	}
 
-	public static void startRepl() throws IOException, Exception {
+	public static void startRepl() throws Exception {
 		Main.repl = true;
 		Code code = new Code("lava.repl", null);
 		Main.codes.put(code.getIdName(), code);

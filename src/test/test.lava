@@ -1,37 +1,7 @@
 (use core)
 
-
-(/run/test
-    (print xie))
-
-
-(/run
-    ($0)
-    (println 'run test success'))
-
-(test)
-
-
-"
-(foreach (lvar $codeId) /println)
-
-
-(def list
-    [
-    xie peng qi
-
-    ])
-
-(gs list [1 2 3])
-
-(foreach list /println)
-
-(while (/ true)
-    (/ (println y) false))
-
-
-(debug [test]
+(debug [core.output]
      (/test
          (print xie))
       (test))
-"
+
