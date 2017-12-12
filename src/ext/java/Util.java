@@ -181,7 +181,9 @@ public class Util {
 	}
 
 	public static List<Object> lvar(String codeId){
-		return Arrays.asList(Main.codes.get(codeId).getDataMap().getMap().keySet().toArray());
+		List list=new ArrayList();
+		list.addAll(Arrays.asList(Main.codes.get(codeId).getDataMap().getMap().keySet().toArray()));
+		return list;
 	}
 
 }

@@ -1,7 +1,11 @@
 (use core)
 
-(debug [core.output]
-     (/test
-         (print xie))
-      (test))
+(def map
+    {
+        xie peng
+        he song
+        ji jin
+    })
+
+
 

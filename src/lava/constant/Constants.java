@@ -53,7 +53,6 @@ public class Constants {
 		keywords.put("&&", AndForm.class);
 		keywords.put("debug", DebugForm.class);
 		keywords.put("eval", EvalForm.class);
-		keywords.put("gs", GsForm.class);
 		keywords.put("catch", CatchForm.class);
 	}
 

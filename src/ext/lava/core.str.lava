@@ -1,6 +1,6 @@
 (use core.bean)
 (/join
-    (def sb (newStringBuilder))
+    (def sb (newStrBuilder))
     (def joinStr
          (if (def? $1)
               $1

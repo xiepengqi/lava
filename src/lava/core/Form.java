@@ -7,11 +7,7 @@ import java.util.List;
 import lava.constant.Constants;
 import lava.constant.RegexConstants;
 import lava.core.DataMap.DataInfo;
-import lava.core.keyword.FnForm;
-import lava.core.keyword.JavaForm;
-import lava.core.keyword.ListForm;
-import lava.core.keyword.MapForm;
-import lava.core.keyword.SubForm;
+import lava.core.keyword.*;
 import lava.util.StringUtil;
 import lava.util.Util;
 
@@ -220,7 +216,7 @@ public class Form {
 		Class formClass = Constants.keywords.get(elems.get(0));
 		if (null != formClass) {
 			form = (Form) formClass.newInstance();
-		} else if (elems.get(0).contains(Constants.javaChar) && !elems.get(0).contains(Constants.subPrefix)) {
+		} else if (elems.get(0).contains(Constants.javaChar)) {
 			form = new JavaForm();
 		} else if (elems.get(0).startsWith(Constants.subPrefix)) {
 			form = new SubForm();
