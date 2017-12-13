@@ -191,6 +191,24 @@ public class Form {
 		return new DataMap.DataInfo(String.class, arg, arg, null);
 	}
 
+	protected DataMap.DataInfo runSub(String subName,Sub sub,List<DataInfo> parseArgs) throws Exception {
+		if (null != sub) {
+			for (int i = 0; i < parseArgs.size(); i++) {
+				sub.getDataMap().put("$" + i, parseArgs.get(i));
+				sub.getDataMap().put("$-" + (parseArgs.size() - i), parseArgs.get(i));
+			}
+
+			List<Object> values = new ArrayList<Object>();
+			Util.splitArgs(parseArgs, values, null);
+			sub.getDataMap().put("$args", values);
+			sub.run();
+			return new DataMap.DataInfo(sub.getAsForm().getType(),sub.getAsForm().getValue(),null,null);
+		} else {
+			Util.runtimeError(this, subName);
+			return null;
+		}
+	}
+
 	@SuppressWarnings("rawtypes")
 	public static Form createdForm(String source) throws InstantiationException, IllegalAccessException {
 		Form form = null;

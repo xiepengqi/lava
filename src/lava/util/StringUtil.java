@@ -8,6 +8,10 @@ import lava.constant.RegexConstants;
 import lava.core.Form;
 
 public class StringUtil {
+	public static String toString(Object obj){
+		return obj==null ? "":obj.toString();
+	}
+
 	public static boolean isInnerId(Form form, String str) {
 		if (isFormId(form, str)) {
 			return true;

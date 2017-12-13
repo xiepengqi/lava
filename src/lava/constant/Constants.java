@@ -54,6 +54,7 @@ public class Constants {
 		keywords.put("debug", DebugForm.class);
 		keywords.put("eval", EvalForm.class);
 		keywords.put("catch", CatchForm.class);
+		keywords.put("link", LinkForm.class);
 	}
 
 	static {

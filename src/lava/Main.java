@@ -14,7 +14,7 @@ public class Main {
 	public static final Map<String, String> config = new HashMap<String, String>();
 	public static boolean syntaxError = false;
 	public static final List<String> ARGS = new ArrayList<String>();
-	public static final Map<String,List<String>> subLinks=new HashMap<String,List<String>>();
+	public static final Map<Object,Object> subLinks=new HashMap<Object,Object>();
 
 	public static boolean repl = false;
 

@@ -31,7 +31,9 @@ public class FnForm extends Form {
 		DataInfo subData = getSubFromScope(this.fnName);
 
 		if(!runSubLink(subData,parseArgs)){
-			runSub((Sub)subData.getValue(),parseArgs);
+			DataInfo dataInfo=runSub(this.fnName,(Sub)subData.getValue(),parseArgs);
+			this.type=dataInfo.getType();
+			this.value=dataInfo.getValue();
 		}
 	}
 
@@ -41,42 +43,44 @@ public class FnForm extends Form {
 			return in;
 		}
 
-		List<String> subLink= Main.subLinks.remove(((Sub)subData.getValue()).getName());
-		if(subLink==null||subLink.size()==0){
+		Object key;
+
+		Object subLink= Main.subLinks.remove(subData.getValue());
+		value=subLink;
+		if(subLink==null){
+			subLink= Main.subLinks.remove(((Sub)subData.getValue()).getName());
+			key=((Sub)subData.getValue()).getName();
+			value=subLink;
+		}else{
+			key=subLink;
+		}
+
+		if(subLink==null){
 			return in;
 		}
-		in=true;
-		DataInfo subDataInLink;
-		for(String subName:subLink){
-			subDataInLink = getSubFromScope(subName);
-			List<DataInfo> args=new ArrayList<DataInfo>();
-			args.add(subData);
-			args.addAll(parseArgs);
 
-			runSub((Sub)subDataInLink.getValue(),args);
+		if(!(subLink instanceof Sub)){
+			subLink=getSubFromScope(StringUtil.toString(subLink)).getValue();
 		}
-		Main.subLinks.put(((Sub)subData.getValue()).getName(),subLink);
+
+		if(subLink ==null){
+			Main.subLinks.put(key,value);
+			return in;
+		}
+
+		in=true;
+		List<DataInfo> args=new ArrayList<DataInfo>();
+		args.add(subData);
+		args.addAll(parseArgs);
+
+		runSub(((Sub)subLink).getName(),(Sub)subLink,args);
+
+
+		Main.subLinks.put(key,value);
 		return in;
 	}
 
-	private void runSub(Sub sub,List<DataInfo> parseArgs) throws Exception {
-		if (null != sub) {
-			for (int i = 0; i < parseArgs.size(); i++) {
-				sub.getDataMap().put("$" + i, parseArgs.get(i));
-				sub.getDataMap().put("$-" + (parseArgs.size() - i), parseArgs.get(i));
-			}
 
-			List<Object> values = new ArrayList<Object>();
-			Util.splitArgs(parseArgs, values, null);
-			sub.getDataMap().put("$args", values);
-			sub.run();
-			this.value = sub.getAsForm().getValue();
-			this.type = sub.getAsForm().getType();
-			return;
-		} else {
-			Util.runtimeError(this, sub.getName());
-		}
-	}
 
 	private DataInfo getSubFromScope(String fnName) {
 		if (fnName.equals(this.fnName)&&StringUtil.isFormId(this, this.fnName)) {
