@@ -39,7 +39,7 @@ public class DefForm extends Form {
 			data = new DataInfo();
 			data.setValue(null);
 			data.setType(void.class);
-			dataMap.put(this.args.get(0), data);
+			dataMap.putData(this.args.get(0), data);
 
 			this.value = null;
 			this.type = void.class;
@@ -57,7 +57,7 @@ public class DefForm extends Form {
 				data.setValue(value.getValue());
 				data.setType(value.getType());
 				data.setSource("arg");
-				dataMap.put(var, data);
+				dataMap.putData(var, data);
 			}
 		}
 

@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import lava.Main;
 import lava.constant.Constants;
 import lava.constant.RegexConstants;
 import lava.core.DataMap.DataInfo;
 import lava.core.keyword.*;
 import lava.util.StringUtil;
 import lava.util.Util;
+
+import javax.xml.crypto.Data;
 
 public class Form {
 	protected Code			inCode;
@@ -191,22 +194,127 @@ public class Form {
 		return new DataMap.DataInfo(String.class, arg, arg, null);
 	}
 
-	protected DataMap.DataInfo runSub(String subName,Sub sub,List<DataInfo> parseArgs) throws Exception {
-		if (null != sub) {
-			for (int i = 0; i < parseArgs.size(); i++) {
-				sub.getDataMap().put("$" + i, parseArgs.get(i));
-				sub.getDataMap().put("$-" + (parseArgs.size() - i), parseArgs.get(i));
+	protected void runSub(Sub sub,List<DataInfo> parseArgs,List<Object> values, Form self) throws Exception {
+		List elems=new ArrayList();
+		List args=new ArrayList();
+		boolean isDataInfo=false;
+		if(parseArgs!=null){
+			isDataInfo=true;
+			elems=parseArgs;
+			Util.splitArgs(parseArgs, args, null);
+		}else if(values!=null){
+			elems=values;
+			args=values;
+		}
+
+		if(runSubLink(sub,elems,self)){
+			return;
+		}
+
+		DataInfo data=null;
+		for (int i = 0; i < elems.size(); i++) {
+			if(isDataInfo){
+				sub.getDataMap().putData("$" + i, (DataInfo)elems.get(i));
+				sub.getDataMap().putData("$-" + (elems.size() - i), (DataInfo)elems.get(i));
+			}else{
+				sub.getDataMap().put("$" + i, elems.get(i));
+				sub.getDataMap().put("$-" + (elems.size() - i), elems.get(i));
 			}
 
-			List<Object> values = new ArrayList<Object>();
-			Util.splitArgs(parseArgs, values, null);
-			sub.getDataMap().put("$args", values);
-			sub.run();
-			return new DataMap.DataInfo(sub.getAsForm().getType(),sub.getAsForm().getValue(),null,null);
-		} else {
-			Util.runtimeError(this, subName);
-			return null;
 		}
+
+		sub.getDataMap().put("$args", args);
+		sub.run();
+	}
+
+	private boolean runSubLink(Sub sub,List elems, Form self) throws Exception {
+		boolean use=false;
+
+		Object key;
+
+		Object subLink= Main.subLinks.remove(sub);
+		value=subLink;
+		if(subLink==null){
+			subLink= Main.subLinks.remove(sub.getName());
+			key=sub.getName();
+			value=subLink;
+		}else{
+			key=subLink;
+		}
+
+		if(subLink==null){
+			return use;
+		}
+
+		if(!(subLink instanceof Sub)){
+			subLink=getSubFromScope(self,StringUtil.toString(subLink)).getValue();
+		}
+
+		if(subLink ==null){
+			Main.subLinks.put(key,value);
+			return use;
+		}
+
+		use=true;
+
+
+		List temp=new ArrayList();
+
+		if(elems.size()==0){
+			temp.add(sub);
+			runSub((Sub)subLink,null,temp,self);
+		}else if(elems.get(0) instanceof DataInfo){
+			temp.add(new DataInfo(Sub.class,sub,null,null));
+			temp.addAll(elems);
+			runSub((Sub)subLink,temp,null, self);
+		}else{
+			temp.add(sub);
+			temp.addAll(elems);
+			runSub((Sub)subLink,null,temp, self);
+		}
+
+		Main.subLinks.put(key,value);
+		return use;
+	}
+
+	protected DataInfo getSubFromScope(Form self,String fnName) {
+		if (fnName.equals(self.getFnName())&&StringUtil.isFormId(self, self.getFnName())) {
+			Form form=self.getInCode().getFormMap().get(self.getFnName());
+			Object obj = form.getValue();
+			if (obj instanceof Sub) {
+				return new DataInfo(Sub.class, obj, form.getSource(), obj);
+			}
+		}
+
+		DataInfo findSub;
+		for (Sub sub : self.getInSubSeq()) {
+			findSub = findSub(sub.getDataMap(), fnName);
+			if (null != findSub) {
+				return findSub;
+			}
+			findSub = findSub(sub.getClosure(), fnName);
+			if (null != findSub) {
+				return findSub;
+			}
+		}
+
+		findSub = findSub(self.getInCode().getDataMap(), fnName);
+		if (null != findSub) {
+			return findSub;
+		}
+		return null;
+	}
+
+	private DataInfo findSub(DataMap dataMap, String fnName) {
+		DataInfo data = dataMap.get(Constants.subPrefix + fnName);
+		if (null == data) {
+			data = dataMap.get(fnName);
+		}
+
+		if (data != null && data.getValue() instanceof Sub) {
+			return data;
+		}
+		return null;
 	}
 
 	@SuppressWarnings("rawtypes")

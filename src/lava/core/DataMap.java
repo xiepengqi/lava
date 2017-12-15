@@ -74,7 +74,7 @@ public class DataMap {
 		return this.map.get(key);
 	}
 
-	public void put(String key, DataInfo data) {
+	public void putData(String key, DataInfo data) {
 		this.map.put(key, data);
 	}
 

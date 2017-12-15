@@ -41,11 +41,8 @@ public class ForeachForm extends Form {
 				for (Object j : (Iterable) elems) {
 					List<Object> values = new ArrayList<Object>();
 					values.add(j);
-					sub.getDataMap().put("$args", values);
-					sub.getDataMap().put("$0", j);
-					sub.getDataMap().put("$-1", j);
 
-					sub.run();
+					runSub(sub,null,values,this);
 
 					if (sub.getAsForm().getValue() instanceof Boolean) {
 						if (!(Boolean) sub.getAsForm().getValue()) {

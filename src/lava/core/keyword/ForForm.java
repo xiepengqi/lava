@@ -55,11 +55,8 @@ public class ForForm extends Form {
 			for (long i = init; init <= limit ? i <= limit : i >= limit; i = i + step) {
 				List<Object> values = new ArrayList<Object>();
 				values.add(String.valueOf(i));
-				sub.getDataMap().put("$args", values);
-				sub.getDataMap().put("$0", String.valueOf(i));
-				sub.getDataMap().put("$-1", String.valueOf(i));
 
-				sub.run();
+				runSub(sub,null,values,this);
 
 				if (sub.getAsForm().getValue() instanceof Boolean) {
 					if (!(Boolean) sub.getAsForm().getValue()) {
