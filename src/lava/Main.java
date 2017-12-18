@@ -7,6 +7,7 @@ import lava.util.JavaUtil;
 import lava.util.Util;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.util.*;
 
 public class Main {
@@ -35,7 +36,6 @@ public class Main {
 
 		Map<String, String> envs = System.getenv();
 		List<String> initSourcePath = new ArrayList<String>();
-		initSourcePath.add("/ext/lava");
 		for (String key : envs.keySet()) {
 			if (key.toLowerCase().startsWith("lavapath")) {
 				initSourcePath.add(envs.get(key));
@@ -92,7 +92,7 @@ public class Main {
 		}
 	}
 
-	public static List<Code> initSource(List<String> codePath) {
+	public static List<Code> initSource(List<String> codePath) throws URISyntaxException {
 		List<String> paths = new ArrayList<String>();
 		for (String path : codePath) {
 			if (!path.contains(";")) {

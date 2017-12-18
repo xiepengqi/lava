@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.LinkedList;
 
 public class FileUtil {
@@ -45,13 +47,9 @@ public class FileUtil {
 		return out.toString();
 	}
 
-	public static void traverseFolder(String path, Action action) {
-		File file;
-		try{
-			file=new File(Main.class.getResource(path).getFile());
-		}catch(Exception e){
-			file = new File(path);
-		}
+	public static void traverseFolder(String path, Action action) throws URISyntaxException {
+		File file=new File(path);
+
 		if (file.exists()) {
 			LinkedList<File> list = new LinkedList<File>();
 			File[] files = file.listFiles();
@@ -78,6 +76,5 @@ public class FileUtil {
 				}
 			}
 		}
-
 	}
 }

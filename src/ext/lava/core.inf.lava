@@ -1,8 +1,0 @@
-(/inf
-    'like java keyword instanceof
-
-    (inf #anyObjecct# #a String of class full name#)
-    return Boolean
-
-    '
-    (ext.java.Inf.inf (as java.lang.Object $0) $1))

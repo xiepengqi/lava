@@ -1,6 +1,0 @@
-(use core.constant)
-(/not
-    (if true
-        (return false))
-    (if false
-        (return true)))

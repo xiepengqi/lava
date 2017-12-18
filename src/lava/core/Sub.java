@@ -17,6 +17,10 @@ public class Sub {
 	private List<Instance>	instancePool	= new ArrayList<Instance>();
 	private DataMap				closure			= new DataMap();
 
+	public Sub(){
+
+	}
+
 	public Sub newSub() {
 		Sub sub = new Sub();
 		sub.dataMap = dataMap;

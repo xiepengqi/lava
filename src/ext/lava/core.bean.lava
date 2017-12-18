@@ -1,4 +1,0 @@
-(/newStrBuilder
-    (if (def? $0)
-        (new java.lang.StringBuilder $0)
-        (new java.lang.StringBuilder)))
