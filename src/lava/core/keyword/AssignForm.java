@@ -4,6 +4,7 @@ import lava.constant.MsgConstants;
 import lava.core.DataMap;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
+import lava.core.ServiceException;
 import lava.util.StringUtil;
 import lava.util.Util;
 
@@ -39,7 +40,7 @@ public class AssignForm extends Form {
 		for (String arg : this.args.subList(0, this.args.size() - 1)) {
 			DataInfo data=this.parseFormArg(arg);
 			if (!(data.getIn() instanceof DataMap)) {
-				Util.runtimeError(this, arg);
+				throw new ServiceException(Util.getErrorStr(this,arg));
 			}
 
 			data.setValue(value.getValue());

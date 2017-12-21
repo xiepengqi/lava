@@ -408,7 +408,13 @@ public class Form {
 			if (action != null)
 				action.beforeRun(form);
 
-			form.run();
+			try{
+				form.run();
+			}catch(ServiceException e){
+				throw new ServiceException(e.getMessage());
+			}catch (Exception e){
+				throw new ServiceException(Util.getErrorStr(form,e.toString()));
+			}
 
 			Util.debug(form, form.getFormId() + ":" + form.getType() + ":" + form.getValue());
 

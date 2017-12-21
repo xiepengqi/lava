@@ -4,6 +4,7 @@ import lava.constant.Constants;
 import lava.core.DataMap;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
+import lava.core.ServiceException;
 import lava.util.StringUtil;
 import lava.util.Util;
 
@@ -41,7 +42,7 @@ public class DefForm extends Form {
 		DataInfo data = null;
 		if (this.args.size() < 2) {
 			if (dataMap.getMap().containsKey(this.args.get(0))) {
-				Util.runtimeError(this, this.args.get(0));
+				throw new ServiceException(Util.getErrorStr(this,this.args.get(0)));
 			}
 
 			data = new DataInfo();
@@ -60,7 +61,7 @@ public class DefForm extends Form {
 
 		for (String var : this.args.subList(0, this.args.size() - 1)) {
 			if (dataMap.getMap().containsKey(var)) {
-				Util.runtimeError(this, var);
+				throw new ServiceException(Util.getErrorStr(this, var));
 			} else {
 				data = new DataInfo();
 				data.setValue(value.getValue());

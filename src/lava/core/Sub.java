@@ -138,7 +138,13 @@ public class Sub {
 					continue;
 				}
 
-				form.run();
+				try{
+					form.run();
+				}catch(ServiceException e){
+					throw new ServiceException(e.getMessage());
+				}catch (Exception e){
+					throw new ServiceException(Util.getErrorStr(form,e.toString()));
+				}
 
 				if (form.asSub != null) {
 					Sub superSub = form.inSubSeq.get(0);

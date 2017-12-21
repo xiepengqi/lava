@@ -3,6 +3,7 @@ package lava.core.keyword;
 import lava.constant.Constants;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
+import lava.core.ServiceException;
 import lava.core.Sub;
 import lava.util.Util;
 
@@ -27,7 +28,7 @@ public class FnForm extends Form {
 		Sub sub = getSubFromScope(this,this.fnName);
 
 		if(sub==null){
-			Util.runtimeError(this,this.fnName);
+			throw new ServiceException(Util.getErrorStr(this, this.fnName));
 		}
 
 		List<DataInfo> newParseArgs=new ArrayList<DataInfo>();

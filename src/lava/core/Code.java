@@ -114,7 +114,13 @@ public class Code {
 				continue;
 			}
 
-			form.run();
+			try{
+				form.run();
+			}catch(ServiceException e){
+				throw new ServiceException(e.getMessage());
+			}catch (Exception e){
+				throw new ServiceException(Util.getErrorStr(form,e.toString()));
+			}
 
 			data.put("value",form.value);
 			data.put("type",form.type);
@@ -180,7 +186,13 @@ public class Code {
 				continue;
 			}
 
-			form.run();
+			try{
+				form.run();
+			}catch(ServiceException e){
+				throw new ServiceException(e.getMessage());
+			}catch (Exception e){
+				throw new ServiceException(Util.getErrorStr(form,e.toString()));
+			}
 
 			Util.debug(form, form.getFormId() + ":" + form.getType() + ":" + form.getValue());
 		}
@@ -247,7 +259,7 @@ public class Code {
 				try {
 					data.setValue(((Constructor) parser).newInstance(content));
 				} catch (Exception e) {
-					Util.runtimeError(this,numberSource);
+					Util.runtimeError(this,numberSource+":"+e.toString());
 				}
 				data.setType(Constants.numberTypes.get(suffix));
 			} else {

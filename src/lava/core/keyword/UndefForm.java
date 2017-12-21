@@ -3,6 +3,7 @@ package lava.core.keyword;
 import lava.core.DataMap;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
+import lava.core.ServiceException;
 import lava.util.Util;
 
 public class UndefForm extends Form {
@@ -30,7 +31,7 @@ public class UndefForm extends Form {
 			if (fundIn instanceof DataMap) {
 				dataMap = ((DataMap) fundIn);
 			}else {
-				Util.runtimeError(this, arg);
+				throw new ServiceException(Util.getErrorStr(this, arg));
 			}
 			dataMap.getMap().remove(this.args.get(i));
 

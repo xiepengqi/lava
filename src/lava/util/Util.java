@@ -101,20 +101,17 @@ public class Util {
 		Main.syntaxError = true;
 	}
 
-	public static void runtimeError(Form form, String str) {
-		System.err.println("RUNTIME-ERROR:" + form.getWhere() + ":" + form.see() + ":" + str);
-		if (!Main.repl) {
-			System.exit(1);
-		}
+	public static String getErrorStr(Form form, String str) {
+		return "RUNTIME-ERROR:" + form.getWhere() + ":" + form.see() + ":" + str;
 	}
 	public static void runtimeError(Code code, String str) {
-		System.err.println("RUNTIME-ERROR:" + code.getIdName() + ":" + str);
+		System.err.println(code.getIdName() + ":" + str);
 		if (!Main.repl) {
 			System.exit(1);
 		}
 	}
 	public static void runtimeError(String str) {
-		System.err.println("RUNTIME-ERROR:" + str);
+		System.err.println(str);
 		if (!Main.repl) {
 			System.exit(1);
 		}

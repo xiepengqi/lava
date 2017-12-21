@@ -2,6 +2,7 @@ package lava;
 
 import lava.constant.Constants;
 import lava.core.Code;
+import lava.core.ServiceException;
 import lava.util.FileUtil;
 import lava.util.JavaUtil;
 import lava.util.Util;
@@ -56,8 +57,10 @@ public class Main {
 			code.check();
 			try {
 				code.run();
+			}catch (ServiceException e) {
+				Util.runtimeError(e.getMessage());
 			} catch (Exception e) {
-				Util.runtimeError(code,e.toString());
+				Util.runtimeError(code, e.toString());
 			}
 		}
 
@@ -71,8 +74,10 @@ public class Main {
 		String line = "(/repl (if (def? $-1) $-1  ''))";
 		try {
 			code.eval(line);
+		}catch (ServiceException e) {
+			Util.runtimeError(e.getMessage());
 		} catch (Exception e) {
-			Util.runtimeError("lava.repl:"+line+":"+e.toString());
+			Util.runtimeError("lava.repl:"+e.toString());
 		}
 
 		Scanner scanner = new Scanner(System.in);
@@ -95,8 +100,10 @@ public class Main {
 			}
 			try {
 				System.out.println(code.eval("(repl " + line + " )").get("value"));
+			}catch(ServiceException e){
+				Util.runtimeError(e.getMessage());
 			} catch (Exception e) {
-				Util.runtimeError("lava.repl:"+line+":"+e.toString());
+				Util.runtimeError("lava.repl:"+e.toString());
 			}
 		}
 	}

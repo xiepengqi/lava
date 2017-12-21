@@ -12,7 +12,7 @@ public class CatchForm extends Form {
         super.parse();
         Form form;
 
-        for (String arg : this.args.subList(0, this.args.size()-1)) {
+        for (String arg : this.args.subList(0, this.args.size())) {
             form = this.inCode.getFormMap().get(arg);
             if (null != form) {
                 form.markRunBy(this);
@@ -30,9 +30,8 @@ public class CatchForm extends Form {
     public void run() throws Exception {
         super.run();
 
-
         Form form;
-        for (String formId : this.args.subList(0, this.args.size()-1)) {
+        for (String formId : this.args.subList(0, this.args.size())) {
             form = this.inCode.getFormMap().get(formId);
             if (form != null) {
                 try{
