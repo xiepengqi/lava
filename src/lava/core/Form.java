@@ -12,8 +12,6 @@ import lava.core.keyword.*;
 import lava.util.StringUtil;
 import lava.util.Util;
 
-import javax.xml.crypto.Data;
-
 public class Form {
 	protected Code			inCode;
 	protected List<Sub>		inSubSeq	= new ArrayList<Sub>();
@@ -160,38 +158,26 @@ public class Form {
 
 		Form form = this.inCode.getFormMap().get(arg);
 		if (null != form) {
-			return new DataMap.DataInfo(form.getType(), form.getValue(), form.source, this.inCode.getFormMap());
+			return new DataMap.DataInfo(form.getType(), form.getValue(), form.source, Constants.in_form);
 		}
 
 		for (Sub sub : this.inSubSeq) {
 			data = sub.getDataMap().get(arg);
 			if (null != data) {
-				data.setFundIn(sub);
-				if (data.getSource() == null) {
-					data.setSource(arg);
-				}
 				return data;
 			}
 			data = sub.getClosure().get(arg);
 			if (null != data) {
-				data.setFundIn(sub);
-				if (data.getSource() == null) {
-					data.setSource(arg);
-				}
 				return data;
 			}
 		}
 
 		data = this.inCode.getDataMap().get(arg);
 		if (null != data) {
-			data.setFundIn(this.inCode);
-			if (data.getSource() == null) {
-				data.setSource(arg);
-			}
 			return data;
 		}
 
-		return new DataMap.DataInfo(String.class, arg, arg, null);
+		return new DataMap.DataInfo(String.class, arg, arg, Constants.in_symbol);
 	}
 
 	protected void runSub(Sub sub,List<DataInfo> parseArgs,List<Object> values, Form self) throws Exception {
@@ -211,11 +197,12 @@ public class Form {
 			return;
 		}
 
-		DataInfo data=null;
+		DataInfo data;
 		for (int i = 0; i < elems.size(); i++) {
 			if(isDataInfo){
-				sub.getDataMap().putData("$" + i, (DataInfo)elems.get(i));
-				sub.getDataMap().putData("$-" + (elems.size() - i), (DataInfo)elems.get(i));
+				data=(DataInfo)elems.get(i);
+				sub.getDataMap().putData("$" + i, data);
+				sub.getDataMap().putData("$-" + (elems.size() - i), data);
 			}else{
 				sub.getDataMap().put("$" + i, elems.get(i));
 				sub.getDataMap().put("$-" + (elems.size() - i), elems.get(i));
@@ -247,7 +234,7 @@ public class Form {
 		}
 
 		if(!(subLink instanceof Sub)){
-			subLink=getSubFromScope(self,StringUtil.toString(subLink)).getValue();
+			subLink=getSubFromScope(self,StringUtil.toString(subLink));
 		}
 
 		if(subLink ==null){
@@ -264,7 +251,7 @@ public class Form {
 			temp.add(sub);
 			runSub((Sub)subLink,null,temp,self);
 		}else if(elems.get(0) instanceof DataInfo){
-			temp.add(new DataInfo(Sub.class,sub,null,null));
+			temp.add(new DataInfo(Sub.class,sub,sub.getAsForm().getSource(),Constants.in_linkSub));
 			temp.addAll(elems);
 			runSub((Sub)subLink,temp,null, self);
 		}else{
@@ -277,16 +264,16 @@ public class Form {
 		return use;
 	}
 
-	protected DataInfo getSubFromScope(Form self,String fnName) {
+	protected Sub getSubFromScope(Form self,String fnName) {
 		if (fnName.equals(self.getFnName())&&StringUtil.isFormId(self, self.getFnName())) {
 			Form form=self.getInCode().getFormMap().get(self.getFnName());
 			Object obj = form.getValue();
 			if (obj instanceof Sub) {
-				return new DataInfo(Sub.class, obj, form.getSource(), obj);
+				return (Sub)obj;
 			}
 		}
 
-		DataInfo findSub;
+		Sub findSub;
 		for (Sub sub : self.getInSubSeq()) {
 			findSub = findSub(sub.getDataMap(), fnName);
 			if (null != findSub) {
@@ -305,14 +292,14 @@ public class Form {
 		return null;
 	}
 
-	private DataInfo findSub(DataMap dataMap, String fnName) {
+	private Sub findSub(DataMap dataMap, String fnName) {
 		DataInfo data = dataMap.get(Constants.subPrefix + fnName);
 		if (null == data) {
 			data = dataMap.get(fnName);
 		}
 
 		if (data != null && data.getValue() instanceof Sub) {
-			return data;
+			return (Sub)data.getValue();
 		}
 		return null;
 	}

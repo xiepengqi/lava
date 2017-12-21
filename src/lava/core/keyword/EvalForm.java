@@ -1,6 +1,7 @@
 package lava.core.keyword;
 
 import java.util.List;
+import java.util.Map;
 
 import lava.Main;
 import lava.core.Code;
@@ -28,7 +29,7 @@ public class EvalForm extends Form {
 		List codeIds = null;
 		String cmd = null;
 
-		DataInfo result = null;
+		Map<String,Object> result = null;
 
 		for (DataInfo data : parseArgs) {
 			if (data.getValue() instanceof List) {
@@ -50,8 +51,8 @@ public class EvalForm extends Form {
 				result = code.eval(cmd);
 			}
 		}
-		this.value = result.getValue();
-		this.type = result.getType();
+		this.value = result.get("value");
+		this.type =(Class)result.get("type");
 	}
 
 }

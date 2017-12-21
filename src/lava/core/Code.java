@@ -83,7 +83,7 @@ public class Code {
 		return dataMap;
 	}
 
-	public DataInfo eval(String codeSource) throws Exception {
+	public Map<String,Object> eval(String codeSource) throws Exception {
 		int index = this.formSeq.size();
 
 		codeSource = extractString(codeSource);
@@ -99,7 +99,7 @@ public class Code {
 			form.check();
 		}
 
-		DataInfo data = new DataInfo();
+		Map<String,Object> data=new HashMap<String,Object>();
 		List<Form> currentFormSeq = new ArrayList<Form>();
 		currentFormSeq.addAll(this.formSeq);
 		for (Form form : currentFormSeq.subList(index, currentFormSeq.size())) {
@@ -111,8 +111,9 @@ public class Code {
 			}
 
 			form.run();
-			data.setValue(form.value);
-			data.setType(form.type);
+
+			data.put("value",form.value);
+			data.put("type",form.type);
 
 			Util.debug(form, form.getFormId() + ":" + form.getType() + ":" + form.getValue());
 		}
@@ -228,7 +229,7 @@ public class Code {
 			String suffix = numberSource.substring(numberSource.length() - 1);
 			String content = numberSource.substring(0, numberSource.length() - 1);
 			DataInfo data = new DataInfo();
-			data.setFundIn(this.numberMap);
+			data.setIn(this.numberMap);
 			data.setSource(numberSource);
 			if (StringUtil.isNotEmpty(suffix) && suffix.matches(RegexConstants.numberSuffix)) {
 				Object parser = Constants.numberParses.get(suffix);

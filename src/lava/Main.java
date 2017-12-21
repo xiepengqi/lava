@@ -85,7 +85,7 @@ public class Main {
 				continue;
 			}
 			try {
-				System.out.println(code.eval("(repl " + line + " )").getValue());
+				System.out.println(code.eval("(repl " + line + " )").get("value"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

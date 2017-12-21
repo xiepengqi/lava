@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lava.constant.Constants;
-import lava.core.DataMap;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
 
@@ -53,7 +52,7 @@ public class JavaUtil {
 		Class classObject = null;
 		if (fnName.startsWith(Constants.javaChar)) {
 			methodStr = fnName.substring(1);
-			if (args.get(0).getFundIn() == null) {
+			if (Constants.in_symbol.equals(args.get(0).getIn())) {
 				classObject = Class.forName((String) values.get(0));
 				object = null;
 			} else {
@@ -104,7 +103,7 @@ public class JavaUtil {
 
 		Util.splitArgs(args, values, null);
 
-		if (args.get(0).getFundIn() == null) {
+		if (Constants.in_symbol.equals(args.get(0).getIn())) {
 			classObj = Class.forName((String) values.get(0));
 			obj = null;
 		} else {

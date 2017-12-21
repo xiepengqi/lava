@@ -40,7 +40,7 @@ public class IfForm extends Form {
 		List<DataInfo> parseArgs = this.parseFormArgs(this.args);
 
 		Form form = null;
-		DataInfo data = new DataInfo();
+		DataInfo data=null;
 		if ((Boolean) parseArgs.get(0).getValue()) {
 			form = this.inCode.getFormMap().get(this.args.get(1));
 			data = parseArgs.get(1);
@@ -52,8 +52,8 @@ public class IfForm extends Form {
 		}
 
 		if (null == form) {
-			this.value = data.getValue();
-			this.type = data.getType();
+			this.value = data==null ? null:data.getValue();
+			this.type = data==null ? void.class:data.getType();
 			return;
 		}
 

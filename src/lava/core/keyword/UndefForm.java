@@ -26,17 +26,15 @@ public class UndefForm extends Form {
 	public void run() throws Exception {
 		super.run();
 
-		List<DataInfo> prepareArgs = this.parseFormArgs(this.args);
 		int i = 0;
-		for (DataInfo data : prepareArgs) {
+		for (String arg : this.args) {
+			DataInfo data=this.parseFormArg(arg);
 			DataMap dataMap = null;
-			Object fundIn = data.getFundIn();
-			if (fundIn instanceof Code) {
-				dataMap = ((Code) fundIn).getDataMap();
-			} else if (fundIn instanceof Sub) {
-				dataMap = ((Sub) fundIn).getDataMap();
-			} else {
-				Util.runtimeError(this, data.getSource());
+			Object fundIn = data.getIn();
+			if (fundIn instanceof DataMap) {
+				dataMap = ((DataMap) fundIn);
+			}else {
+				Util.runtimeError(this, arg);
 			}
 			dataMap.getMap().remove(this.args.get(i));
 

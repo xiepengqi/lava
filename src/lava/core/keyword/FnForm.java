@@ -1,16 +1,13 @@
 package lava.core.keyword;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import lava.Main;
 import lava.constant.Constants;
-import lava.core.DataMap;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
 import lava.core.Sub;
-import lava.util.StringUtil;
 import lava.util.Util;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FnForm extends Form {
 	@Override
@@ -27,16 +24,39 @@ public class FnForm extends Form {
 	@Override
 	public void run() throws Exception {
 		super.run();
-		List<DataInfo> parseArgs = this.parseFormArgs(this.args);
-		DataInfo subData = getSubFromScope(this,this.fnName);
+		Sub sub = getSubFromScope(this,this.fnName);
 
-		if(subData.getValue()==null){
+		if(sub==null){
 			Util.runtimeError(this,this.fnName);
 		}
 
-		runSub((Sub)subData.getValue(),parseArgs,null,this);
-		this.type=((Sub)subData.getValue()).getAsForm().getType();
-		this.value=((Sub)subData.getValue()).getAsForm().getValue();
+		List<DataInfo> newParseArgs=new ArrayList<DataInfo>();
+		for(String arg:this.args){
+			if(!Constants.in_args.equals(arg)){
+				newParseArgs.add(this.parseFormArg(arg));
+			}
+			DataInfo $args=this.parseFormArg(arg);
+
+			if($args.getValue()==null){
+				newParseArgs.add($args);
+			}
+
+			if($args.getValue() instanceof Object[]){
+				for(Object obj:(Object[])$args.getValue()){
+					newParseArgs.add(new DataInfo(Object.class,obj,null,Constants.in_args));
+				}
+			}else if($args.getValue() instanceof List){
+				for(Object obj:(List)$args.getValue()){
+					newParseArgs.add(new DataInfo(Object.class,obj,null,Constants.in_args));
+				}
+			}else{
+				newParseArgs.add($args);
+			}
+		}
+
+		runSub(sub,newParseArgs,null,this);
+		this.type=(sub).getAsForm().getType();
+		this.value=(sub).getAsForm().getValue();
 	}
 
 }

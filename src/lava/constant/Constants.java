@@ -2,6 +2,7 @@ package lava.constant;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import lava.core.keyword.*;
@@ -33,7 +34,12 @@ public class Constants {
 
 	public static String					replPrefix			= ">";
 
-	static {
+	public static String 					in_symbol="symbol";
+	public static String 					in_form="form";
+	public static String 					in_linkSub="linkSub";
+	public static String 					in_args ="args";
+
+    static {
 		keywords.put("load", LoadForm.class);
 		keywords.put("use", UseForm.class);
 		keywords.put("as", AsForm.class);

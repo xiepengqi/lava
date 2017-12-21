@@ -2,6 +2,7 @@ package lava.core.keyword;
 
 import java.util.List;
 
+import lava.core.DataMap;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
 import lava.util.Util;
@@ -25,12 +26,12 @@ public class AssignForm extends Form {
 	}
 
 	private void processFormAssign() throws Exception {
-		List<DataInfo> parseArgs = this.parseFormArgs(this.args);
-		DataInfo value = parseArgs.get(parseArgs.size() - 1);
+		DataInfo value = this.parseFormArg(this.args.get(this.args.size() - 1));
 
-		for (DataInfo data : parseArgs.subList(0, parseArgs.size() - 1)) {
-			if (null == data.getFundIn()) {
-				Util.runtimeError(this, data.getSource());
+		for (String arg : this.args.subList(0, this.args.size() - 1)) {
+			DataInfo data=this.parseFormArg(arg);
+			if (!(data.getIn() instanceof DataMap)) {
+				Util.runtimeError(this, arg);
 			}
 
 			data.setValue(value.getValue());
