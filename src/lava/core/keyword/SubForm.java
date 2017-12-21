@@ -8,7 +8,7 @@ import lava.util.StringUtil;
 public class SubForm extends Form {
 
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 		super.parse();
 
 		Sub sub = new Sub();

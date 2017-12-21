@@ -6,11 +6,12 @@ import lava.constant.Constants;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
 import lava.util.JavaUtil;
+import lava.util.Util;
 
 public class JavaForm extends Form {
 
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 
 	}
 
@@ -24,9 +25,11 @@ public class JavaForm extends Form {
 		super.run();
 		List<DataInfo> parseArgs = this.parseFormArgs(this.args);
 		if (Constants.javaChar.equals(this.fnName)) {
+
 			this.value = JavaUtil.processField(this, parseArgs);
 			return;
 		}
+
 		this.value = JavaUtil.processMethod(this, parseArgs);
 	}
 }

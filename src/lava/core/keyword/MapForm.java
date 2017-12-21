@@ -9,7 +9,7 @@ import lava.core.Form;
 
 public class MapForm extends Form {
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 		super.parse();
 
 	}

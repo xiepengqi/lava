@@ -123,7 +123,7 @@ public class Form {
 		this.inCode = inCode;
 	}
 
-	public void parse() throws Exception {
+	public void parse() {
 
 	}
 
@@ -132,10 +132,10 @@ public class Form {
 	}
 
 	public void run() throws Exception {
-		Util.debug(this, this.formId + ":" + this.source);
+		Util.debug(this, this.formId + ":" + this.see());
 	}
 
-	protected List<DataInfo> parseFormArgs(List<String> oArgs) throws Exception {
+	protected List<DataInfo> parseFormArgs(List<String> oArgs) {
 		List<DataInfo> parseArgs = new ArrayList<DataMap.DataInfo>();
 		for (String arg : oArgs) {
 			parseArgs.add(parseFormArg(arg));
@@ -143,7 +143,7 @@ public class Form {
 		return parseArgs;
 	}
 
-	protected DataInfo parseFormArg(String arg) throws Exception {
+	protected DataInfo parseFormArg(String arg){
 		DataMap.DataInfo data = null;
 
 		data = this.inCode.getStringMap().get(arg);
@@ -305,7 +305,7 @@ public class Form {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public static Form createdForm(String source) throws InstantiationException, IllegalAccessException {
+	public static Form createdForm(String source) {
 		Form form = null;
 		List<String> elems = null;
 
@@ -328,7 +328,11 @@ public class Form {
 		}
 		Class formClass = Constants.keywords.get(elems.get(0));
 		if (null != formClass) {
-			form = (Form) formClass.newInstance();
+			try {
+				form = (Form) formClass.newInstance();
+			} catch (Exception e) {
+				Util.runtimeError(source+":"+e.toString());
+			}
 		} else if (elems.get(0).contains(Constants.javaChar)) {
 			form = new JavaForm();
 		} else if (elems.get(0).startsWith(Constants.subPrefix)) {

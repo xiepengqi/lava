@@ -8,7 +8,7 @@ import lava.core.Form;
 public class IfForm extends Form {
 
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 		super.parse();
 		if (this.args.size() < 2 || this.args.size() > 3) {
 			return;

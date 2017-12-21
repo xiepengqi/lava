@@ -5,7 +5,7 @@ import lava.core.Form;
 
 public class OrForm extends Form {
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 		super.parse();
 		Form form = null;
 		for (String arg : this.args) {

@@ -1,22 +1,30 @@
 package lava.core.keyword;
 
-import java.util.List;
-
+import lava.constant.MsgConstants;
 import lava.core.DataMap;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
+import lava.util.StringUtil;
 import lava.util.Util;
 
 public class AssignForm extends Form {
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 		super.parse();
 	}
 
 	@Override
 	public void check() {
 		super.check();
+		if(this.args.size()<2){
+			Util.syntaxError(this, MsgConstants.wrong_args_num);
+		}
 
+		for(String arg:this.args.subList(0,this.args.size()-1)){
+			if(!StringUtil.isVarAble(arg)){
+				Util.syntaxError(this,arg+":"+MsgConstants.wrong_arg_name);
+			}
+		}
 	}
 
 	@Override
@@ -25,7 +33,7 @@ public class AssignForm extends Form {
 		processFormAssign();
 	}
 
-	private void processFormAssign() throws Exception {
+	private void processFormAssign() {
 		DataInfo value = this.parseFormArg(this.args.get(this.args.size() - 1));
 
 		for (String arg : this.args.subList(0, this.args.size() - 1)) {

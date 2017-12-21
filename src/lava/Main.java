@@ -7,7 +7,6 @@ import lava.util.JavaUtil;
 import lava.util.Util;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.*;
 
 public class Main {
@@ -17,9 +16,10 @@ public class Main {
 	public static final List<String> ARGS = new ArrayList<String>();
 	public static final Map<Object,Object> subLinks=new HashMap<Object,Object>();
 
+	public static boolean debug=false;
 	public static boolean repl = false;
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		List<String> codePaths = new ArrayList<String>();
 		for (String arg : args) {
 			if (arg.contains(Constants.configSplit)) {
@@ -54,17 +54,26 @@ public class Main {
 		for (Code code : mainCodes) {
 			code.parse();
 			code.check();
-			code.run();
+			try {
+				code.run();
+			} catch (Exception e) {
+				Util.runtimeError(code,e.toString());
+			}
 		}
+
 	}
 
-	public static void startRepl() throws Exception {
+	public static void startRepl(){
 		Main.repl = true;
 		Code code = new Code("lava.repl", null);
 		Main.codes.put(code.getIdName(), code);
 
 		String line = "(/repl (if (def? $-1) $-1  ''))";
-		code.eval(line);
+		try {
+			code.eval(line);
+		} catch (Exception e) {
+			Util.runtimeError("lava.repl:"+line+":"+e.toString());
+		}
 
 		Scanner scanner = new Scanner(System.in);
 		while (line != null) {
@@ -87,12 +96,12 @@ public class Main {
 			try {
 				System.out.println(code.eval("(repl " + line + " )").get("value"));
 			} catch (Exception e) {
-				e.printStackTrace();
+				Util.runtimeError("lava.repl:"+line+":"+e.toString());
 			}
 		}
 	}
 
-	public static List<Code> initSource(List<String> codePath) throws URISyntaxException {
+	public static List<Code> initSource(List<String> codePath) {
 		List<String> paths = new ArrayList<String>();
 		for (String path : codePath) {
 			if (!path.contains(";")) {
@@ -121,7 +130,11 @@ public class Main {
 			@Override
 			public void action(File topFile, File file) {
 				if (file.getName().endsWith(".jar")) {
-					JavaUtil.loadjar(file);
+					try {
+						JavaUtil.loadjar(file);
+					} catch (Exception e) {
+						Util.runtimeError("fail to load jar file:"+file.getAbsolutePath());
+					}
 					return;
 				}
 				if (!file.getName().endsWith(".lava")) {

@@ -24,7 +24,7 @@ public class UseForm extends Form {
 	}
 
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 		super.parse();
 
 		Code useCode = null;

@@ -1,6 +1,8 @@
 package lava.core;
 
+import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +12,7 @@ import lava.Main;
 import lava.constant.Constants;
 import lava.constant.RegexConstants;
 import lava.core.DataMap.DataInfo;
+import lava.core.keyword.CatchForm;
 import lava.util.FileUtil;
 import lava.util.StringUtil;
 import lava.util.Util;
@@ -102,6 +105,7 @@ public class Code {
 		Map<String,Object> data=new HashMap<String,Object>();
 		List<Form> currentFormSeq = new ArrayList<Form>();
 		currentFormSeq.addAll(this.formSeq);
+
 		for (Form form : currentFormSeq.subList(index, currentFormSeq.size())) {
 			if (form.getInSubSeq().size() > 0) {
 				continue;
@@ -117,16 +121,22 @@ public class Code {
 
 			Util.debug(form, form.getFormId() + ":" + form.getType() + ":" + form.getValue());
 		}
+
 		return data;
 	}
 
-	public void parse() throws Exception {
+	public void parse(){
 		if (this.isParsed) {
 			return;
 		}
 		this.isParsed = true;
 
-		String codeSource = FileUtil.readFile(this.filePath);
+		String codeSource = null;
+		try {
+			codeSource = FileUtil.readFile(this.filePath);
+		} catch (Exception e) {
+			Util.runtimeError(this,e.toString());
+		}
 
 		codeSource = extractString(codeSource);
 		codeSource = extractNumber(codeSource);
@@ -171,11 +181,12 @@ public class Code {
 			}
 
 			form.run();
+
 			Util.debug(form, form.getFormId() + ":" + form.getType() + ":" + form.getValue());
 		}
 	}
 
-	private String extractForm(String codeSource) throws Exception {
+	private String extractForm(String codeSource){
 		String formSource = null;
 		int num = this.formMap.size();
 
@@ -218,8 +229,8 @@ public class Code {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private String extractNumber(String codeSource) throws Exception {
-		String numberSource = null;
+	private String extractNumber(String codeSource) {
+		String numberSource;
 		int num = this.numberMap.size();
 
 		numberSource = StringUtil.getFirstMatch(RegexConstants.extractNumber, codeSource);
@@ -233,7 +244,11 @@ public class Code {
 			data.setSource(numberSource);
 			if (StringUtil.isNotEmpty(suffix) && suffix.matches(RegexConstants.numberSuffix)) {
 				Object parser = Constants.numberParses.get(suffix);
-				data.setValue(((Constructor) parser).newInstance(content));
+				try {
+					data.setValue(((Constructor) parser).newInstance(content));
+				} catch (Exception e) {
+					Util.runtimeError(this,numberSource);
+				}
 				data.setType(Constants.numberTypes.get(suffix));
 			} else {
 				data.setValue(numberSource);

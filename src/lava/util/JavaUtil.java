@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -30,12 +31,8 @@ public class JavaUtil {
 		}
 	}
 
-	public static void loadjar(File jarFile) {
-		try {
-			jarLoader.loadJar(jarFile.toURI().toURL());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public static void loadjar(File jarFile) throws Exception {
+		jarLoader.loadJar(jarFile.toURI().toURL());
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

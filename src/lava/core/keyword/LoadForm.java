@@ -9,7 +9,7 @@ import lava.core.Form;
 
 public class LoadForm extends Form {
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 		super.parse();
 
 		List<String> paths = new ArrayList<String>();

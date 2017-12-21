@@ -1,17 +1,6 @@
 package lava.util;
 
-import lava.Main;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.*;
 import java.util.LinkedList;
 
 public class FileUtil {
@@ -47,7 +36,7 @@ public class FileUtil {
 		return out.toString();
 	}
 
-	public static void traverseFolder(String path, Action action) throws URISyntaxException {
+	public static void traverseFolder(String path, Action action) {
 		File file=new File(path);
 
 		if (file.exists()) {

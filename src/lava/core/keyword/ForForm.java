@@ -10,7 +10,7 @@ import lava.util.Util;
 
 public class ForForm extends Form {
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 
 	}
 

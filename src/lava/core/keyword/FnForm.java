@@ -11,7 +11,7 @@ import java.util.List;
 
 public class FnForm extends Form {
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 		super.parse();
 	}
 

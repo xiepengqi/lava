@@ -37,15 +37,6 @@ public class StringUtil {
 		return true;
 	}
 
-	public static boolean isFnNameAble(String str) {
-
-		return false;
-	}
-
-	public static boolean isNotInnerId(Form form, String str) {
-		return !isInnerId(form, str);
-	}
-
 	public static boolean isFormId(Form form, String str) {
 		if (null == form.getInCode().getFormMap().get(str)) {
 			return false;
@@ -53,19 +44,12 @@ public class StringUtil {
 		return true;
 	}
 
-	public static boolean isNotFormId(Form form, String str) {
-		return !isFormId(form, str);
-	}
 
 	public static boolean isStringId(Form form, String str) {
 		if (null == form.getInCode().getStringMap().get(str)) {
 			return false;
 		}
 		return true;
-	}
-
-	public static boolean isNotStringId(Form form, String str) {
-		return !isStringId(form, str);
 	}
 
 	public static boolean isNumberId(Form form, String str) {
@@ -75,18 +59,12 @@ public class StringUtil {
 		return true;
 	}
 
-	public static boolean isNotNumberId(Form form, String str) {
-		return !isNumberId(form, str);
-	}
-
 	public static boolean isVarAble(String str) {
 		if (!str.matches(RegexConstants.var)) {
 			return false;
 		}
-		for (String key : Constants.keywords.keySet()) {
-			if (key.equals(str)) {
-				return false;
-			}
+		if(isKeyWords(str)){
+			return false;
 		}
 		return true;
 	}

@@ -8,7 +8,7 @@ import lava.core.Form;
 
 public class ListForm extends Form {
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 		super.parse();
 
 	}

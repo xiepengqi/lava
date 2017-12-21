@@ -3,8 +3,10 @@ package lava.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import lava.Main;
 import lava.constant.Constants;
 import lava.core.DataMap.DataInfo;
+import lava.core.keyword.CatchForm;
 import lava.util.Util;
 
 public class Sub {
@@ -135,7 +137,9 @@ public class Sub {
 				if (null != form.getRunBy()) {
 					continue;
 				}
+
 				form.run();
+
 				if (form.asSub != null) {
 					Sub superSub = form.inSubSeq.get(0);
 					form.value = form.asSub.newSub();
@@ -164,7 +168,7 @@ public class Sub {
 			}
 		}
 
-		private DataInfo getSubReturnData(int argsSize) throws Exception {
+		private DataInfo getSubReturnData(int argsSize) {
 			List<String> argsList = this.sub.asForm.getArgs().subList(argsSize - 1, argsSize);
 			String args = argsList.get(0);
 

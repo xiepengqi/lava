@@ -3,13 +3,15 @@ package lava.core.keyword;
 import java.util.List;
 
 import lava.constant.Constants;
+import lava.constant.MsgConstants;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
+import lava.util.Util;
 
 public class AsForm extends Form {
 
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 		super.parse();
 
 	}
@@ -17,7 +19,9 @@ public class AsForm extends Form {
 	@Override
 	public void check() {
 		super.check();
-
+		if(this.args.size()<2){
+			Util.syntaxError(this, MsgConstants.wrong_args_num);
+		}
 	}
 
 	@Override
@@ -27,10 +31,10 @@ public class AsForm extends Form {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void processFormAs() throws Exception {
+	private void processFormAs() throws ClassNotFoundException {
 		List<DataInfo> parseArgs = this.parseFormArgs(this.args);
 
-		Class classObj = null;
+		Class classObj;
 		if (this.args.size() == 1) {
 			this.value = parseArgs.get(0).getValue();
 			this.type = null == parseArgs.get(0).getValue() ? void.class : parseArgs.get(0).getValue().getClass();
@@ -52,17 +56,12 @@ public class AsForm extends Form {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private Class getClassByName(String className) {
+	private Class getClassByName(String className) throws ClassNotFoundException {
 		Class classObj = null;
 		if (null != Constants.baseTypes.get(className)) {
 			classObj = Constants.baseTypes.get(className);
 		} else {
-			try {
-				classObj = Class.forName(className);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			classObj = Class.forName(className);
 		}
 		return classObj;
 	}

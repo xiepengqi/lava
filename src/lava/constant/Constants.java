@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import lava.core.keyword.*;
+import lava.util.Util;
 
 @SuppressWarnings("rawtypes")
 public class Constants {
@@ -96,7 +97,7 @@ public class Constants {
 			newFloat = Float.class.getConstructor(String.class);
 			newDouble = Double.class.getConstructor(String.class);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Util.runtimeError("lava start failed");
 		}
 
 		numberParses.put("i", newInteger);

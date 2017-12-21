@@ -1,16 +1,19 @@
 package lava.core.keyword;
 
+import lava.Main;
+import lava.constant.MsgConstants;
+import lava.core.DataMap.DataInfo;
+import lava.core.Form;
+import lava.util.StringUtil;
+import lava.util.Util;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import lava.Main;
-import lava.core.DataMap.DataInfo;
-import lava.core.Form;
-
 public class DebugForm extends Form {
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 		super.parse();
 
 		Form form;
@@ -25,7 +28,11 @@ public class DebugForm extends Form {
 	@Override
 	public void check() {
 		super.check();
-
+		if(this.args.size()<1){
+			Util.syntaxError(this, MsgConstants.wrong_args_num);
+		}else if((!StringUtil.isInnerId(this,this.args.get(0)))&&!StringUtil.isVarAble(this.args.get(0))){
+			Util.syntaxError(this,MsgConstants.wrong_arg_name);
+		}
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -35,7 +42,7 @@ public class DebugForm extends Form {
 
 		DataInfo data = parseFormArg(this.args.get(0));
 		Map<Object, Boolean> rollback = new HashMap<Object, Boolean>();
-
+		boolean mainDebug=Main.debug;
 		if (data.getValue() instanceof Map) {
 			Map map = (Map) data.getValue();
 			for (Object codeId : map.keySet()) {
@@ -47,6 +54,8 @@ public class DebugForm extends Form {
 				Main.codes.get(codeId).setDebug(true);
 				rollback.put(codeId, false);
 			}
+		} else if (data.getValue() instanceof Boolean){
+			Main.debug=(Boolean)data.getValue();
 		}
 
 		if (this.args.size() == 1) {
@@ -67,7 +76,7 @@ public class DebugForm extends Form {
 			}
 		};
 
-		Form form = null;
+		Form form;
 		for (String formId : this.args.subList(1, this.args.size())) {
 			form = this.inCode.getFormMap().get(formId);
 			if (form != null) {
@@ -75,6 +84,7 @@ public class DebugForm extends Form {
 			}
 		}
 
+		Main.debug=mainDebug;
 		for (Object codeId : rollback.keySet()) {
 			Main.codes.get(codeId).setDebug(rollback.get(codeId));
 		}

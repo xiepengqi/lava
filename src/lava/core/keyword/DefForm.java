@@ -1,19 +1,27 @@
 package lava.core.keyword;
 
+import lava.constant.Constants;
 import lava.core.DataMap;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
+import lava.util.StringUtil;
 import lava.util.Util;
 
 public class DefForm extends Form {
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 
 	}
 
 	@Override
 	public void check() {
 		super.check();
+
+		for(String arg:this.args.subList(0,this.args.size()-1)){
+			if(arg.startsWith(Constants.systemVarPrefix)||!StringUtil.isVarAble(arg)){
+				Util.syntaxError(this,arg);
+			}
+		}
 	}
 
 	@Override
@@ -22,7 +30,7 @@ public class DefForm extends Form {
 		processFormDef();
 	}
 
-	private void processFormDef() throws Exception {
+	private void processFormDef() {
 		DataMap dataMap = null;
 		if (inSubSeq.size() > 0) {
 			dataMap = this.inSubSeq.get(0).getDataMap();

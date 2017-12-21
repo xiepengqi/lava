@@ -11,7 +11,7 @@ import lava.util.Util;
 
 public class ForeachForm extends Form {
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 
 	}
 

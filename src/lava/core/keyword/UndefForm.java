@@ -1,17 +1,13 @@
 package lava.core.keyword;
 
-import java.util.List;
-
-import lava.core.Code;
 import lava.core.DataMap;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
-import lava.core.Sub;
 import lava.util.Util;
 
 public class UndefForm extends Form {
 	@Override
-	public void parse() throws Exception {
+	public void parse() {
 		super.parse();
 
 	}

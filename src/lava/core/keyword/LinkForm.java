@@ -12,7 +12,7 @@ import java.util.List;
 public class LinkForm extends Form {
 
     @Override
-    public void parse() throws Exception {
+    public void parse() {
         super.check();
     }
 
