@@ -2,7 +2,6 @@ package lava.constant;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import lava.core.keyword.*;
@@ -54,7 +53,7 @@ public class Constants {
 		keywords.put("while", WhileForm.class);
 		keywords.put("def?", QDefForm.class);
 		keywords.put("foreach", ForeachForm.class);
-		keywords.put("undef", UndefForm.class);
+		keywords.put("throw", ThrowForm.class);
 		keywords.put("return", ReturnForm.class);
 		keywords.put("||", OrForm.class);
 		keywords.put("&&", AndForm.class);

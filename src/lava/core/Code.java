@@ -114,13 +114,7 @@ public class Code {
 				continue;
 			}
 
-			try{
-				form.run();
-			}catch(ServiceException e){
-				throw new ServiceException(e.getMessage());
-			}catch (Exception e){
-				throw new ServiceException(Util.getErrorStr(form,e.toString()));
-			}
+			Main.runForm(form);
 
 			data.put("value",form.value);
 			data.put("type",form.type);
@@ -186,13 +180,7 @@ public class Code {
 				continue;
 			}
 
-			try{
-				form.run();
-			}catch(ServiceException e){
-				throw new ServiceException(e.getMessage());
-			}catch (Exception e){
-				throw new ServiceException(Util.getErrorStr(form,e.toString()));
-			}
+			Main.runForm(form);
 
 			Util.debug(form, form.getFormId() + ":" + form.getType() + ":" + form.getValue());
 		}
@@ -231,7 +219,7 @@ public class Code {
 		while (stringSource != null) {
 			String stringId = num + Constants.stringIdSuffix;
 			String stringContent = stringSource.substring(1, stringSource.length() - 1);
-			this.stringMap.put(stringId, new DataInfo(String.class, stringContent, stringSource, this.stringMap));
+			this.stringMap.put(stringId, new DataInfo(String.class, stringContent, stringSource));
 
 			codeSource = codeSource.replaceFirst(RegexConstants.extractString, stringId);
 			stringSource = StringUtil.getFirstMatch(RegexConstants.extractString, codeSource);
@@ -252,7 +240,6 @@ public class Code {
 			String suffix = numberSource.substring(numberSource.length() - 1);
 			String content = numberSource.substring(0, numberSource.length() - 1);
 			DataInfo data = new DataInfo();
-			data.setIn(this.numberMap);
 			data.setSource(numberSource);
 			if (StringUtil.isNotEmpty(suffix) && suffix.matches(RegexConstants.numberSuffix)) {
 				Object parser = Constants.numberParses.get(suffix);

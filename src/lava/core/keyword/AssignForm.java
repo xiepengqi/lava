@@ -1,5 +1,6 @@
 package lava.core.keyword;
 
+import lava.constant.Constants;
 import lava.constant.MsgConstants;
 import lava.core.DataMap;
 import lava.core.DataMap.DataInfo;
@@ -39,10 +40,6 @@ public class AssignForm extends Form {
 
 		for (String arg : this.args.subList(0, this.args.size() - 1)) {
 			DataInfo data=this.parseFormArg(arg);
-			if (!(data.getIn() instanceof DataMap)) {
-				throw new ServiceException(Util.getErrorStr(this,arg));
-			}
-
 			data.setValue(value.getValue());
 			data.setType(value.getType());
 		}

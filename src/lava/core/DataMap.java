@@ -11,18 +11,16 @@ public class DataMap {
 		}
 
 		@SuppressWarnings("rawtypes")
-		public DataInfo(Class type, Object value, String source, Object in) {
+		public DataInfo(Class type, Object value, String source) {
 			this.type = type;
 			this.value = value;
 			this.source = source;
-			this.in = in;
 		} 
 
 		private String	source;
 		private Object	value;
 		@SuppressWarnings("rawtypes")
 		private Class	type	= void.class;
-		private Object	in	= null;
 
 		public String getSource() {
 			return source;
@@ -30,14 +28,6 @@ public class DataMap {
 
 		public void setSource(String source) {
 			this.source = source;
-		}
-
-		public Object getIn() {
-			return in;
-		}
-
-		public void setIn(Object in) {
-			this.in = in;
 		}
 
 		public Object getValue() {
@@ -67,7 +57,6 @@ public class DataMap {
 		}
 		data.setType(null == value ? void.class : value.getClass());
 		data.setValue(value);
-		data.setIn(this);
 		this.map.put(key, data);
 	}
 

@@ -1,13 +1,12 @@
 package lava.core;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import lava.Main;
 import lava.constant.Constants;
 import lava.core.DataMap.DataInfo;
-import lava.core.keyword.CatchForm;
 import lava.util.Util;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Sub {
 	private DataMap				dataMap			= new DataMap();
@@ -138,13 +137,7 @@ public class Sub {
 					continue;
 				}
 
-				try{
-					form.run();
-				}catch(ServiceException e){
-					throw new ServiceException(e.getMessage());
-				}catch (Exception e){
-					throw new ServiceException(Util.getErrorStr(form,e.toString()));
-				}
+				Main.runForm(form);
 
 				if (form.asSub != null) {
 					Sub superSub = form.inSubSeq.get(0);

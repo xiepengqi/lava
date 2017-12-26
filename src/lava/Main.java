@@ -2,6 +2,7 @@ package lava;
 
 import lava.constant.Constants;
 import lava.core.Code;
+import lava.core.Form;
 import lava.core.ServiceException;
 import lava.util.FileUtil;
 import lava.util.JavaUtil;
@@ -53,9 +54,9 @@ public class Main {
 		List<Code> mainCodes = initSource(codePaths);
 
 		for (Code code : mainCodes) {
-			code.parse();
-			code.check();
 			try {
+				code.parse();
+				code.check();
 				code.run();
 			}catch (ServiceException e) {
 				Util.runtimeError(e.getMessage());
@@ -176,4 +177,13 @@ public class Main {
 		return list;
 	}
 
+	public static void runForm(Form form) {
+		try{
+			form.run();
+		}catch(ServiceException e){
+			throw new ServiceException(e.getMessage());
+		}catch (Exception e){
+			throw new ServiceException(Util.getErrorStr(form,e.toString()));
+		}
+	}
 }

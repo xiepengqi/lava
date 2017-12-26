@@ -144,7 +144,7 @@ public class Form {
 	}
 
 	protected DataInfo parseFormArg(String arg){
-		DataMap.DataInfo data = null;
+		DataMap.DataInfo data;
 
 		data = this.inCode.getStringMap().get(arg);
 		if (null != data) {
@@ -158,7 +158,7 @@ public class Form {
 
 		Form form = this.inCode.getFormMap().get(arg);
 		if (null != form) {
-			return new DataMap.DataInfo(form.getType(), form.getValue(), form.source, Constants.in_form);
+			return new DataMap.DataInfo(form.getType(), form.getValue(), form.see());
 		}
 
 		for (Sub sub : this.inSubSeq) {
@@ -177,7 +177,7 @@ public class Form {
 			return data;
 		}
 
-		return new DataMap.DataInfo(String.class, arg, arg, Constants.in_symbol);
+		throw new ServiceException(Util.getErrorStr(this,arg));
 	}
 
 	protected void runSub(Sub sub,List<DataInfo> parseArgs,List<Object> values, Form self) throws Exception {
@@ -251,7 +251,7 @@ public class Form {
 			temp.add(sub);
 			runSub((Sub)subLink,null,temp,self);
 		}else if(elems.get(0) instanceof DataInfo){
-			temp.add(new DataInfo(Sub.class,sub,sub.getAsForm().getSource(),Constants.in_linkSub));
+			temp.add(new DataInfo(Sub.class,sub,sub.getAsForm().see()));
 			temp.addAll(elems);
 			runSub((Sub)subLink,temp,null, self);
 		}else{
@@ -408,13 +408,7 @@ public class Form {
 			if (action != null)
 				action.beforeRun(form);
 
-			try{
-				form.run();
-			}catch(ServiceException e){
-				throw new ServiceException(e.getMessage());
-			}catch (Exception e){
-				throw new ServiceException(Util.getErrorStr(form,e.toString()));
-			}
+			Main.runForm(form);
 
 			Util.debug(form, form.getFormId() + ":" + form.getType() + ":" + form.getValue());
 

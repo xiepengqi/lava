@@ -35,20 +35,22 @@ public class FnForm extends Form {
 		for(String arg:this.args){
 			if(!Constants.in_args.equals(arg)){
 				newParseArgs.add(this.parseFormArg(arg));
+				continue;
 			}
 			DataInfo $args=this.parseFormArg(arg);
 
 			if($args.getValue()==null){
 				newParseArgs.add($args);
+				continue;
 			}
 
 			if($args.getValue() instanceof Object[]){
 				for(Object obj:(Object[])$args.getValue()){
-					newParseArgs.add(new DataInfo(Object.class,obj,null,Constants.in_args));
+					newParseArgs.add(new DataInfo(Object.class,obj,null));
 				}
 			}else if($args.getValue() instanceof List){
 				for(Object obj:(List)$args.getValue()){
-					newParseArgs.add(new DataInfo(Object.class,obj,null,Constants.in_args));
+					newParseArgs.add(new DataInfo(Object.class,obj,null));
 				}
 			}else{
 				newParseArgs.add($args);

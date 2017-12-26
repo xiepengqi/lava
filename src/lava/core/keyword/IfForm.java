@@ -37,17 +37,15 @@ public class IfForm extends Form {
 	}
 
 	private void processFormIf() throws Exception {
-		List<DataInfo> parseArgs = this.parseFormArgs(this.args);
-
 		Form form = null;
 		DataInfo data=null;
-		if ((Boolean) parseArgs.get(0).getValue()) {
+		if ((Boolean) parseFormArg(this.args.get(0)).getValue()) {
 			form = this.inCode.getFormMap().get(this.args.get(1));
-			data = parseArgs.get(1);
+			data = parseFormArg(this.args.get(1));
 		} else {
 			if (this.args.size() == 3) {
 				form = this.inCode.getFormMap().get(this.args.get(2));
-				data = parseArgs.get(2);
+				data = parseFormArg(this.args.get(2));
 			}
 		}
 

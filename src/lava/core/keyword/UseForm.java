@@ -9,6 +9,7 @@ import lava.constant.Constants;
 import lava.core.Code;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
+import lava.core.ServiceException;
 import lava.util.Util;
 
 public class UseForm extends Form {
@@ -27,13 +28,20 @@ public class UseForm extends Form {
 	public void parse() {
 		super.parse();
 
-		Code useCode = null;
-		for (String arg : this.args) {
-			useCode = Main.codes.get(arg);
-			if (null == useCode) {
-				continue;
+		try{
+			Code useCode;
+			for (String arg : this.args) {
+				DataInfo data=this.parseFormArg(arg);
+				useCode = Main.codes.get(data.getValue());
+				if (null == useCode) {
+					continue;
+				}
+				useCode.parse();
 			}
-			useCode.parse();
+		}catch (ServiceException e) {
+			Util.syntaxError(this,e.getMessage());
+		} catch (Exception e) {
+			Util.syntaxError(this, e.toString());
 		}
 
 	}
@@ -42,13 +50,20 @@ public class UseForm extends Form {
 	public void check() {
 		super.check();
 
-		Code useCode = null;
-		for (String arg : this.args) {
-			useCode = Main.codes.get(arg);
-			if (null == useCode) {
-				continue;
+		try{
+			Code useCode;
+			for (String arg : this.args) {
+				DataInfo data=this.parseFormArg(arg);
+				useCode = Main.codes.get(data.getValue());
+				if (null == useCode) {
+					continue;
+				}
+				useCode.check();
 			}
-			useCode.check();
+		}catch (ServiceException e) {
+			Util.syntaxError(this,e.getMessage());
+		} catch (Exception e) {
+			Util.syntaxError(this, e.toString());
 		}
 	}
 
@@ -59,8 +74,8 @@ public class UseForm extends Form {
 
 		List<DataInfo> parseArgs = parseFormArgs(this.args);
 		int index = 0;
-		boolean isLast = false;
-		Code useCode = null;
+		boolean isLast;
+		Code useCode;
 		while (true) {
 			String key = genUseCaseKey(index, parseArgs);
 			Integer catchCase = useCase.get(key);

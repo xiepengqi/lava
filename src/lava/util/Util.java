@@ -102,16 +102,16 @@ public class Util {
 	}
 
 	public static String getErrorStr(Form form, String str) {
-		return "RUNTIME-ERROR:" + form.getWhere() + ":" + form.see() + ":" + str;
+		return form.getWhere() + ":" + form.see() + ":" + str;
 	}
 	public static void runtimeError(Code code, String str) {
-		System.err.println(code.getIdName() + ":" + str);
+		System.err.println("RUNTIME-ERROR:" + code.getIdName() + ":" + str);
 		if (!Main.repl) {
 			System.exit(1);
 		}
 	}
 	public static void runtimeError(String str) {
-		System.err.println(str);
+		System.err.println("RUNTIME-ERROR:" + str);
 		if (!Main.repl) {
 			System.exit(1);
 		}

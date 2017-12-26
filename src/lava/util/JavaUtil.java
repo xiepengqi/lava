@@ -1,18 +1,17 @@
 package lava.util;
 
+import lava.constant.Constants;
+import lava.core.DataMap.DataInfo;
+import lava.core.Form;
+
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
-
-import lava.constant.Constants;
-import lava.core.DataMap.DataInfo;
-import lava.core.Form;
 
 public class JavaUtil {
 	public static JarLoader	jarLoader	= new JarLoader((URLClassLoader) ClassLoader.getSystemClassLoader());
@@ -49,13 +48,10 @@ public class JavaUtil {
 		Class classObject = null;
 		if (fnName.startsWith(Constants.javaChar)) {
 			methodStr = fnName.substring(1);
-			if (Constants.in_symbol.equals(args.get(0).getIn())) {
-				classObject = Class.forName((String) values.get(0));
-				object = null;
-			} else {
-				object = values.get(0);
-				classObject = object.getClass();
-			}
+
+			object = values.get(0);
+			classObject = object.getClass();
+
 			values = values.subList(1, values.size());
 			types = types.subList(1, types.size());
 		} else if (fnName.contains(Constants.javaChar)) {
@@ -95,25 +91,33 @@ public class JavaUtil {
 	public static Object processField(Form form, List<DataInfo> args) throws Exception {
 		Class classObj;
 		Object obj;
-
+		Field field;
 		List<Object> values = new ArrayList<Object>();
 
 		Util.splitArgs(args, values, null);
 
-		if (Constants.in_symbol.equals(args.get(0).getIn())) {
-			classObj = Class.forName((String) values.get(0));
-			obj = null;
-		} else {
+		if (args.size()>1) {
 			obj = values.get(0);
 			classObj = obj.getClass();
+			field=getField(classObj,(String)values.get(1));
+		}else{
+			String className = ((String)values.get(0)).replaceFirst("\\.[^\\.]+$", "");
+			obj = null;
+			classObj = Class.forName(className);
+			field=getField(classObj,StringUtil.getFirstMatch("[^\\.]+$", (String)values.get(0)));
 		}
-		Field field = classObj.getField((String) values.get(1));
-		if (field == null) {
-			field = classObj.getDeclaredField((String) values.get(1));
-		}
+
 		field.setAccessible(true);
 		form.setType(field.getType());
 		return field.get(obj);
+	}
+
+	public static Field getField(Class classObj,String fieldName) throws NoSuchFieldException {
+		Field field = classObj.getField(fieldName);
+		if (field == null) {
+			field = classObj.getDeclaredField(fieldName);
+		}
+		return field;
 	}
 
 }
