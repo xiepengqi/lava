@@ -11,6 +11,7 @@ import lava.constant.RegexConstants;
 import lava.core.Code;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
+import lava.core.ServiceException;
 
 public class Util {
 
@@ -150,4 +151,21 @@ public class Util {
 		}
 	}
 
+	public static void runForm(Form form) {
+		try{
+			form.run();
+		}catch(ServiceException e){
+			throw new ServiceException(e.getMessage());
+		}catch (Exception e){
+			throw new ServiceException(Util.getErrorStr(form,e.toString()));
+		}
+	}
+
+	public static List<Form> safeFormSeqToRun(List<Form> formSeq){
+		List<Form> safeFormSeq = new ArrayList<Form>();
+		if(!Main.syntaxError){
+			safeFormSeq.addAll(formSeq);
+		}
+		return safeFormSeq;
+	}
 }

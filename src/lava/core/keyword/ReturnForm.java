@@ -25,8 +25,10 @@ public class ReturnForm extends Form {
 		List<DataInfo> parseArgs = this.parseFormArgs(this.args);
 		this.inSubSeq.get(0).setIsReturn(true);
 
-		DataInfo data = parseArgs.get(parseArgs.size() - 1);
-		this.value = data.getValue();
-		this.type = data.getType();
+		if(parseArgs.size()>0) {
+			DataInfo data = parseArgs.get(parseArgs.size() - 1);
+			this.value = data.getValue();
+			this.type = data.getType();
+		}
 	}
 }

@@ -1,6 +1,5 @@
 package lava.core;
 
-import lava.Main;
 import lava.constant.Constants;
 import lava.core.DataMap.DataInfo;
 import lava.util.Util;
@@ -129,7 +128,7 @@ public class Sub {
 		}
 
 		public void run() throws Exception {
-			for (Form form : this.sub.formSeq) {
+			for (Form form : Util.safeFormSeqToRun(this.sub.formSeq)) {
 				int index = form.inSubSeq.indexOf(this.sub.asForm.asSub);
 				form.inSubSeq.set(index, this.sub);
 
@@ -137,7 +136,7 @@ public class Sub {
 					continue;
 				}
 
-				Main.runForm(form);
+				Util.runForm(form);
 
 				if (form.asSub != null) {
 					Sub superSub = form.inSubSeq.get(0);

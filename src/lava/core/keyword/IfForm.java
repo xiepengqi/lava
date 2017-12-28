@@ -1,7 +1,5 @@
 package lava.core.keyword;
 
-import java.util.List;
-
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
 
@@ -55,7 +53,7 @@ public class IfForm extends Form {
 			return;
 		}
 
-		runFormSeq(form.getFormSeqWhichRunBy(this));
+		runFormSeq(form.getFormSeqWhichRunBy(this),null);
 
 		this.value = form.getValue();
 		this.type = form.getType();

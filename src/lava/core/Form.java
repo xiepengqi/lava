@@ -399,16 +399,12 @@ public class Form {
 		return formSeq;
 	}
 
-	public static void runFormSeq(List<Form> formSeq) throws Exception {
-		runFormSeq(formSeq, null);
-	}
-
 	public static void runFormSeq(List<Form> formSeq, Action action) throws Exception {
-		for (Form form : formSeq) {
+		for (Form form : Util.safeFormSeqToRun(formSeq)) {
 			if (action != null)
 				action.beforeRun(form);
 
-			Main.runForm(form);
+			Util.runForm(form);
 
 			Util.debug(form, form.getFormId() + ":" + form.getType() + ":" + form.getValue());
 

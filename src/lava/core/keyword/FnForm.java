@@ -1,6 +1,5 @@
 package lava.core.keyword;
 
-import lava.constant.Constants;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
 import lava.core.ServiceException;
@@ -33,7 +32,7 @@ public class FnForm extends Form {
 
 		List<DataInfo> newParseArgs=new ArrayList<DataInfo>();
 		for(String arg:this.args){
-			if(!Constants.in_args.equals(arg)){
+			if(!"args".equals(arg)){
 				newParseArgs.add(this.parseFormArg(arg));
 				continue;
 			}

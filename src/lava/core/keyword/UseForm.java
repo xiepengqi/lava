@@ -1,5 +1,6 @@
 package lava.core.keyword;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ import lava.util.Util;
 public class UseForm extends Form {
 
 	private static Map<String, Integer>	useCase	= new HashMap<String, Integer>();
-
+    private static List<Code> useCodes=new ArrayList<Code>();
 	static {
 		useCase.put("String:", 1);
 		useCase.put("String:String", 2);
@@ -36,6 +37,7 @@ public class UseForm extends Form {
 				if (null == useCode) {
 					continue;
 				}
+				useCodes.add(useCode);
 				useCode.parse();
 			}
 		}catch (ServiceException e) {
@@ -50,20 +52,8 @@ public class UseForm extends Form {
 	public void check() {
 		super.check();
 
-		try{
-			Code useCode;
-			for (String arg : this.args) {
-				DataInfo data=this.parseFormArg(arg);
-				useCode = Main.codes.get(data.getValue());
-				if (null == useCode) {
-					continue;
-				}
-				useCode.check();
-			}
-		}catch (ServiceException e) {
-			Util.syntaxError(this,e.getMessage());
-		} catch (Exception e) {
-			Util.syntaxError(this, e.toString());
+		for (Code useCode : useCodes) {
+			useCode.check();
 		}
 	}
 

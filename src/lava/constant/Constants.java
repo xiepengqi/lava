@@ -34,11 +34,6 @@ public class Constants {
 
 	public static String					replPrefix			= ">";
 
-	public static String 					in_symbol="symbol";
-	public static String 					in_form="form";
-	public static String 					in_linkSub="linkSub";
-	public static String 					in_args ="args";
-
     static {
 		keywords.put("load", LoadForm.class);
 		keywords.put("use", UseForm.class);

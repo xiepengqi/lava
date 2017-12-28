@@ -31,7 +31,7 @@ public class OrForm extends Form {
 		for (String arg : this.args) {
 			form = this.inCode.getFormMap().get(arg);
 			if (null != form) {
-				runFormSeq(form.getFormSeqWhichRunBy(this));
+				runFormSeq(form.getFormSeqWhichRunBy(this),null);
 				flag = (Boolean) form.getValue();
 			} else {
 				DataInfo data = parseFormArg(arg);

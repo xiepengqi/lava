@@ -1,21 +1,18 @@
 package lava.core;
 
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import lava.Main;
 import lava.constant.Constants;
 import lava.constant.RegexConstants;
 import lava.core.DataMap.DataInfo;
-import lava.core.keyword.CatchForm;
 import lava.util.FileUtil;
 import lava.util.StringUtil;
 import lava.util.Util;
+
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Code {
 	private String					filePath;
@@ -103,10 +100,8 @@ public class Code {
 		}
 
 		Map<String,Object> data=new HashMap<String,Object>();
-		List<Form> currentFormSeq = new ArrayList<Form>();
-		currentFormSeq.addAll(this.formSeq);
-
-		for (Form form : currentFormSeq.subList(index, currentFormSeq.size())) {
+		List<Form> currentFormSeq = Util.safeFormSeqToRun(this.formSeq);
+		for (Form form : currentFormSeq.size()>0 ? currentFormSeq.subList(index, currentFormSeq.size()):currentFormSeq) {
 			if (form.getInSubSeq().size() > 0) {
 				continue;
 			}
@@ -114,7 +109,7 @@ public class Code {
 				continue;
 			}
 
-			Main.runForm(form);
+			Util.runForm(form);
 
 			data.put("value",form.value);
 			data.put("type",form.type);
@@ -172,7 +167,7 @@ public class Code {
 		}
 		this.isRuned = true;
 
-		for (Form form : this.formSeq) {
+		for (Form form : Util.safeFormSeqToRun(this.formSeq)) {
 			if (form.getInSubSeq().size() > 0) {
 				continue;
 			}
@@ -180,7 +175,7 @@ public class Code {
 				continue;
 			}
 
-			Main.runForm(form);
+			Util.runForm(form);
 
 			Util.debug(form, form.getFormId() + ":" + form.getType() + ":" + form.getValue());
 		}

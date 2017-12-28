@@ -31,8 +31,8 @@ public class CatchForm extends Form {
         super.run();
 
         Form form;
-        for (String formId : this.args.subList(0, this.args.size())) {
-            form = this.inCode.getFormMap().get(formId);
+        for (String arg : this.args) {
+            form = this.inCode.getFormMap().get(arg);
             if (form != null) {
                 try{
                     runFormSeq(form.getFormSeqWhichRunBy(this), null);
