@@ -1,1 +1,8 @@
-(use core)
+(use 'core')
+
+(link 'println' 'cost')
+
+(println 123)
+(println 123)
+(println 123)
+(println 123)

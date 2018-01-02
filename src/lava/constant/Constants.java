@@ -40,8 +40,8 @@ public class Constants {
 		keywords.put("as", AsForm.class);
 		keywords.put("type", TypeForm.class);
 		keywords.put("def", DefForm.class);
-		keywords.put("=", AssignForm.class);
-		keywords.put("==", QEqForm.class);
+		keywords.put("share", AssignForm.class);
+		keywords.put("one?", QEqForm.class);
 		keywords.put("new", NewForm.class);
 		keywords.put("if", IfForm.class);
 		keywords.put("for", ForForm.class);
@@ -50,8 +50,8 @@ public class Constants {
 		keywords.put("foreach", ForeachForm.class);
 		keywords.put("throw", ThrowForm.class);
 		keywords.put("return", ReturnForm.class);
-		keywords.put("||", OrForm.class);
-		keywords.put("&&", AndForm.class);
+		keywords.put("or", OrForm.class);
+		keywords.put("and", AndForm.class);
 		keywords.put("debug", DebugForm.class);
 		keywords.put("eval", EvalForm.class);
 		keywords.put("catch", CatchForm.class);

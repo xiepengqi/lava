@@ -100,8 +100,8 @@ public class Code {
 		}
 
 		Map<String,Object> data=new HashMap<String,Object>();
-		List<Form> currentFormSeq = Util.safeFormSeqToRun(this.formSeq);
-		for (Form form : currentFormSeq.size()>0 ? currentFormSeq.subList(index, currentFormSeq.size()):currentFormSeq) {
+		List<Form> safeFormSeq = Util.safeFormSeqToRun(this.formSeq);
+		for (Form form : safeFormSeq.size()>0 ? safeFormSeq.subList(index, safeFormSeq.size()):safeFormSeq) {
 			if (form.getInSubSeq().size() > 0) {
 				continue;
 			}

@@ -220,13 +220,13 @@ public class Form {
 		Object key;
 
 		Object subLink= Main.subLinks.remove(sub);
-		value=subLink;
+		Object value=subLink;
 		if(subLink==null){
 			subLink= Main.subLinks.remove(sub.getName());
 			key=sub.getName();
 			value=subLink;
 		}else{
-			key=subLink;
+			key=sub;
 		}
 
 		if(subLink==null){
