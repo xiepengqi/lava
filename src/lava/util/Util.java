@@ -1,19 +1,18 @@
 package lava.util;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import lava.Main;
+import lava.constant.Constants;
 import lava.constant.RegexConstants;
 import lava.core.Code;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
-import lava.core.ServiceException;
+
+import java.util.*;
 
 public class Util {
+	public static int debug_when_form_begin =0;
+	public static int debug_when_form_end =1;
+
 
 	public static String seeNumber(Code inCode, String seeSource) {
 		String temp = null;
@@ -118,11 +117,23 @@ public class Util {
 		}
 	}
 
-	public static void debug(Form form, String str) {
-		str = form.getWhere() + ":" + str;
-		if (form.isDebug() || form.getInCode().isDebug()||Main.debug) {
-			System.out.println(str);
+	public static void debug(Form form, int debugMode) {
+		if(!isDebug(form)){
+			return;
 		}
+		String msg=Constants.empty;
+		if(debugMode == debug_when_form_begin){
+			msg=StringUtil.join(Constants.sep,form.getFormId(),form.see());
+		}
+		if(debugMode == debug_when_form_end){
+			msg=StringUtil.join(Constants.sep,form.getFormId(),form.getType(),form.getValue());
+		}
+
+		System.out.println(StringUtil.join(Constants.sep,form.getWhere(),msg));
+	}
+
+	public static boolean isDebug(Form form){
+		return form.isDebug() || form.getInCode().isDebug()||Main.debug;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -151,21 +162,4 @@ public class Util {
 		}
 	}
 
-	public static void runForm(Form form) {
-		try{
-			form.run();
-		}catch(ServiceException e){
-			throw new ServiceException(e.getMessage());
-		}catch (Exception e){
-			throw new ServiceException(Util.getErrorStr(form,e.toString()));
-		}
-	}
-
-	public static List<Form> safeFormSeqToRun(List<Form> formSeq){
-		List<Form> safeFormSeq = new ArrayList<Form>();
-		if(!Main.syntaxError){
-			safeFormSeq.addAll(formSeq);
-		}
-		return safeFormSeq;
-	}
 }
