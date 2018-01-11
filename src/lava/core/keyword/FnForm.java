@@ -45,11 +45,11 @@ public class FnForm extends Form {
 
 			if(args.getValue() instanceof Object[]){
 				for(Object obj:(Object[])args.getValue()){
-					newParseArgs.add(new DataInfo(obj==null ? void.class:obj.getClass(),obj));
+					newParseArgs.add(new DataInfo(DataInfo.getClass(obj),obj));
 				}
 			}else if(args.getValue() instanceof List){
 				for(Object obj:(List)args.getValue()){
-					newParseArgs.add(new DataInfo(obj==null ? void.class:obj.getClass(),obj));
+					newParseArgs.add(new DataInfo(DataInfo.getClass(obj),obj));
 				}
 			}else{
 				newParseArgs.add(args);

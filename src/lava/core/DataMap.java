@@ -58,6 +58,12 @@ public class DataMap {
 			this.type = type;
 		}
 
+		public static Class getClass(Object obj){
+			return obj==null ? void.class:obj.getClass();
+		}
+		public static Class getType(DataInfo data){
+			return data==null ? void.class:data.getType();
+		}
 	}
 
 	public void put(String key, Object value) {
@@ -65,7 +71,7 @@ public class DataMap {
 		if (null == data) {
 			data = new DataInfo();
 		}
-		data.setType(null == value ? void.class : value.getClass());
+		data.setType(DataInfo.getClass(value));
 		data.setValue(value);
 		this.map.put(key, data);
 	}
@@ -76,21 +82,6 @@ public class DataMap {
 
 	public void putData(String key, DataInfo data) {
 		this.map.put(key, data);
-	}
-
-	public Object getValue(String key) {
-		if (null == this.map.get(key)) {
-			return null;
-		}
-		return this.map.get(key).getValue();
-	}
-
-	@SuppressWarnings("rawtypes")
-	public Class getType(String key) {
-		if (null == this.map.get(key)) {
-			return void.class;
-		}
-		return this.map.get(key).getType();
 	}
 
 	public Map<String, DataInfo> getMap() {

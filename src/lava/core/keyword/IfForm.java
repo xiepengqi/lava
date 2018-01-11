@@ -49,7 +49,7 @@ public class IfForm extends Form {
 
 		if (null == form) {
 			this.value = data==null ? null:data.getValue();
-			this.type = data==null ? void.class:data.getType();
+			this.type = DataInfo.getType(data);
 			return;
 		}
 
