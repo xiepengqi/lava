@@ -32,27 +32,27 @@ public class FnForm extends Form {
 
 		List<DataInfo> newParseArgs=new ArrayList<DataInfo>();
 		for(String arg:this.args){
+			DataInfo args=new DataInfo(this.parseFormArg(arg));
 			if(!"args".equals(arg)){
-				newParseArgs.add(this.parseFormArg(arg));
-				continue;
-			}
-			DataInfo $args=this.parseFormArg(arg);
-
-			if($args.getValue()==null){
-				newParseArgs.add($args);
+				newParseArgs.add(args);
 				continue;
 			}
 
-			if($args.getValue() instanceof Object[]){
-				for(Object obj:(Object[])$args.getValue()){
-					newParseArgs.add(new DataInfo(Object.class,obj,null));
+			if(args.getValue()==null){
+				newParseArgs.add(args);
+				continue;
+			}
+
+			if(args.getValue() instanceof Object[]){
+				for(Object obj:(Object[])args.getValue()){
+					newParseArgs.add(new DataInfo(obj==null ? void.class:obj.getClass(),obj));
 				}
-			}else if($args.getValue() instanceof List){
-				for(Object obj:(List)$args.getValue()){
-					newParseArgs.add(new DataInfo(Object.class,obj,null));
+			}else if(args.getValue() instanceof List){
+				for(Object obj:(List)args.getValue()){
+					newParseArgs.add(new DataInfo(obj==null ? void.class:obj.getClass(),obj));
 				}
 			}else{
-				newParseArgs.add($args);
+				newParseArgs.add(args);
 			}
 		}
 

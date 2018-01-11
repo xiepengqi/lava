@@ -34,6 +34,8 @@ public class Constants {
 
 	public static String					replPrefix			= ">";
 
+	public static String 					sep					= ":";
+
     static {
 		keywords.put("load", LoadForm.class);
 		keywords.put("use", UseForm.class);
@@ -41,7 +43,7 @@ public class Constants {
 		keywords.put("type", TypeForm.class);
 		keywords.put("def", DefForm.class);
 		keywords.put("share", AssignForm.class);
-		keywords.put("one?", QEqForm.class);
+		keywords.put("share?", QEqForm.class);
 		keywords.put("new", NewForm.class);
 		keywords.put("if", IfForm.class);
 		keywords.put("for", ForForm.class);

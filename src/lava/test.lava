@@ -1,8 +1,14 @@
 (use 'core')
 
-(link 'println' 'cost')
 
-(println 123)
-(println 123)
-(println 123)
-(println 123)
+(/-doToType
+   "(doToType obj whenNull)"
+    (if (def? $0) (def obj $0))
+    (if (def? $1) (def whenNull $1))
+
+    (if (def? obj)
+        (do
+             (return)
+             (println 123)))
+     )
+(-doToType null /println)

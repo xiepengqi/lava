@@ -99,23 +99,30 @@ public class Code {
 			form.check();
 		}
 
-		Map<String,Object> data=new HashMap<String,Object>();
-		List<Form> safeFormSeq = Util.safeFormSeqToRun(this.formSeq);
-		for (Form form : safeFormSeq.size()>0 ? safeFormSeq.subList(index, safeFormSeq.size()):safeFormSeq) {
-			if (form.getInSubSeq().size() > 0) {
-				continue;
+		final Map<String,Object> data=new HashMap<String,Object>();
+
+		Form.Action action=new Form.Action(){
+
+			@Override
+			public boolean beforeRun(Form form) {
+				if (form.getInSubSeq().size() > 0) {
+					return false;
+				}
+				if (null != form.getRunBy()) {
+					return false;
+				}
+				return true;
 			}
-			if (null != form.getRunBy()) {
-				continue;
+
+			@Override
+			public boolean afterRun(Form form) {
+				data.put("value",form.value);
+				data.put("type",form.type);
+				return true;
 			}
+		};
 
-			Util.runForm(form);
-
-			data.put("value",form.value);
-			data.put("type",form.type);
-
-			Util.debug(form, form.getFormId() + ":" + form.getType() + ":" + form.getValue());
-		}
+		Form.runFormSeq(this.formSeq,action);
 
 		return data;
 	}
@@ -167,18 +174,25 @@ public class Code {
 		}
 		this.isRuned = true;
 
-		for (Form form : Util.safeFormSeqToRun(this.formSeq)) {
-			if (form.getInSubSeq().size() > 0) {
-				continue;
-			}
-			if (null != form.getRunBy()) {
-				continue;
+		Form.Action action=new Form.Action(){
+			@Override
+			public boolean beforeRun(Form form) {
+				if (form.getInSubSeq().size() > 0) {
+					return false;
+				}
+				if (null != form.getRunBy()) {
+					return false;
+				}
+				return true;
 			}
 
-			Util.runForm(form);
+			@Override
+			public boolean afterRun(Form form) {
+				return true;
+			}
+		};
 
-			Util.debug(form, form.getFormId() + ":" + form.getType() + ":" + form.getValue());
-		}
+		Form.runFormSeq(this.formSeq,action);
 	}
 
 	private String extractForm(String codeSource){

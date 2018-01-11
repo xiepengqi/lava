@@ -3,7 +3,7 @@ package lava.constant;
 public class RegexConstants {
 
 	public static String	numberSuffix	= "[ilfdILFD]";
-	public static String	number			= "-?\\d+\\.?[\\d+]?" + numberSuffix + "?";
+	public static String	number			= "-?\\d+\\.?\\d*" + numberSuffix + "?";
 
 	public static String	avoidsChars		= Constants.javaChar + Constants.subPrefix;
 	static {

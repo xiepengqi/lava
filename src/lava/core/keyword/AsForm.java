@@ -19,7 +19,7 @@ public class AsForm extends Form {
 	@Override
 	public void check() {
 		super.check();
-		if(this.args.size()<2){
+		if(this.args.size()<1){
 			Util.syntaxError(this, MsgConstants.wrong_args_num);
 		}
 	}

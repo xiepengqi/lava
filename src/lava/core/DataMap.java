@@ -10,6 +10,16 @@ public class DataMap {
 		public DataInfo() {
 		}
 
+		public DataInfo(DataInfo dataInfo) {
+			this.type = dataInfo.getType();
+			this.value = dataInfo.getValue();
+			this.source = dataInfo.getSource();
+		}
+		@SuppressWarnings("rawtypes")
+		public DataInfo(Class type, Object value) {
+			this.type = type;
+			this.value = value;
+		}
 		@SuppressWarnings("rawtypes")
 		public DataInfo(Class type, Object value, String source) {
 			this.type = type;

@@ -2,7 +2,7 @@ package lava.core;
 
 import lava.constant.Constants;
 import lava.core.DataMap.DataInfo;
-import lava.util.Util;
+import lava.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +89,9 @@ public class Sub {
 	public void setIsReturn(boolean isReturn) {
 		this.instancePool.get(this.instancePool.size() - 1).isReturn = isReturn;
 	}
+	public boolean isReturn(){
+		return this.instancePool.get(this.instancePool.size() - 1).isReturn;
+	}
 
 	public void run() throws Exception {
 		Instance ins = new Instance(this);
@@ -128,31 +131,40 @@ public class Sub {
 		}
 
 		public void run() throws Exception {
-			for (Form form : Util.safeFormSeqToRun(this.sub.formSeq)) {
-				int index = form.inSubSeq.indexOf(this.sub.asForm.asSub);
-				form.inSubSeq.set(index, this.sub);
+			final Instance self=this;
 
-				if (null != form.getRunBy()) {
-					continue;
+			Form.Action action=new Form.Action(){
+				int index;
+				@Override
+				public boolean beforeRun(Form form) {
+					int index = form.inSubSeq.indexOf(self.sub.asForm.asSub);
+					form.inSubSeq.set(index, self.sub);
+
+					if (null != form.getRunBy()) {
+						return false;
+					}
+					return true;
 				}
 
-				Util.runForm(form);
+				@Override
+				public boolean afterRun(Form form) {
+					if (form.asSub != null) {
+						Sub superSub = form.inSubSeq.get(0);
+						form.value = form.asSub.newSub();
+						((Sub) form.value).closure.getMap().putAll(superSub.closure.getMap());
+						((Sub) form.value).closure.getMap().putAll(superSub.getDataMap().getMap());
+					}
+					form.inSubSeq.set(index, self.sub.asForm.asSub);
 
-				if (form.asSub != null) {
-					Sub superSub = form.inSubSeq.get(0);
-					form.value = form.asSub.newSub();
-					((Sub) form.value).closure.getMap().putAll(superSub.closure.getMap());
-					((Sub) form.value).closure.getMap().putAll(superSub.getDataMap().getMap());
+					if (self.isReturn) {
+						self.value = form.getValue();
+						self.type = form.getType();
+					}
+					return true;
 				}
-				form.inSubSeq.set(index, this.sub.asForm.asSub);
-				Util.debug(form, form.getFormId() + ":" + form.getType() + ":" + form.getValue());
+			};
 
-				if (this.isReturn) {
-					this.value = form.getValue();
-					this.type = form.getType();
-					return;
-				}
-			}
+			Form.runFormSeq(this.sub.formSeq,action);
 
 			int argsSize = this.sub.asForm.getArgs().size();
 			if (argsSize > 0) {
@@ -183,7 +195,7 @@ public class Sub {
 
 	@Override
 	public String toString() {
-		return "Sub [idName=" + getIdName() + "]";
+		return StringUtil.join(Constants.empty,"Sub [idName=",getIdName(),"]");
 	}
 
 	public String see() {

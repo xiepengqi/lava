@@ -132,7 +132,7 @@ public class Form {
 	}
 
 	public void run() throws Exception {
-		Util.debug(this, this.formId + ":" + this.see());
+		Util.debug(this, Util.debug_when_form_begin);
 	}
 
 	protected List<DataInfo> parseFormArgs(List<String> oArgs) {
@@ -158,7 +158,7 @@ public class Form {
 
 		Form form = this.inCode.getFormMap().get(arg);
 		if (null != form) {
-			return new DataMap.DataInfo(form.getType(), form.getValue(), form.see());
+			return new DataMap.DataInfo(form.getType(), form.getValue());
 		}
 
 		for (Sub sub : this.inSubSeq) {
@@ -251,7 +251,7 @@ public class Form {
 			temp.add(sub);
 			runSub((Sub)subLink,null,temp,self);
 		}else if(elems.get(0) instanceof DataInfo){
-			temp.add(new DataInfo(Sub.class,sub,sub.getAsForm().see()));
+			temp.add(new DataInfo(Sub.class,sub));
 			temp.addAll(elems);
 			runSub((Sub)subLink,temp,null, self);
 		}else{
@@ -400,27 +400,44 @@ public class Form {
 	}
 
 	public static void runFormSeq(List<Form> formSeq, Action action) throws Exception {
-		for (Form form : Util.safeFormSeqToRun(formSeq)) {
-			if (action != null)
-				action.beforeRun(form);
+		List<Form> safeFormSeq = new ArrayList<Form>();
+		if(!Main.syntaxError){
+			safeFormSeq.addAll(formSeq);
+		}
+		for (Form form : safeFormSeq) {
+			if (action != null){
+				if(!action.beforeRun(form)){
+					continue;
+				}
+			}
 
-			Util.runForm(form);
+			if(form.getInSubSeq().size()>0&&form.getInSubSeq().get(0).isReturn()){
+				continue;
+			}
 
-			Util.debug(form, form.getFormId() + ":" + form.getType() + ":" + form.getValue());
+			runForm(form);
 
-			if (action != null)
-				action.afterRun(form);
+			if (action != null){
+				if(!action.afterRun(form)){
+					continue;
+				}
+			}
 		}
 	}
 
-	public static class Action {
-		public void beforeRun(Form form) {
-
+	public static void runForm(Form form) {
+		try{
+			form.run();
+			Util.debug(form, Util.debug_when_form_end);
+		}catch(ServiceException e){
+			throw new ServiceException(e.getMessage());
+		}catch (Exception e){
+			throw new ServiceException(Util.getErrorStr(form,e.toString()));
 		}
-
-		public void afterRun(Form form) {
-
-		}
+	}
+	public interface Action {
+		boolean beforeRun(Form form);
+		boolean afterRun(Form form);
 	}
 
 	public String see() {

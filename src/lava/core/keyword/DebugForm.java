@@ -66,13 +66,15 @@ public class DebugForm extends Form {
 
 		Action action = new Action() {
 			@Override
-			public void beforeRun(Form form) {
+			public boolean beforeRun(Form form) {
 				form.setDebug(true);
+				return true;
 			}
 
 			@Override
-			public void afterRun(Form form) {
+			public boolean afterRun(Form form) {
 				form.setDebug(false);
+				return true;
 			}
 		};
 

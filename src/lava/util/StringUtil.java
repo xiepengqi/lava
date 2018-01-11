@@ -25,6 +25,22 @@ public class StringUtil {
 		return false;
 	}
 
+	public static String join(String sep,Object... objs){
+		if(objs.length==0){
+			return "";
+		}
+		StringBuilder sb=new StringBuilder();
+		boolean flag=false;
+		for (Object obj : objs) {
+			if(flag){
+				sb.append(sep);
+			}
+			flag=true;
+			sb.append(String.valueOf(obj));
+		}
+		return sb.toString();
+	}
+
 	public static boolean isDataMapKeyAble(String str) {
 		if (!str.matches(RegexConstants.dataMapKey)) {
 			return false;

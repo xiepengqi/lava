@@ -28,50 +28,53 @@ public class DefForm extends Form {
 	@Override
 	public void run() throws Exception {
 		super.run();
-		processFormDef();
+
+		DataMap dataMap = getDataMap();
+
+		if (this.args.size() < 2) {
+			dealOneArgs(dataMap);
+		}else{
+			dealMoreArgs(dataMap);
+		}
+
 	}
 
-	private void processFormDef() {
-		DataMap dataMap = null;
+	private void dealMoreArgs(DataMap dataMap) {
+		String arg = this.args.get(this.args.size() - 1);
+		DataInfo value = parseFormArg(arg);
+
+		for (String var : this.args.subList(0, this.args.size() - 1)) {
+            if (dataMap.getMap().containsKey(var)) {
+                throw new ServiceException(Util.getErrorStr(this, var));
+            } else {
+                dataMap.putData(var, new DataInfo(value.getType(),value.getValue(),value.getSource()));
+            }
+        }
+
+		this.value = value.getValue();
+		this.type = value.getType();
+	}
+
+	private void dealOneArgs(DataMap dataMap) {
+		if (dataMap.getMap().containsKey(this.args.get(0))) {
+            throw new ServiceException(Util.getErrorStr(this,parseFormArg(this.args.get(0)).getSource()));
+        }
+
+		dataMap.putData(this.args.get(0), new DataInfo(void.class,null));
+
+		this.value = null;
+		this.type = void.class;
+	}
+
+	private DataMap getDataMap() {
+		DataMap dataMap;
 		if (inSubSeq.size() > 0) {
 			dataMap = this.inSubSeq.get(0).getDataMap();
 		} else {
 			dataMap = this.inCode.getDataMap();
 		}
-
-		DataInfo data = null;
-		if (this.args.size() < 2) {
-			if (dataMap.getMap().containsKey(this.args.get(0))) {
-				throw new ServiceException(Util.getErrorStr(this,parseFormArg(this.args.get(0)).getSource()));
-			}
-
-			data = new DataInfo();
-			data.setValue(null);
-			data.setType(void.class);
-			data.setSource(this.see());
-			dataMap.putData(this.args.get(0), data);
-
-			this.value = null;
-			this.type = void.class;
-			return;
-		}
-
-		String arg = this.args.get(this.args.size() - 1);
-		DataInfo value = parseFormArg(arg);
-
-		for (String var : this.args.subList(0, this.args.size() - 1)) {
-			if (dataMap.getMap().containsKey(var)) {
-				throw new ServiceException(Util.getErrorStr(this, var));
-			} else {
-				data = new DataInfo();
-				data.setValue(value.getValue());
-				data.setType(value.getType());
-				data.setSource(this.see());
-				dataMap.putData(var, data);
-			}
-		}
-
-		this.value = value.getValue();
-		this.type = value.getType();
+		return dataMap;
 	}
+
+
 }
