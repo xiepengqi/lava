@@ -1,14 +1,7 @@
 (use 'core')
 
 
-(/-doToType
-   "(doToType obj whenNull)"
-    (if (def? $0) (def obj $0))
-    (if (def? $1) (def whenNull $1))
+(/test:str
+    (println str))
 
-    (if (def? obj)
-        (do
-             (return)
-             (println 123)))
-     )
-(-doToType null /println)
+(test 123)

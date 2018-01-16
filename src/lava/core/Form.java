@@ -199,13 +199,25 @@ public class Form {
 
 		DataInfo data;
 		for (int i = 0; i < elems.size(); i++) {
+			boolean haveValidArg=false;
+			if(sub.getArgs().size()>i&&StringUtil.isNotEmpty(sub.getArgs().get(i))){
+				haveValidArg=true;
+			}
 			if(isDataInfo){
 				data=(DataInfo)elems.get(i);
 				sub.getDataMap().putData("$" + i, data);
 				sub.getDataMap().putData("$-" + (elems.size() - i), data);
+				if(haveValidArg){
+					sub.getDataMap().putData(sub.getArgs().get(i),data);
+				}
+
 			}else{
 				sub.getDataMap().put("$" + i, elems.get(i));
 				sub.getDataMap().put("$-" + (elems.size() - i), elems.get(i));
+
+				if(haveValidArg){
+					sub.getDataMap().put(sub.getArgs().get(i),elems.get(i));
+				}
 			}
 
 		}
@@ -415,7 +427,14 @@ public class Form {
 				continue;
 			}
 
-			runForm(form);
+			try{
+				form.run();
+				Util.debug(form, Util.debug_when_form_end);
+			}catch(ServiceException e){
+				throw new ServiceException(e.getMessage());
+			}catch (Exception e){
+				throw new ServiceException(Util.getErrorStr(form,e.toString()));
+			}
 
 			if (action != null){
 				if(!action.afterRun(form)){
@@ -425,16 +444,6 @@ public class Form {
 		}
 	}
 
-	public static void runForm(Form form) {
-		try{
-			form.run();
-			Util.debug(form, Util.debug_when_form_end);
-		}catch(ServiceException e){
-			throw new ServiceException(e.getMessage());
-		}catch (Exception e){
-			throw new ServiceException(Util.getErrorStr(form,e.toString()));
-		}
-	}
 	public interface Action {
 		boolean beforeRun(Form form);
 		boolean afterRun(Form form);
@@ -448,7 +457,7 @@ public class Form {
 		return seeSource;
 	}
 
-	public String seeForm() {
+	private String seeForm() {
 		String seeSource = this.source;
 		String temp = null;
 		String innerId = StringUtil.getFirstMatch(RegexConstants.extractFormId, seeSource);

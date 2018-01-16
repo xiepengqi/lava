@@ -16,6 +16,7 @@ public class Sub {
 	private String				idName;
 	private List<Instance>	instancePool	= new ArrayList<Instance>();
 	private DataMap				closure			= new DataMap();
+	private List<String> 		args=new ArrayList<String>();
 
 	public Sub(){
 
@@ -51,8 +52,8 @@ public class Sub {
 		return closure;
 	}
 
-	public void setClosure(DataMap closure) {
-		this.closure = closure;
+	public List<String> getArgs() {
+		return args;
 	}
 
 	public Form getAsForm() {
