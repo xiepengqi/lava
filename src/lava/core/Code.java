@@ -84,7 +84,9 @@ public class Code {
 
 		this.source += codeSource + Constants.newLine;
 
-		for (Form form : this.formSeq.subList(index, this.formSeq.size())) {
+		List<Form> replFormSeq=this.formSeq.subList(index, this.formSeq.size());
+
+		for (Form form : replFormSeq) {
 			if (form.getInSubSeq().size() > 0) {
 				form.getInSubSeq().get(0).getFormSeq().add(form);
 			}
@@ -114,7 +116,7 @@ public class Code {
 			}
 		};
 
-		Form.runFormSeq(this.formSeq,action);
+		Form.runFormSeq(replFormSeq,action);
 
 		return data;
 	}

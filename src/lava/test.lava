@@ -3,7 +3,5 @@
 (link /sort /cost)
 (link /println /cost)
 
-(debug [/cost])
-
 (sort [123 456])
 
