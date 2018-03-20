@@ -1,7 +1,9 @@
 (use 'core')
 
+(link /sort /cost)
+(link /println /cost)
 
-(/test:str
-    (println str))
+(debug [/sort])
 
-(test 123)
+(sort [123 456])
+

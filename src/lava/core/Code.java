@@ -32,14 +32,6 @@ public class Code {
 	private boolean					debug;
 	private String					source		= Constants.empty;
 
-	public String getSource() {
-		return source;
-	}
-
-	public void setSource(String source) {
-		this.source = source;
-	}
-
 	public boolean isDebug() {
 		return debug;
 	}
@@ -196,7 +188,7 @@ public class Code {
 	}
 
 	private String extractForm(String codeSource){
-		String formSource = null;
+		String formSource;
 		int num = this.formMap.size();
 
 		formSource = StringUtil.getFirstForm(codeSource);
@@ -221,7 +213,7 @@ public class Code {
 	}
 
 	private String extractString(String codeSource) {
-		String stringSource = null;
+		String stringSource;
 		int num = this.stringMap.size();
 
 		stringSource = StringUtil.getFirstMatch(RegexConstants.extractString, codeSource);

@@ -6,6 +6,7 @@ import lava.constant.RegexConstants;
 import lava.core.Code;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
+import lava.core.Sub;
 
 import java.util.*;
 
@@ -133,7 +134,15 @@ public class Util {
 	}
 
 	public static boolean isDebug(Form form){
-		return form.isDebug() || form.getInCode().isDebug()||Main.debug;
+		boolean subDebug=false;
+		for (Sub sub : form.getInSubSeq()) {
+			if(sub.isDebug()){
+				subDebug=true;
+			}
+		}
+
+		return form.isDebug() || form.getInCode().isDebug()||
+				Main.debug||subDebug;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

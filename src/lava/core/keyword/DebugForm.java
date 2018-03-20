@@ -4,6 +4,7 @@ import lava.Main;
 import lava.constant.MsgConstants;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
+import lava.core.Sub;
 import lava.util.StringUtil;
 import lava.util.Util;
 
@@ -45,14 +46,23 @@ public class DebugForm extends Form {
 		boolean mainDebug=Main.debug;
 		if (data.getValue() instanceof Map) {
 			Map map = (Map) data.getValue();
-			for (Object codeId : map.keySet()) {
-				Main.codes.get(codeId).setDebug((Boolean) map.get(codeId));
-				rollback.put(codeId, !(Boolean) map.get(codeId));
+			for (Object elem : map.keySet()) {
+				boolean set=(Boolean) map.get(elem);
+				if(elem instanceof Sub){
+					((Sub)elem).setIsDebug(set);
+				}else{
+					Main.codes.get(elem).setDebug(set);
+				}
+				rollback.put(elem, !set);
 			}
 		} else if (data.getValue() instanceof Collection) {
-			for (Object codeId : (Collection) data.getValue()) {
-				Main.codes.get(codeId).setDebug(true);
-				rollback.put(codeId, false);
+			for (Object elem : (Collection) data.getValue()) {
+				if(elem instanceof Sub){
+					((Sub)elem).setIsDebug(true);
+				}else{
+					Main.codes.get(elem).setDebug(true);
+				}
+				rollback.put(elem, false);
 			}
 		} else if (data.getValue() instanceof Boolean){
 			Main.debug=(Boolean)data.getValue();
@@ -87,8 +97,13 @@ public class DebugForm extends Form {
 		}
 
 		Main.debug=mainDebug;
-		for (Object codeId : rollback.keySet()) {
-			Main.codes.get(codeId).setDebug(rollback.get(codeId));
+		for (Object elem : rollback.keySet()) {
+			if(elem instanceof Sub){
+				((Sub)elem).setIsDebug(rollback.get(elem));
+			}else{
+				Main.codes.get(elem).setDebug(rollback.get(elem));
+			}
+
 		}
 	}
 }

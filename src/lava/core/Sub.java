@@ -14,9 +14,11 @@ public class Sub {
 	private Code				inCode;
 	private Form				asForm;
 	private String				idName;
+	private List<String> 		args=new ArrayList<String>();
+
 	private List<Instance>	instancePool	= new ArrayList<Instance>();
 	private DataMap				closure			= new DataMap();
-	private List<String> 		args=new ArrayList<String>();
+	private boolean  isDebug=false;
 
 	public Sub(){
 
@@ -30,6 +32,7 @@ public class Sub {
 		sub.inCode = inCode;
 		sub.asForm = asForm;
 		sub.idName = idName;
+		sub.args=args;
 		return sub;
 	}
 
@@ -93,7 +96,12 @@ public class Sub {
 	public boolean isReturn(){
 		return this.instancePool.get(this.instancePool.size() - 1).isReturn;
 	}
-
+	public boolean isDebug(){
+		return this.isDebug;
+	}
+	public void setIsDebug(boolean isDeubg){
+		this.isDebug=isDeubg;
+	}
 	public void run() throws Exception {
 		Instance ins = new Instance(this);
 		instancePool.add(ins);
@@ -122,9 +130,9 @@ public class Sub {
 		public DataMap	dataMap		= new DataMap();
 		public Object	value		= null;
 		@SuppressWarnings("rawtypes")
-		public Class	type		= void.class;
+		private Class	type		= void.class;
 
-		public boolean	isReturn	= false;
+		private boolean	isReturn	= false;
 
 		private Instance(Sub sub) {
 			this.dataMap.getMap().putAll(sub.dataMap.getMap());
