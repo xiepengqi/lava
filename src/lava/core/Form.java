@@ -198,6 +198,7 @@ public class Form {
 		}
 
 		DataInfo data;
+		DataMap dataMap=new DataMap();
 		for (int i = 0; i < elems.size(); i++) {
 			boolean haveValidArg=false;
 			if(sub.getArgs().size()>i&&StringUtil.isNotEmpty(sub.getArgs().get(i))){
@@ -205,25 +206,25 @@ public class Form {
 			}
 			if(isDataInfo){
 				data=(DataInfo)elems.get(i);
-				sub.getDataMap().putData("$" + i, data);
-				sub.getDataMap().putData("$-" + (elems.size() - i), data);
+				dataMap.putData("$" + i, data);
+				dataMap.putData("$-" + (elems.size() - i), data);
 				if(haveValidArg){
-					sub.getDataMap().putData(sub.getArgs().get(i),data);
+					dataMap.putData(sub.getArgs().get(i),data);
 				}
 
 			}else{
-				sub.getDataMap().put("$" + i, elems.get(i));
-				sub.getDataMap().put("$-" + (elems.size() - i), elems.get(i));
+				dataMap.put("$" + i, elems.get(i));
+				dataMap.put("$-" + (elems.size() - i), elems.get(i));
 
 				if(haveValidArg){
-					sub.getDataMap().put(sub.getArgs().get(i),elems.get(i));
+					dataMap.put(sub.getArgs().get(i),elems.get(i));
 				}
 			}
 
 		}
 
-		sub.getDataMap().put("$args", args);
-		sub.run();
+		dataMap.put("$args", args);
+		sub.run(dataMap);
 	}
 
 	private boolean runSubLink(Sub sub,List elems, Form self) throws Exception {

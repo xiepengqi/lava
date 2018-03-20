@@ -102,8 +102,9 @@ public class Sub {
 	public void setIsDebug(boolean isDeubg){
 		this.isDebug=isDeubg;
 	}
-	public void run() throws Exception {
+	public void run(DataMap dataMap) throws Exception {
 		Instance ins = new Instance(this);
+		ins.dataMap.getMap().putAll(dataMap.getMap());
 		instancePool.add(ins);
 
 		ins.run();
