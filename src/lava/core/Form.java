@@ -148,6 +148,11 @@ public class Form {
 
 		data = this.inCode.getStringMap().get(arg);
 		if (null != data) {
+			if(LString.class.equals(data.getType())){
+				data.setValue(((LString)data.getValue()).parse(this));
+				data.setType(String.class);
+			}
+			
 			return data;
 		}
 
@@ -177,7 +182,7 @@ public class Form {
 			return data;
 		}
 
-		throw new ServiceException(Util.getErrorStr(this,arg));
+		throw new SysError(Util.getErrorStr(this,arg));
 	}
 
 	protected void runSub(Sub sub,List<DataInfo> parseArgs,List<Object> values, Form self) throws Exception {
@@ -431,10 +436,10 @@ public class Form {
 			try{
 				form.run();
 				Util.debug(form, Util.debug_when_form_end);
-			}catch(ServiceException e){
-				throw new ServiceException(e.getMessage());
+			}catch(SysError e){
+				throw new SysError(e.getMessage());
 			}catch (Exception e){
-				throw new ServiceException(Util.getErrorStr(form,e.toString()));
+				throw new SysError(Util.getErrorStr(form,e.toString()));
 			}
 
 			if (action != null){

@@ -4,7 +4,7 @@ import java.util.List;
 
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
-import lava.core.ServiceException;
+import lava.core.SysError;
 import lava.core.Sub;
 import lava.util.Util;
 
@@ -33,7 +33,7 @@ public class WhileForm extends Form {
 		if (parseArgs.get(0).getValue() instanceof Sub) {
 			flagSub = (Sub) parseArgs.get(0).getValue();
 		} else {
-			throw new ServiceException(Util.getErrorStr(this, this.args.get(0)));
+			throw new SysError(Util.getErrorStr(this, this.args.get(0)));
 		}
 
 		if (parseArgs.get(1).getValue() instanceof Sub) {
@@ -56,7 +56,7 @@ public class WhileForm extends Form {
 			this.value = null;
 			this.type = void.class;
 		} else {
-			throw new ServiceException(Util.getErrorStr(this, this.args.get(1)));
+			throw new SysError(Util.getErrorStr(this, this.args.get(1)));
 		}
 	}
 }

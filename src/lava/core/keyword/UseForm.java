@@ -10,7 +10,7 @@ import lava.constant.Constants;
 import lava.core.Code;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
-import lava.core.ServiceException;
+import lava.core.SysError;
 import lava.util.Util;
 
 public class UseForm extends Form {
@@ -40,7 +40,7 @@ public class UseForm extends Form {
 				useCodes.add(useCode);
 				useCode.parse();
 			}
-		}catch (ServiceException e) {
+		}catch (SysError e) {
 			Util.syntaxError(this,e.getMessage());
 		} catch (Exception e) {
 			Util.syntaxError(this, e.toString());

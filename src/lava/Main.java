@@ -2,7 +2,7 @@ package lava;
 
 import lava.constant.Constants;
 import lava.core.Code;
-import lava.core.ServiceException;
+import lava.core.SysError;
 import lava.util.FileUtil;
 import lava.util.JavaUtil;
 import lava.util.Util;
@@ -57,7 +57,7 @@ public class Main {
 				code.parse();
 				code.check();
 				code.run();
-			}catch (ServiceException e) {
+			}catch (SysError e) {
 				Util.runtimeError(e.getMessage());
 			} catch (Exception e) {
 				Util.runtimeError(code, e.toString());
@@ -74,7 +74,7 @@ public class Main {
 		String line = "(/repl (if (def? $-1) $-1  ''))";
 		try {
 			code.eval(line);
-		}catch (ServiceException e) {
+		}catch (SysError e) {
 			Util.runtimeError(e.getMessage());
 		} catch (Exception e) {
 			Util.runtimeError("lava.repl:"+e.toString());
@@ -100,7 +100,7 @@ public class Main {
 			}
 			try {
 				System.out.println(code.eval("(repl " + line + " )").get("value"));
-			}catch(ServiceException e){
+			}catch(SysError e){
 				Util.runtimeError(e.getMessage());
 			} catch (Exception e) {
 				Util.runtimeError("lava.repl:"+e.toString());

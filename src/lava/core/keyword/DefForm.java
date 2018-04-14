@@ -4,7 +4,7 @@ import lava.constant.Constants;
 import lava.core.DataMap;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
-import lava.core.ServiceException;
+import lava.core.SysError;
 import lava.util.StringUtil;
 import lava.util.Util;
 
@@ -45,7 +45,7 @@ public class DefForm extends Form {
 
 		for (String var : this.args.subList(0, this.args.size() - 1)) {
             if (dataMap.getMap().containsKey(var)) {
-                throw new ServiceException(Util.getErrorStr(this, var));
+                throw new SysError(Util.getErrorStr(this, var));
             } else {
                 dataMap.putData(var, new DataInfo(value.getType(),value.getValue(),value.getSource()));
             }
@@ -57,7 +57,7 @@ public class DefForm extends Form {
 
 	private void dealOneArgs(DataMap dataMap) {
 		if (dataMap.getMap().containsKey(this.args.get(0))) {
-            throw new ServiceException(Util.getErrorStr(this,parseFormArg(this.args.get(0)).getSource()));
+            throw new SysError(Util.getErrorStr(this,parseFormArg(this.args.get(0)).getSource()));
         }
 
 		dataMap.putData(this.args.get(0), new DataInfo(void.class,null));

@@ -5,7 +5,7 @@ import java.util.List;
 
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
-import lava.core.ServiceException;
+import lava.core.SysError;
 import lava.core.Sub;
 import lava.util.Util;
 
@@ -69,7 +69,7 @@ public class ForForm extends Form {
 			this.value = null;
 			this.type = void.class;
 		} else {
-			throw new ServiceException(Util.getErrorStr(this, this.args.get(0)));
+			throw new SysError(Util.getErrorStr(this, this.args.get(0)));
 		}
 
 	}

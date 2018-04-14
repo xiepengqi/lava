@@ -215,21 +215,35 @@ public class Code {
 	}
 
 	private String extractString(String codeSource) {
-		String stringSource;
-		int num = this.stringMap.size();
-
-		stringSource = StringUtil.getFirstMatch(RegexConstants.extractString, codeSource);
-		while (stringSource != null) {
-			String stringId = num + Constants.stringIdSuffix;
-			String stringContent = stringSource.substring(1, stringSource.length() - 1);
-			this.stringMap.put(stringId, new DataInfo(String.class, stringContent, stringSource));
-
-			codeSource = codeSource.replaceFirst(RegexConstants.extractString, stringId);
-			stringSource = StringUtil.getFirstMatch(RegexConstants.extractString, codeSource);
-			num++;
-		}
+		codeSource=extractString(codeSource, RegexConstants.extractString, String.class);
+		codeSource=extractString(codeSource, RegexConstants.extractLString, LString.class);
+		
 		return codeSource;
 	}
+	
+	private String extractString(String codeSource, String reg, Class type){
+		int num = this.stringMap.size();
+
+		String stringSource = StringUtil.getFirstMatch(reg, codeSource);
+		while (stringSource != null) {
+			String stringId = num + Constants.stringIdSuffix;
+			
+			Object val = stringSource.substring(1, stringSource.length() - 1);
+			
+			if(LString.class.equals(type)){
+				val=new LString(val);
+			}
+			this.stringMap.put(stringId, new DataInfo(type, val, stringSource));
+
+			codeSource = codeSource.replaceFirst(reg, stringId);
+			stringSource = StringUtil.getFirstMatch(reg, codeSource);
+			num++;
+		}
+		
+		return codeSource;
+	}
+	
+	
 
 	@SuppressWarnings("rawtypes")
 	private String extractNumber(String codeSource) {

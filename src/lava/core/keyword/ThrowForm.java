@@ -3,7 +3,7 @@ package lava.core.keyword;
 import lava.constant.MsgConstants;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
-import lava.core.ServiceException;
+import lava.core.SysError;
 import lava.util.Util;
 
 public class ThrowForm extends Form {
@@ -28,7 +28,7 @@ public class ThrowForm extends Form {
 		if(data.getValue() instanceof Exception){
 			throw (Exception)data.getValue();
 		}else{
-			throw new ServiceException(Util.getErrorStr(this,this.args.get(0)));
+			throw new SysError(Util.getErrorStr(this,this.args.get(0)));
 		}
 	}
 }

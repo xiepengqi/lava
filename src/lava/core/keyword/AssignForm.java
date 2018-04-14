@@ -5,7 +5,7 @@ import lava.constant.MsgConstants;
 import lava.core.DataMap;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
-import lava.core.ServiceException;
+import lava.core.SysError;
 import lava.util.StringUtil;
 import lava.util.Util;
 
