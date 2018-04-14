@@ -149,8 +149,7 @@ public class Form {
 		data = this.inCode.getStringMap().get(arg);
 		if (null != data) {
 			if(LString.class.equals(data.getType())){
-				data.setValue(((LString)data.getValue()).parse(this));
-				data.setType(String.class);
+				data=new DataInfo(String.class,((LString)data.getValue()).parse(this),data.getSource());
 			}
 			
 			return data;

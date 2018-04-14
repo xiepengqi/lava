@@ -16,12 +16,19 @@
 (println (cal `{time2} - {time1}`))
 )
 
-(link /test /time)
 
-(/test
-	(for (/
-			(println 123))
-		1 1000)
-)
 
-(test 1)
+
+(foreach [1 2 3 4]
+	(/:x
+		(println `¥Ú”°  {x}`)))
+
+
+
+
+
+
+
+
+
+
