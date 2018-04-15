@@ -1,34 +1,8 @@
-(def se (.getEngineByName (new 'javax.script.ScriptEngineManager') "JavaScript"))
-(/cal:express 
-	(.eval se express)
-)
+(load 'E:\workspace\lib\src\core.lava')
 
-(def xie 123)
+(use "core")
 
-(def out (. 'java.lang.System.out'))
-
-(/println:str (.println out str))
-
-(/time:sub:args
-(def time1 (java.lang.System.currentTimeMillis))
-(sub args)
-(def time2 (java.lang.System.currentTimeMillis))
-(println (cal `{time2} - {time1}`))
-)
-
-
-
-
-(foreach [1 '$' 3 4]
-	(/:
-		(println `¥Ú”°  {$0}`)))
-
-
-
-
-
-
-
-
-
-
+(/test:peng:*xie
+	(println xie))
+	
+(test 1 2 3)

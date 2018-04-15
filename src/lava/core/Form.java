@@ -2,7 +2,10 @@ package lava.core;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import lava.Main;
 import lava.constant.Constants;
@@ -195,40 +198,67 @@ public class Form {
 		if(parseArgs!=null){
 			isDataInfo=true;
 			elems=parseArgs;
-			Util.splitArgs(parseArgs, args, null);
 		}else if(values!=null){
 			elems=values;
-			args=values;
 		}
 
 		if(runSubLink(sub,elems,self)){
 			return;
 		}
 
-		DataInfo data;
 		DataMap dataMap=new DataMap();
+		List<Map> subArgs=new ArrayList<Map>();
+		
+		List<String> subArgsName=new LinkedList<String>();
+		subArgsName.addAll(sub.getArgs());
+		
 		for (int i = 0; i < elems.size(); i++) {
-			boolean haveValidArg=false;
-			if(sub.getArgs().size()>i&&StringUtil.isNotEmpty(sub.getArgs().get(i))){
-				haveValidArg=true;
-			}
-			if(isDataInfo){
-				data=(DataInfo)elems.get(i);
-				dataMap.putData("$" + i, data);
-				dataMap.putData("$-" + (elems.size() - i), data);
-				if(haveValidArg){
-					dataMap.putData(sub.getArgs().get(i),data);
+			String argName=subArgsName.size() > 0 ? subArgsName.remove(0) : null;
+			Map<String,Object> temp=new HashMap<String,Object>();
+			if(StringUtil.isNotBlank(argName)){
+				List<Object> list=new ArrayList<Object>();
+				if(argName.startsWith(Constants.expand)){
+					do{
+						list.add(isDataInfo ? ((DataInfo)elems.get(i)).getValue():elems.get(i));
+						i++;
+					}while((elems.size()-i) > subArgsName.size());	
+					temp.put("arg",list);
+					temp.put("argName", argName.substring(1));
+					temp.put("isDataInfo", false);
+				}else{
+					temp.put("arg",elems.get(i));
+					temp.put("argName", argName);
+					temp.put("isDataInfo", isDataInfo);
 				}
-
+				subArgs.add(temp);
 			}else{
-				dataMap.put("$" + i, elems.get(i));
-				dataMap.put("$-" + (elems.size() - i), elems.get(i));
-
-				if(haveValidArg){
-					dataMap.put(sub.getArgs().get(i),elems.get(i));
+				temp.put("arg",elems.get(i));
+				temp.put("isDataInfo", isDataInfo);
+				subArgs.add(temp);
+			}
+		}
+		
+		int argIndex=0;
+		int argSize=subArgs.size();
+		for(Map elem:subArgs){
+			Object arg=elem.get("arg");
+			String argName=(String)elem.get("argName");
+			
+			if((Boolean)elem.get("isDataInfo")){
+				args.add(((DataInfo)arg).getValue());
+				dataMap.putData("$"+argIndex, (DataInfo)arg);
+				dataMap.putData("$-"+(argSize - argIndex), (DataInfo)arg);
+				if(argName != null){
+					dataMap.putData(argName, (DataInfo)arg);
+				}
+			}else{
+				args.add(arg);
+				dataMap.put("$"+argIndex, arg);
+				dataMap.put("$-"+(argSize - argIndex), arg);
+				if(argName != null){
+					dataMap.put(argName, arg);
 				}
 			}
-
 		}
 
 		dataMap.put("$args", args);
@@ -442,6 +472,7 @@ public class Form {
 			}catch(SysError e){
 				throw new SysError(e.getMessage());
 			}catch (Exception e){
+				e.printStackTrace();
 				throw new SysError(Util.getErrorStr(form,e.toString()));
 			}
 

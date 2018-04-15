@@ -4,6 +4,7 @@ import lava.constant.Constants;
 import lava.core.Form;
 import lava.core.Sub;
 import lava.util.StringUtil;
+import lava.util.Util;
 
 import java.util.Arrays;
 
@@ -44,6 +45,13 @@ public class SubForm extends Form {
 	public void check() {
 		super.check();
 
+		for(String argName:this.asSub.getArgs()){
+			if(!StringUtil.isVarAble(argName.startsWith(Constants.expand)? argName.substring(1):argName)){
+				Util.syntaxError(this, argName);
+				return;
+			}
+		}
+		
 		if (StringUtil.isEmpty(this.asSub.getName())) {
 			return;
 		}

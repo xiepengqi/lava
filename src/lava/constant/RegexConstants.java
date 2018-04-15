@@ -1,22 +1,17 @@
 package lava.constant;
 
+import lava.util.StringUtil;
+
 public class RegexConstants {
 
 	public static String	numberSuffix	= "[ilfdILFD]";
 	public static String	number			= "-?\\d+\\.?\\d*" + numberSuffix + "?";
 
-	public static String	avoidsChars		= Constants.javaChar + Constants.subPrefix + "\\{\\}\\[\\]";
-	static {
-		avoidsChars = avoidsChars.replaceAll("\\.", "\\\\.");
-	}
+	public static String	avoidsChars		=StringUtil.escapeReg(Constants.javaChar + Constants.subPrefix + "{}[]") ;
 
-	public static String	var				= "[^0-9" + avoidsChars + "][^" + avoidsChars + "]*";
+	public static String	var				= "[^0-9" + StringUtil.escapeReg(Constants.expand)+ avoidsChars + "][^" + avoidsChars + "]*";
 
-	public static String	dataMapKey		= var;
-
-	static {
-		dataMapKey = dataMapKey.replaceFirst(Constants.subPrefix, "");
-	}
+	public static String	dataMapKey		= var.replaceFirst(Constants.subPrefix, "");
 
 	public static String	elemLeftBorder	= "(?<=[\\s\\(\\[\\{]|^)";
 	public static String	elemRightBorder	= "(?=[\\s\\)\\]\\}]|$)";

@@ -31,7 +31,11 @@ public class DataMap {
 		private Object	value;
 		@SuppressWarnings("rawtypes")
 		private Class	type	= void.class;
-
+		
+		public String toString(){
+			return this.type+":"+this.value;
+		}
+		
 		public String getSource() {
 			return source;
 		}

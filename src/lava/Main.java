@@ -60,6 +60,7 @@ public class Main {
 			}catch (SysError e) {
 				Util.runtimeError(e.getMessage());
 			} catch (Exception e) {
+				e.printStackTrace();
 				Util.runtimeError(code, e.toString());
 			}
 		}

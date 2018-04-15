@@ -35,6 +35,8 @@ public class Constants {
 	public static String					replPrefix			= ">";
 
 	public static String 					sep					= ":";
+	
+	public static String 					expand				="*";
 
     static {
 		keywords.put("load", LoadForm.class);
@@ -58,6 +60,7 @@ public class Constants {
 		keywords.put("eval", EvalForm.class);
 		keywords.put("catch", CatchForm.class);
 		keywords.put("link", LinkForm.class);
+		keywords.put("man", ManForm.class);
 	}
 
 	static {
