@@ -115,6 +115,25 @@ public class StringUtil {
 	    }  
 	    return list;  
 	}  
+	/** 
+	 * 转义正则特殊字符 （$()*+.[]?\^{},|） 
+	 *  
+	 * @param keyword 
+	 * @return 
+	 */  
+	public static String escapeReg(String str) {
+		if(isBlank(str)){
+			return str;
+		}
+		String[] fbsArr = { "\\", "$", "(", ")", "*", "+", ".", "[", "]", "?",
+				"^", "{", "}", "|" };
+		for (String key : fbsArr) {
+			if (str.contains(key)) {
+				str = str.replace(key, "\\" + key);
+			}
+		}
+		return str;
+	}
 	
 	public static String getFirstForm(String source) {
 		return getFirstMatch(RegexConstants.extractForm, source);
@@ -130,6 +149,17 @@ public class StringUtil {
 
 	public static boolean isEmpty(String str) {
 		if (null != str && str.length() > 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	public static boolean isNotBlank(String str) {
+		return !isBlank(str);
+	}
+
+	public static boolean isBlank(String str) {
+		if (null != str && str.trim().length() > 0) {
 			return false;
 		} else {
 			return true;
