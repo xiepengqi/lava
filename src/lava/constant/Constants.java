@@ -28,8 +28,6 @@ public class Constants {
 
 	public static String					configSplit			= "=";
 	public static String					empty				= "";
-	public static String					privatePrefix		= "-";
-	public static String					privateSubPrefix	= subPrefix + privatePrefix;
 	public static String					systemVarPrefix		= "$";
 
 	public static String					replPrefix			= ">";
@@ -61,6 +59,7 @@ public class Constants {
 		keywords.put("catch", CatchForm.class);
 		keywords.put("link", LinkForm.class);
 		keywords.put("man", ManForm.class);
+		keywords.put("export", ExportForm.class);
 	}
 
 	static {

@@ -17,7 +17,7 @@ import java.util.Map;
 public class Code {
 	private String					filePath;
 	private String					idName;
-
+	private DataMap					exports     = new DataMap();
 	private List<Form>				formSeq		= new ArrayList<Form>();
 
 	private DataMap					dataMap		= new DataMap();
@@ -31,6 +31,10 @@ public class Code {
 	private boolean					isRuned;
 	private boolean					debug;
 	private String					source		= Constants.empty;
+
+	public DataMap getExports() {
+		return exports;
+	}
 
 	public boolean isDebug() {
 		return debug;

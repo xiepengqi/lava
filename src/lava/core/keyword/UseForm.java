@@ -129,11 +129,6 @@ public class UseForm extends Form {
 	private void exportMap(Code useCode, final Map exportMap) {
 		Util.Action action = new Util.Action() {
 			@Override
-			public boolean isPutAble(Object useKey) {
-				return true;
-			}
-
-			@Override
 			public String defToKey(Object useKey) {
 				String key = (String) exportMap.get(useKey);
 				if (null == key) {
@@ -161,10 +156,6 @@ public class UseForm extends Form {
 	@SuppressWarnings("rawtypes")
 	private void exportList(Code useCode, final List exportList) {
 		Util.Action action = new Util.Action() {
-			@Override
-			public boolean isPutAble(Object useKey) {
-				return true;
-			}
 
 			@Override
 			public boolean isOverAble() {
@@ -185,11 +176,6 @@ public class UseForm extends Form {
 	private void exportAll(Code useCode) {
 		Util.Action action = new Util.Action() {
 			@Override
-			public boolean isPutAble(Object useKey) {
-				return UseForm.isPutAble((String) useKey);
-			}
-
-			@Override
 			public boolean isOverAble() {
 				return false;
 			}
@@ -207,15 +193,7 @@ public class UseForm extends Form {
 			toMap = this.inCode.getDataMap().getMap();
 		}
 
-		Util.putAll(useCode.getDataMap().getMap(), toMap, action);
-	}
-
-	private static boolean isPutAble(String key) {
-		if ((key.startsWith(Constants.privatePrefix) || key.startsWith(Constants.privateSubPrefix))
-				&& !(key.equals(Constants.privatePrefix) || key.equals(Constants.privateSubPrefix))) {
-			return false;
-		}
-		return true;
+		Util.putAll(useCode.getExports().getMap(), toMap, action);
 	}
 
 	private String genUseCaseKey(int index, List<DataInfo> parseArgs) {
