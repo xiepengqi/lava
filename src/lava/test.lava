@@ -1,8 +1,7 @@
-(load 'E:\workspace\lib\src\core.lava')
+(use 'core')
 
-(use "core")
+(/test:xie:*qi:peng
+    (println qi))
 
-(/test:peng:*xie
-	(println xie))
-	
-(test 1 2 3)
+(def xie [2 3 4 5 4 3 5 3])
+(test *xie)

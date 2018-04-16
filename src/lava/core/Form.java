@@ -259,6 +259,7 @@ public class Form {
 					dataMap.put(argName, arg);
 				}
 			}
+			argIndex++;
 		}
 
 		dataMap.put("$args", args);

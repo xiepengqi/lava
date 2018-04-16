@@ -46,9 +46,14 @@ public class SubForm extends Form {
 		super.check();
 
 		for(String argName:this.asSub.getArgs()){
-			if(!StringUtil.isVarAble(argName.startsWith(Constants.expand)? argName.substring(1):argName)){
+			if(argName.startsWith(Constants.expand)){
+				argName=argName.substring(1);
+			}
+			if(StringUtil.isBlank(argName)){
+				continue;
+			}
+			if(!StringUtil.isVarAble(argName)){
 				Util.syntaxError(this, argName);
-				return;
 			}
 		}
 		

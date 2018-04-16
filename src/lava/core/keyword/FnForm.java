@@ -32,11 +32,11 @@ public class FnForm extends Form {
 
 		List<DataInfo> newParseArgs=new ArrayList<DataInfo>();
 		for(String arg:this.args){
-			DataInfo args=new DataInfo(this.parseFormArg(arg));
-			if(!"args".equals(arg)){
-				newParseArgs.add(args);
+			if(!arg.startsWith("*")){
+				newParseArgs.add(new DataInfo(this.parseFormArg(arg)));
 				continue;
 			}
+			DataInfo args=new DataInfo(this.parseFormArg(arg.substring(1)));
 
 			if(args.getValue()==null){
 				newParseArgs.add(args);
