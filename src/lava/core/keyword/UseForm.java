@@ -11,6 +11,7 @@ import lava.core.Code;
 import lava.core.DataMap.DataInfo;
 import lava.core.Form;
 import lava.core.SysError;
+import lava.util.StringUtil;
 import lava.util.Util;
 
 public class UseForm extends Form {
@@ -103,7 +104,7 @@ public class UseForm extends Form {
 					useCode.run();
 
 					Map exportMap = (Map) parseArgs.get(index + 1).getValue();
-					exportMap(useCode, exportMap);
+					exportMap(useCode, exportMap, this);
 					index += 2;
 					isLast = false;
 
@@ -126,11 +127,14 @@ public class UseForm extends Form {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void exportMap(Code useCode, final Map exportMap) {
+	private void exportMap(Code useCode, final Map exportMap,final Form form) {
 		Util.Action action = new Util.Action() {
 			@Override
 			public String defToKey(Object useKey) {
 				String key = (String) exportMap.get(useKey);
+				if(!StringUtil.isDataMapKeyAble(key)){
+					throw new SysError(Util.getErrorStr(form, key));
+				}
 				if (null == key) {
 					key = (String) useKey;
 				}

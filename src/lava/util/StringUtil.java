@@ -47,10 +47,8 @@ public class StringUtil {
 		if (!str.matches(RegexConstants.dataMapKey)) {
 			return false;
 		}
-		for (String key : Constants.keywords.keySet()) {
-			if (key.equals(str)) {
-				return false;
-			}
+		if(isKeyWords(str)){
+			return false;
 		}
 		return true;
 	}
