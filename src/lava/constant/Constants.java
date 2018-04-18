@@ -32,7 +32,7 @@ public class Constants {
 
 	public static String					replPrefix			= ">";
 
-	public static String 					sep					= ":";
+	public static String 					sepOrObjChar					= ":";
 	
 	public static String 					expand				="*";
 

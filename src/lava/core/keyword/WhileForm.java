@@ -39,10 +39,10 @@ public class WhileForm extends Form {
 		if (parseArgs.get(1).getValue() instanceof Sub) {
 			bodySub = (Sub) parseArgs.get(1).getValue();
 
-			runSub(flagSub,null,null,this);
+			runSub(flagSub,null,null);
 
 			while ((Boolean) flagSub.getAsForm().getValue()) {
-				runSub(bodySub,null,null,this);
+				runSub(bodySub,null,null);
 
 				if (bodySub.getAsForm().getValue() instanceof Boolean) {
 					if (!(Boolean) bodySub.getAsForm().getValue()) {
@@ -50,7 +50,7 @@ public class WhileForm extends Form {
 					}
 				}
 
-				runSub(flagSub,null,null,this);
+				runSub(flagSub,null,null);
 			}
 
 			this.value = null;

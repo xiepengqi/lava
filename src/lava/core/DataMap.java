@@ -6,6 +6,14 @@ import java.util.Map;
 public class DataMap {
 	private Map<String, DataInfo>	map	= new HashMap<String, DataInfo>();
 
+	public DataMap(){
+		
+	}
+	
+	public DataMap(Map<String,DataInfo> map){
+		
+	}
+	
 	public static class DataInfo {
 		public DataInfo() {
 		}

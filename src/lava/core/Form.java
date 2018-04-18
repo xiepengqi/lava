@@ -15,6 +15,7 @@ import lava.core.keyword.FnForm;
 import lava.core.keyword.JavaForm;
 import lava.core.keyword.ListForm;
 import lava.core.keyword.MapForm;
+import lava.core.keyword.KeyForm;
 import lava.core.keyword.SubForm;
 import lava.util.StringUtil;
 import lava.util.Util;
@@ -191,7 +192,7 @@ public class Form {
 		throw new SysError(Util.getErrorStr(this,arg));
 	}
 
-	protected void runSub(Sub sub,List<DataInfo> parseArgs,List<Object> values, Form self) throws Exception {
+	protected void runSub(Sub sub,List<DataInfo> parseArgs,List<Object> values) throws Exception {
 		List elems=new ArrayList();
 		List args=new ArrayList();
 		boolean isDataInfo=false;
@@ -202,7 +203,7 @@ public class Form {
 			elems=values;
 		}
 
-		if(runSubLink(sub,elems,self)){
+		if(runSubLink(sub,elems)){
 			return;
 		}
 
@@ -266,7 +267,7 @@ public class Form {
 		sub.run(dataMap);
 	}
 
-	private boolean runSubLink(Sub sub,List elems, Form self) throws Exception {
+	private boolean runSubLink(Sub sub,List elems) throws Exception {
 		boolean use=false;
 
 		Object key;
@@ -286,7 +287,7 @@ public class Form {
 		}
 
 		if(!(subLink instanceof Sub)){
-			subLink=getSubFromScope(self,StringUtil.toString(subLink));
+			subLink=getSubFromScope(StringUtil.toString(subLink));
 		}
 
 		if(subLink ==null){
@@ -301,24 +302,24 @@ public class Form {
 
 		if(elems.size()==0){
 			temp.add(sub);
-			runSub((Sub)subLink,null,temp,self);
+			runSub((Sub)subLink,null,temp);
 		}else if(elems.get(0) instanceof DataInfo){
 			temp.add(new DataInfo(Sub.class,sub));
 			temp.addAll(elems);
-			runSub((Sub)subLink,temp,null, self);
+			runSub((Sub)subLink,temp,null);
 		}else{
 			temp.add(sub);
 			temp.addAll(elems);
-			runSub((Sub)subLink,null,temp, self);
+			runSub((Sub)subLink,null,temp);
 		}
 
 		Main.subLinks.put(key,value);
 		return use;
 	}
 
-	protected Sub getSubFromScope(Form self,String fnName) {
-		if (fnName.equals(self.getFnName())&&StringUtil.isFormId(self, self.getFnName())) {
-			Form form=self.getInCode().getFormMap().get(self.getFnName());
+	protected Sub getSubFromScope(String fnName) {
+		if (fnName.equals(this.getFnName())&&StringUtil.isFormId(this, this.getFnName())) {
+			Form form=this.getInCode().getFormMap().get(this.getFnName());
 			Object obj = form.getValue();
 			if (obj instanceof Sub) {
 				return (Sub)obj;
@@ -326,7 +327,7 @@ public class Form {
 		}
 
 		Sub findSub;
-		for (Sub sub : self.getInSubSeq()) {
+		for (Sub sub : this.getInSubSeq()) {
 			findSub = findSub(sub.getDataMap(), fnName);
 			if (null != findSub) {
 				return findSub;
@@ -337,7 +338,7 @@ public class Form {
 			}
 		}
 
-		findSub = findSub(self.getInCode().getDataMap(), fnName);
+		findSub = findSub(this.getInCode().getDataMap(), fnName);
 		if (null != findSub) {
 			return findSub;
 		}
@@ -389,6 +390,8 @@ public class Form {
 			form = new JavaForm();
 		} else if (elems.get(0).startsWith(Constants.subPrefix)) {
 			form = new SubForm();
+		} else if(elems.get(0).startsWith(Constants.sepOrObjChar)){ 
+			form = new KeyForm();
 		} else {
 			form = new FnForm();
 		}

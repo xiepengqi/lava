@@ -43,7 +43,7 @@ public class ForeachForm extends Form {
 					List<Object> values = new ArrayList<Object>();
 					values.add(j);
 
-					runSub(sub,null,values,this);
+					runSub(sub,null,values);
 
 					if (sub.getAsForm().getValue() instanceof Boolean) {
 						if (!(Boolean) sub.getAsForm().getValue()) {

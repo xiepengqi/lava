@@ -1,3 +1,0 @@
-(use 'core' {"/println" "core.println"})
-
-(foreach (man) core.println)

@@ -7,7 +7,7 @@ public class RegexConstants {
 	public static String	numberSuffix	= "[ilfdILFD]";
 	public static String	number			= "-?\\d+\\.?\\d*" + numberSuffix + "?";
 
-	public static String	avoidsChars		=StringUtil.escapeReg(Constants.javaChar + Constants.subPrefix + "{}[]") ;
+	public static String	avoidsChars		=StringUtil.escapeReg(Constants.sepOrObjChar + Constants.javaChar + Constants.subPrefix + "{}[]") ;
 
 	public static String	var				= "[^0-9" + StringUtil.escapeReg(Constants.expand)+ avoidsChars + "][^" + avoidsChars + "]*";
 

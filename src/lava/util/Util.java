@@ -124,13 +124,13 @@ public class Util {
 		}
 		String msg=Constants.empty;
 		if(debugMode == debug_when_form_begin){
-			msg=StringUtil.join(Constants.sep,form.getFormId(),form.see());
+			msg=StringUtil.join(Constants.sepOrObjChar,form.getFormId(),form.see());
 		}
 		if(debugMode == debug_when_form_end){
-			msg=StringUtil.join(Constants.sep,form.getFormId(),form.getType(),form.getValue());
+			msg=StringUtil.join(Constants.sepOrObjChar,form.getFormId(),form.getType(),form.getValue());
 		}
 
-		System.out.println(StringUtil.join(Constants.sep,form.getWhere(),msg));
+		System.out.println(StringUtil.join(Constants.sepOrObjChar,form.getWhere(),msg));
 	}
 
 	public static boolean isDebug(Form form){

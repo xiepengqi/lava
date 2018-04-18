@@ -1,0 +1,35 @@
+(def -se (.getEngineByName (new 'javax.script.ScriptEngineManager') "JavaScript"))
+(/cal:express 
+	(.eval -se express)
+)
+
+(def -out (. 'java.lang.System.out'))
+
+(/println:str (.println -out (java.lang.String.valueOf (as 'java.lang.Object' str))))
+
+(/time:sub:args
+	(def time1 (java.lang.System.currentTimeMillis))
+	(sub args)
+	(def time2 (java.lang.System.currentTimeMillis))
+	(println (cal `{time2} - {time1}`))
+)
+
+
+(export
+/println
+/time
+/cal
+
+)
+
+
+
+
+
+
+
+
+
+
+
+

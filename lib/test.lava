@@ -1,0 +1,10 @@
+(load 'E:\workspace\lava\lib\core.lava')
+(use 'core')
+
+
+(def obj {
+	'println' /println
+	
+})
+
+(:println obj 123)

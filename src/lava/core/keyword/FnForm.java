@@ -24,7 +24,7 @@ public class FnForm extends Form {
 	@Override
 	public void run() throws Exception {
 		super.run();
-		Sub sub = getSubFromScope(this,this.fnName);
+		Sub sub = getSubFromScope(this.fnName);
 
 		if(sub==null){
 			throw new SysError(Util.getErrorStr(this, this.fnName));
@@ -56,7 +56,7 @@ public class FnForm extends Form {
 			}
 		}
 
-		runSub(sub,newParseArgs,null,this);
+		runSub(sub,newParseArgs,null);
 		this.type=(sub).getAsForm().getType();
 		this.value=(sub).getAsForm().getValue();
 	}
