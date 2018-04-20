@@ -1,3 +1,8 @@
 out/
 lava.iml
 .idea/
+/bin
+.classpath
+.project
+.settings/
+
