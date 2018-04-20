@@ -148,7 +148,9 @@ public class Sub {
 				@Override
 				public boolean beforeRun(Form form) {
 					int index = form.inSubSeq.indexOf(self.sub.asForm.asSub);
-					form.inSubSeq.set(index, self.sub);
+					if(index != -1){
+						form.inSubSeq.set(index, self.sub);
+					}
 
 					if (null != form.getRunBy()) {
 						return false;

@@ -2,9 +2,4 @@
 (use 'core')
 
 
-(def obj {
-	'println' /println
-	
-})
-
-(:println obj 123)
+(println (join [1 2 3] 2))

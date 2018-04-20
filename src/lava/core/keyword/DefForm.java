@@ -19,7 +19,7 @@ public class DefForm extends Form {
 		super.check();
 
 		for(String arg:this.args.subList(0,this.args.size()-1)){
-			if(arg.startsWith(Constants.systemVarPrefix)||!StringUtil.isVarAble(arg)){
+			if(!StringUtil.isVarAble(arg)){
 				Util.syntaxError(this,arg);
 			}
 		}

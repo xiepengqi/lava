@@ -1,25 +1,58 @@
-(def -se (.getEngineByName (new 'javax.script.ScriptEngineManager') "JavaScript"))
+(def true (java.lang.Boolean.parseBoolean "true"))
+(def false (java.lang.Boolean.parseBoolean "false"))
+
+(def -se 
+	(.getEngineByName
+		 (new 'javax.script.ScriptEngineManager') "JavaScript"))
+		 
 (/cal:express 
-	(.eval -se express)
-)
+	(.eval -se express))
 
 (def -out (. 'java.lang.System.out'))
 
-(/println:str (.println -out (java.lang.String.valueOf (as 'java.lang.Object' str))))
+(/println:*strs 
+	(.println -out (str *strs)))
 
-(/time:sub:args
+(/str:*objs
+	(def sb (new 'java.lang.StringBuilder'))
+	(foreach objs
+		(/:item
+			(.append sb 
+				(java.lang.String.valueOf (as 'java.lang.Object' item)))))
+	(.toString sb))
+
+(/join:objs:obj
+	(def sb (new 'java.lang.StringBuilder'))
+	(foreach objs
+		(/:item
+			(if (and (def? obj) (? (.length sb) 0i false true))
+				(.append sb	
+					(java.lang.String.valueOf (as 'java.lang.Object' obj))))
+			(.append sb 
+				(java.lang.String.valueOf (as 'java.lang.Object' item)))))
+	(.toString sb))
+
+
+(/time:sub:*args
 	(def time1 (java.lang.System.currentTimeMillis))
-	(sub args)
+	(if (def? args)
+		(sub *args)
+		(sub))
+	
 	(def time2 (java.lang.System.currentTimeMillis))
 	(println (cal `{time2} - {time1}`))
 )
+
 
 
 (export
 /println
 /time
 /cal
-
+/str
+true
+false
+/join
 )
 
 

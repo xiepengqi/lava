@@ -9,7 +9,7 @@ public class RegexConstants {
 
 	public static String	avoidsChars		=StringUtil.escapeReg(Constants.sepOrObjChar + Constants.javaChar + Constants.subPrefix + "{}[]") ;
 
-	public static String	var				= "[^0-9" + StringUtil.escapeReg(Constants.expand)+ avoidsChars + "][^" + avoidsChars + "]*";
+	public static String	var				= "[^0-9" + StringUtil.escapeReg(Constants.expand+Constants.systemVarPrefix)+ avoidsChars + "][^" + avoidsChars + "]*";
 
 	public static String	dataMapKey		= var.replaceFirst(Constants.subPrefix, "");
 

@@ -26,11 +26,30 @@ public class Code {
 	private Map<String, DataInfo>	stringMap	= new HashMap<String, DataInfo>();
 	private Map<String, DataInfo>	numberMap	= new HashMap<String, DataInfo>();
 
+	private Class type=void.class;
+	private Object value=null;
+	
 	private boolean					isParsed;
 	private boolean					isChecked;
 	private boolean					isRuned;
 	private boolean					debug;
 	private String					source		= Constants.empty;
+
+	public Class getType() {
+		return type;
+	}
+
+	public void setType(Class type) {
+		this.type = type;
+	}
+
+	public Object getValue() {
+		return value;
+	}
+
+	public void setValue(Object value) {
+		this.value = value;
+	}
 
 	public DataMap getExports() {
 		return exports;
@@ -191,6 +210,9 @@ public class Code {
 		};
 
 		Form.runFormSeq(this.formSeq,action);
+		Form lastForm=this.formSeq.get(this.formSeq.size()-1);
+		this.value=lastForm.value;
+		this.type=lastForm.type;
 	}
 
 	private String extractForm(String codeSource){

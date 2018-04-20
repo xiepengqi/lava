@@ -62,7 +62,9 @@ public class UseForm extends Form {
 	@Override
 	public void run() throws Exception {
 		super.run();
-
+		if(useCodes.size() == 0){
+			return;
+		}
 		List<DataInfo> parseArgs = parseFormArgs(this.args);
 		int index = 0;
 		boolean isLast;
@@ -124,6 +126,11 @@ public class UseForm extends Form {
 				break;
 			}
 		}
+		
+		Code lastCode=useCodes.get(useCodes.size()-1);
+		
+		this.value=lastCode.getValue();
+		this.type=lastCode.getType();
 	}
 
 	@SuppressWarnings("rawtypes")
