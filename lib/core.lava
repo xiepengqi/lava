@@ -12,14 +12,12 @@
 
 (/println:*strs 
 	(.println -out (str *strs)))
+	
+(/print:*strs 
+	(.println -out (str *strs)))
 
 (/str:*objs
-	(def sb (new 'java.lang.StringBuilder'))
-	(foreach objs
-		(/:item
-			(.append sb 
-				(java.lang.String.valueOf (as 'java.lang.Object' item)))))
-	(.toString sb))
+	(join objs))
 
 (/join:objs:obj
 	(def sb (new 'java.lang.StringBuilder'))
@@ -53,6 +51,7 @@
 true
 false
 /join
+/print
 )
 
 

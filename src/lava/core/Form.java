@@ -13,9 +13,9 @@ import lava.constant.RegexConstants;
 import lava.core.DataMap.DataInfo;
 import lava.core.keyword.FnForm;
 import lava.core.keyword.JavaForm;
+import lava.core.keyword.KeyForm;
 import lava.core.keyword.ListForm;
 import lava.core.keyword.MapForm;
-import lava.core.keyword.KeyForm;
 import lava.core.keyword.SubForm;
 import lava.util.StringUtil;
 import lava.util.Util;
@@ -140,6 +140,12 @@ public class Form {
 	}
 
 	public void run() throws Exception {
+		if(this.getInSubSeq().size()>0){
+			this.inSubSeq.set(0, this.inSubSeq.get(0).getAsForm().asSub.getIng());
+			if(this.getInSubSeq().get(0).isReturn()){
+				return;
+			}
+		}
 		Util.debug(this, Util.debug_when_form_begin);
 	}
 
@@ -464,10 +470,6 @@ public class Form {
 				if(!action.beforeRun(form)){
 					continue;
 				}
-			}
-
-			if(form.getInSubSeq().size()>0&&form.getInSubSeq().get(0).isReturn()){
-				continue;
 			}
 
 			try{

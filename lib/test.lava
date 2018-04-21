@@ -2,4 +2,6 @@
 (use 'core')
 
 
-(println (join [1 2 3] 2))
+(println (join (.keySet (man)) ":"))
+
+

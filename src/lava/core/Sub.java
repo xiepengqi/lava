@@ -1,11 +1,11 @@
 package lava.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lava.constant.Constants;
 import lava.core.DataMap.DataInfo;
 import lava.util.StringUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Sub {
 	private DataMap				dataMap			= new DataMap();
@@ -19,6 +19,8 @@ public class Sub {
 	private List<Instance>	instancePool	= new ArrayList<Instance>();
 	private DataMap				closure			= new DataMap();
 	private boolean  isDebug=false;
+	
+	private Sub ing;
 
 	public Sub(){
 
@@ -53,6 +55,14 @@ public class Sub {
 
 	public DataMap getClosure() {
 		return closure;
+	}
+
+	public Sub getIng() {
+		return ing;
+	}
+
+	public void setIng(Sub ing) {
+		this.ing = ing;
 	}
 
 	public List<String> getArgs() {
@@ -103,6 +113,8 @@ public class Sub {
 		this.isDebug=isDeubg;
 	}
 	public void run(DataMap dataMap) throws Exception {
+		this.asForm.asSub.ing=this;
+		
 		Instance ins = new Instance(this);
 		ins.dataMap.getMap().putAll(dataMap.getMap());
 		instancePool.add(ins);
@@ -144,17 +156,12 @@ public class Sub {
 			final Instance self=this;
 
 			Form.Action action=new Form.Action(){
-				int index;
 				@Override
 				public boolean beforeRun(Form form) {
-					int index = form.inSubSeq.indexOf(self.sub.asForm.asSub);
-					if(index != -1){
-						form.inSubSeq.set(index, self.sub);
-					}
-
 					if (null != form.getRunBy()) {
 						return false;
 					}
+					
 					return true;
 				}
 
@@ -166,7 +173,6 @@ public class Sub {
 						((Sub) form.value).closure.getMap().putAll(superSub.closure.getMap());
 						((Sub) form.value).closure.getMap().putAll(superSub.getDataMap().getMap());
 					}
-					form.inSubSeq.set(index, self.sub.asForm.asSub);
 
 					if (self.isReturn) {
 						self.value = form.getValue();
