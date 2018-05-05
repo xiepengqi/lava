@@ -1,10 +1,3 @@
-(load 'E:\workspace\lava\lib\core.lava')
 (use 'core')
-
-
-(/comp:a:b
-	(def res (cal `{a} - {b}`))
-	(? ()))
-	
-	
-(println (comp 1 2))
+(print 123)
+{13}

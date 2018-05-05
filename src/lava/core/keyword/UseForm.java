@@ -17,7 +17,7 @@ import lava.util.Util;
 public class UseForm extends Form {
 
 	private static Map<String, Integer>	useCase	= new HashMap<String, Integer>();
-    private static List<Code> useCodes=new ArrayList<Code>();
+    private List<Code> useCodes=new ArrayList<Code>();
 	static {
 		useCase.put("String:", 1);
 		useCase.put("String:String", 2);

@@ -5,6 +5,6 @@ package lava;
  */
 public class Test {
     public static void main(String[] args){
-        Main.main(new String[]{"E:\\workspace\\lava\\lib\\test.lava"});
+        Main.main(new String[]{"E:\\workspace\\lava\\lava\\lib\\test.lava"});
     }
 }
