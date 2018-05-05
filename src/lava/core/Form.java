@@ -140,12 +140,6 @@ public class Form {
 	}
 
 	public void run() throws Exception {
-		if(this.getInSubSeq().size()>0){
-			this.inSubSeq.set(0, this.inSubSeq.get(0).getAsForm().asSub.getIng());
-			if(this.getInSubSeq().get(0).isReturn()){
-				return;
-			}
-		}
 		Util.debug(this, Util.debug_when_form_begin);
 	}
 
@@ -474,7 +468,14 @@ public class Form {
 					continue;
 				}
 			}
-
+			if(form.getInSubSeq().size()>0){
+				form.inSubSeq.set(0, form.inSubSeq.get(0).getAsForm().asSub.getIng());
+				if(form.getInSubSeq().get(0).isReturn()){
+					break;
+				}
+			}else if(form.getInCode().isReturn()){
+				break;
+			}
 			try{
 				form.run();
 				Util.debug(form, Util.debug_when_form_end);

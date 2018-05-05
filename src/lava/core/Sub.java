@@ -121,8 +121,10 @@ public class Sub {
 
 		ins.run();
 
-		this.asForm.setValue(ins.value);
-		this.asForm.setType(ins.type);
+		if(!ins.isReturn){
+			this.asForm.setValue(ins.value);
+			this.asForm.setType(ins.type);
+		}
 		instancePool.remove(ins);
 
 		if (instancePool.size() != 0) {
@@ -153,8 +155,6 @@ public class Sub {
 		}
 
 		public void run() throws Exception {
-			final Instance self=this;
-
 			Form.Action action=new Form.Action(){
 				@Override
 				public boolean beforeRun(Form form) {
@@ -174,16 +174,15 @@ public class Sub {
 						((Sub) form.value).closure.getMap().putAll(superSub.getDataMap().getMap());
 					}
 
-					if (self.isReturn) {
-						self.value = form.getValue();
-						self.type = form.getType();
-					}
 					return true;
 				}
 			};
 
 			Form.runFormSeq(this.sub.formSeq,action);
 
+			if(this.isReturn){
+				return;
+			}
 			int argsSize = this.sub.asForm.getArgs().size();
 			if (argsSize > 0) {
 				Data data = getSubReturnData(argsSize);

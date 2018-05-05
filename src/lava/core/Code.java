@@ -1,5 +1,11 @@
 package lava.core;
 
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import lava.Main;
 import lava.constant.Constants;
 import lava.constant.RegexConstants;
@@ -7,12 +13,6 @@ import lava.core.DataMap.Data;
 import lava.util.FileUtil;
 import lava.util.StringUtil;
 import lava.util.Util;
-
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Code {
 	private String					filePath;
@@ -25,7 +25,8 @@ public class Code {
 	private Map<String, Form>		formMap		= new HashMap<String, Form>();
 	private Map<String, Data>	stringMap	= new HashMap<String, Data>();
 	private Map<String, Data>	numberMap	= new HashMap<String, Data>();
-
+	private boolean	isReturn	= false;
+	
 	private Class type=void.class;
 	private Object value=null;
 	
@@ -34,6 +35,14 @@ public class Code {
 	private boolean					isRuned;
 	private boolean					debug;
 	private String					source		= Constants.empty;
+
+	public boolean isReturn() {
+		return isReturn;
+	}
+
+	public void setReturn(boolean isReturn) {
+		this.isReturn = isReturn;
+	}
 
 	public Class getType() {
 		return type;

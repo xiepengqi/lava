@@ -1,9 +1,8 @@
 package lava.core.keyword;
 
-import java.util.List;
-
 import lava.core.DataMap.Data;
 import lava.core.Form;
+import lava.core.Sub;
 
 public class ReturnForm extends Form {
 	@Override
@@ -22,13 +21,22 @@ public class ReturnForm extends Form {
 	public void run() throws Exception {
 		super.run();
 
-		List<Data> parseArgs = this.parseFormArgs(this.args);
-		this.inSubSeq.get(0).setIsReturn(true);
-
-		if(parseArgs.size()>0) {
-			Data data = parseArgs.get(parseArgs.size() - 1);
-			this.value = data.getValue();
+		if(this.args.size()>0) {
+			Data data = this.parseFormArg(this.args.get(this.args.size() - 1));
 			this.type = data.getType();
+			this.value = data.getValue();
 		}
+		if(this.inSubSeq.size() > 0){
+			this.inSubSeq.get(0).setIsReturn(true);
+
+			Sub sub=this.inSubSeq.get(0);
+			sub.getAsForm().setType(this.type);
+			sub.getAsForm().setValue(this.value);
+		}else{
+			this.inCode.setReturn(true);
+			this.inCode.setType(this.type);
+			this.inCode.setValue(this.value);
+		}
+		
 	}
 }

@@ -1,6 +1,5 @@
 package lava.core.keyword;
 
-import lava.constant.Constants;
 import lava.core.DataMap;
 import lava.core.DataMap.Data;
 import lava.core.Form;
