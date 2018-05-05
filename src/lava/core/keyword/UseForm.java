@@ -148,11 +148,6 @@ public class UseForm extends Form {
 				return key;
 			}
 
-			@Override
-			public boolean isOverAble() {
-				return false;
-			}
-
 			@SuppressWarnings("unchecked")
 			@Override
 			public Iterable<Object> defUseKeys() {
@@ -167,12 +162,6 @@ public class UseForm extends Form {
 	@SuppressWarnings("rawtypes")
 	private void exportList(Code useCode, final List exportList) {
 		Util.Action action = new Util.Action() {
-
-			@Override
-			public boolean isOverAble() {
-				return false;
-			}
-
 			@SuppressWarnings("unchecked")
 			@Override
 			public Iterable<Object> defUseKeys() {
