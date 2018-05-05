@@ -27,7 +27,7 @@ public class FnForm extends Form {
 		Sub sub = getSubFromScope(this.fnName);
 
 		if(sub==null){
-			throw new SysError(Util.getErrorStr(this, this.fnName));
+			throw new SysError(this, this.fnName);
 		}
 
 		List<Data> newParseArgs=new ArrayList<Data>();

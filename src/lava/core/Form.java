@@ -189,7 +189,7 @@ public class Form {
 			return data;
 		}
 
-		throw new SysError(Util.getErrorStr(this,arg));
+		throw new SysError(this,arg);
 	}
 
 	protected void runSub(Sub sub,List<Data> parseArgs,List<Object> values) throws Exception {
@@ -386,8 +386,8 @@ public class Form {
 		if (null != formClass) {
 			try {
 				form = (Form) formClass.newInstance();
-			} catch (Exception e) {
-				Util.runtimeError(source+":"+e.toString());
+			} catch (Throwable t) {
+				Util.runtimeError(source+":"+t.toString());
 			}
 		} else if (elems.get(0).contains(Constants.javaChar)) {
 			form = new JavaForm();
@@ -480,10 +480,9 @@ public class Form {
 				form.run();
 				Util.debug(form, Util.debug_when_form_end);
 			}catch(SysError e){
-				throw new SysError(e.getMessage());
-			}catch (Exception e){
-				e.printStackTrace();
-				throw new SysError(Util.getErrorStr(form,e.toString()));
+				throw new SysError(form, e.getMessage());
+			}catch (Throwable t){
+				throw new SysError(form ,t.toString());
 			}
 
 			if (action != null){

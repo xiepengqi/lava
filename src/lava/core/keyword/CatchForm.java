@@ -36,9 +36,9 @@ public class CatchForm extends Form {
             if (form != null) {
                 try{
                     runFormSeq(form.getFormSeqWhichRunBy(this), null);
-                } catch (Exception e){
-                    this.value=e;
-                    this.type=e.getClass();
+                } catch (Throwable t){
+                    this.value=t;
+                    this.type=t.getClass();
                 }
             }
         }

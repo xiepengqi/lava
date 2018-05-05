@@ -102,9 +102,6 @@ public class Util {
 		Main.syntaxError = true;
 	}
 
-	public static String getErrorStr(Form form, String str) {
-		return form.getWhere() + ":" + form.see() + ":" + str;
-	}
 	public static void runtimeError(Code code, String str) {
 		System.err.println("RUNTIME-ERROR:" + code.getIdName() + ":" + str);
 		if (!Main.repl) {

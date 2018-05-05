@@ -25,10 +25,10 @@ public class ThrowForm extends Form {
 	public void run() throws Exception {
 		super.run();
 		Data data=parseFormArg(this.args.get(0));
-		if(data.getValue() instanceof Exception){
+		if(data.getValue() instanceof Throwable){
 			throw (Exception)data.getValue();
 		}else{
-			throw new SysError(Util.getErrorStr(this,this.args.get(0)));
+			throw new SysError(this,this.args.get(0));
 		}
 	}
 }

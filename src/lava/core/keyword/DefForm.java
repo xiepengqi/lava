@@ -44,7 +44,7 @@ public class DefForm extends Form {
 
 		for (String var : this.args.subList(0, this.args.size() - 1)) {
             if (dataMap.getMap().containsKey(var)) {
-                throw new SysError(Util.getErrorStr(this, var));
+                throw new SysError(this, var);
             } else {
                 dataMap.putData(var, new Data(value.getType(),value.getValue(),value.getSource()));
             }
@@ -56,7 +56,7 @@ public class DefForm extends Form {
 
 	private void dealOneArgs(DataMap dataMap) {
 		if (dataMap.getMap().containsKey(this.args.get(0))) {
-            throw new SysError(Util.getErrorStr(this,parseFormArg(this.args.get(0)).getSource()));
+            throw new SysError(this,parseFormArg(this.args.get(0)).getSource());
         }
 
 		dataMap.putData(this.args.get(0), new Data(void.class,null));

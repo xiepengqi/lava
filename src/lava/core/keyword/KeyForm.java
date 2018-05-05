@@ -8,6 +8,7 @@ import lava.constant.Constants;
 import lava.core.DataMap.Data;
 import lava.core.Form;
 import lava.core.Sub;
+import lava.core.SysError;
 import lava.util.StringUtil;
 import lava.util.Util;
 
@@ -35,7 +36,7 @@ public class KeyForm extends Form{
 		
 		List<Data> parseArgs=this.parseFormArgs(this.args);
 		if(!(parseArgs.get(0).getValue() instanceof Map)){
-			Util.runtimeError(Util.getErrorStr(this, this.args.get(0)));
+			throw new SysError(this, this.args.get(0));
 		}
 		Map map=(Map)parseArgs.get(0).getValue();
 		
@@ -45,7 +46,7 @@ public class KeyForm extends Form{
 			this.type=Data.getClass(result);
 		} else {
 			if(!(map.get(this.fieldName) instanceof Sub)){
-				Util.runtimeError(Util.getErrorStr(this, this.fieldName));
+				throw new SysError(this, this.fieldName);
 			}
 			
 			Sub sub=(Sub)map.get(this.fieldName);

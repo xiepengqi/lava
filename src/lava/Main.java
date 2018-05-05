@@ -67,9 +67,8 @@ public class Main {
 				code.run();
 			}catch (SysError e) {
 				Util.runtimeError(e.getMessage());
-			} catch (Exception e) {
-				e.printStackTrace();
-				Util.runtimeError(code, e.toString());
+			} catch (Throwable t) {
+				Util.runtimeError(code, t.toString());
 			}
 		}
 
@@ -85,8 +84,8 @@ public class Main {
 			code.eval(line);
 		}catch (SysError e) {
 			Util.runtimeError(e.getMessage());
-		} catch (Exception e) {
-			Util.runtimeError("lava.repl:"+e.toString());
+		} catch (Throwable t) {
+			Util.runtimeError("lava.repl:"+t.toString());
 		}
 
 		Scanner scanner = new Scanner(System.in);
@@ -111,8 +110,8 @@ public class Main {
 				System.out.println(code.eval("(repl " + line + " )").get("value"));
 			}catch(SysError e){
 				Util.runtimeError(e.getMessage());
-			} catch (Exception e) {
-				Util.runtimeError("lava.repl:"+e.toString());
+			} catch (Throwable t) {
+				Util.runtimeError("lava.repl:"+t.toString());
 			}
 		}
 	}
@@ -148,8 +147,8 @@ public class Main {
 				if (file.getName().endsWith(".jar")) {
 					try {
 						JavaUtil.loadjar(file);
-					} catch (Exception e) {
-						Util.runtimeError("fail to load jar file:"+file.getAbsolutePath());
+					} catch (Throwable t) {
+						Util.runtimeError("fail to load jar file:" + file.getAbsolutePath()+":" + t.toString());
 					}
 					return;
 				}

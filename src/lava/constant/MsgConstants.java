@@ -19,8 +19,8 @@ public class MsgConstants {
             field.setAccessible(true);
             try {
                 field.set(null,field.getName());
-            } catch (IllegalAccessException e) {
-                Util.runtimeError("lava start failed");
+            } catch (Throwable t) {
+                Util.runtimeError("lava start failed: " + t.toString());
             }
         }
     }

@@ -42,9 +42,9 @@ public class UseForm extends Form {
 				useCode.parse();
 			}
 		}catch (SysError e) {
-			Util.syntaxError(this,e.getMessage());
-		} catch (Exception e) {
-			Util.syntaxError(this, e.toString());
+			Util.syntaxError(this, e.getMessage());
+		} catch (Throwable t) {
+			Util.syntaxError(this, t.toString());
 		}
 
 	}
@@ -140,7 +140,7 @@ public class UseForm extends Form {
 			public String defToKey(Object useKey) {
 				String key = (String) exportMap.get(useKey);
 				if(!StringUtil.isDataMapKeyAble(key)){
-					throw new SysError(Util.getErrorStr(form, key));
+					throw new SysError(form, key);
 				}
 				if (null == key) {
 					key = (String) useKey;

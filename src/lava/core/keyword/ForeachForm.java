@@ -56,7 +56,7 @@ public class ForeachForm extends Form {
 			this.value = null;
 			this.type = void.class;
 		} else {
-			throw new SysError(Util.getErrorStr(this, this.args.get(0)));
+			throw new SysError(this, this.args.get(0));
 		}
 	}
 }

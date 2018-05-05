@@ -33,7 +33,7 @@ public class WhileForm extends Form {
 		if (parseArgs.get(0).getValue() instanceof Sub) {
 			flagSub = (Sub) parseArgs.get(0).getValue();
 		} else {
-			throw new SysError(Util.getErrorStr(this, this.args.get(0)));
+			throw new SysError(this, this.args.get(0));
 		}
 
 		if (parseArgs.get(1).getValue() instanceof Sub) {
@@ -56,7 +56,7 @@ public class WhileForm extends Form {
 			this.value = null;
 			this.type = void.class;
 		} else {
-			throw new SysError(Util.getErrorStr(this, this.args.get(1)));
+			throw new SysError(this, this.args.get(1));
 		}
 	}
 }

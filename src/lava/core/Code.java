@@ -163,8 +163,8 @@ public class Code {
 		String codeSource = null;
 		try {
 			codeSource = FileUtil.readFile(this.filePath);
-		} catch (Exception e) {
-			Util.runtimeError(this,e.toString());
+		} catch (Throwable t) {
+			Util.runtimeError(this,t.toString());
 		}
 
 		codeSource = extractString(codeSource);
@@ -298,8 +298,8 @@ public class Code {
 				Object parser = Constants.numberParses.get(suffix);
 				try {
 					data.setValue(((Constructor) parser).newInstance(content));
-				} catch (Exception e) {
-					Util.runtimeError(this,numberSource+":"+e.toString());
+				} catch (Throwable t) {
+					Util.runtimeError(this,numberSource+":"+t.toString());
 				}
 				data.setType(Constants.numberTypes.get(suffix));
 			} else {
