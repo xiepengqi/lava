@@ -3,7 +3,7 @@ package lava.core.keyword;
 import lava.core.Form;
 import lava.core.DataMap.DataInfo;
 
-public class AskForm extends Form{
+public class SwitchForm extends Form{
 	@Override
 	public void parse() {
 		super.parse();

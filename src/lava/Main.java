@@ -38,8 +38,8 @@ public class Main {
 		Map<String, String> envs = System.getenv();
 		List<String> initSourcePath = new ArrayList<String>();
 		for (String key : envs.keySet()) {
-			if (key.toLowerCase().startsWith("lavapath")) {
-				initSourcePath.add(envs.get(key));
+			if (key.equalsIgnoreCase("lava_home")) {
+				initSourcePath.add(envs.get(key) + "/lib");
 			}
 		}
 

@@ -1,7 +1,0 @@
-(load 'E:\workspace\lava\lib\core.lava')
-(use 'core')
-
-
-(println (join (.keySet (man)) ":"))
-
-

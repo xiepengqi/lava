@@ -60,7 +60,7 @@ public class Constants {
 		keywords.put("link", LinkForm.class);
 		keywords.put("man", ManForm.class);
 		keywords.put("export", ExportForm.class);
-		keywords.put("?", AskForm.class);
+		keywords.put("?", SwitchForm.class);
 	}
 
 	static {
