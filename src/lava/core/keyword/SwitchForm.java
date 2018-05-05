@@ -1,7 +1,7 @@
 package lava.core.keyword;
 
 import lava.core.Form;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 
 public class SwitchForm extends Form{
 	@Override
@@ -29,9 +29,9 @@ public class SwitchForm extends Form{
 		super.run();
 		
 		int i=-1;
-		DataInfo main = null;
-		DataInfo key = null;
-		DataInfo value = null;
+		Data main = null;
+		Data key = null;
+		Data value = null;
 		for(String arg:this.args){
 			i++;
 			if(i == 0){
@@ -67,12 +67,12 @@ public class SwitchForm extends Form{
 		}
 	}
 	
-	private DataInfo getParseArg(String arg) throws Exception{
+	private Data getParseArg(String arg) throws Exception{
 		Form form=this.inCode.getFormMap().get(arg);
-		DataInfo data;
+		Data data;
 		if(form!=null){
 			runFormSeq(form.getFormSeqWhichRunBy(this),null);
-			data=new DataInfo(form.getType(),form.getValue());
+			data=new Data(form.getType(),form.getValue());
 		}else{
 			data=this.parseFormArg(arg);
 		}

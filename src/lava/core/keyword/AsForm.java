@@ -4,7 +4,7 @@ import java.util.List;
 
 import lava.constant.Constants;
 import lava.constant.MsgConstants;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 import lava.util.Util;
 
@@ -32,12 +32,12 @@ public class AsForm extends Form {
 
 	@SuppressWarnings("rawtypes")
 	private void processFormAs() throws ClassNotFoundException {
-		List<DataInfo> parseArgs = this.parseFormArgs(this.args);
+		List<Data> parseArgs = this.parseFormArgs(this.args);
 
 		Class classObj;
 		if (this.args.size() == 1) {
 			this.value = parseArgs.get(0).getValue();
-			this.type = DataInfo.getClass(parseArgs.get(0).getValue());
+			this.type = Data.getClass(parseArgs.get(0).getValue());
 			return;
 		}
 
@@ -47,7 +47,7 @@ public class AsForm extends Form {
 			classObj = (Class) getClassByName(parseArgs.get(0).getValue().toString());
 		}
 
-		for (DataInfo data : parseArgs.subList(1, parseArgs.size())) {
+		for (Data data : parseArgs.subList(1, parseArgs.size())) {
 			data.setType(classObj);
 		}
 

@@ -8,7 +8,7 @@ import java.util.Map;
 import lava.Main;
 import lava.constant.Constants;
 import lava.core.Code;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 import lava.core.SysError;
 import lava.util.StringUtil;
@@ -33,7 +33,7 @@ public class UseForm extends Form {
 		try{
 			Code useCode;
 			for (String arg : this.args) {
-				DataInfo data=this.parseFormArg(arg);
+				Data data=this.parseFormArg(arg);
 				useCode = Main.codes.get(data.getValue());
 				if (null == useCode) {
 					continue;
@@ -65,7 +65,7 @@ public class UseForm extends Form {
 		if(useCodes.size() == 0){
 			return;
 		}
-		List<DataInfo> parseArgs = parseFormArgs(this.args);
+		List<Data> parseArgs = parseFormArgs(this.args);
 		int index = 0;
 		boolean isLast;
 		Code useCode;
@@ -207,7 +207,7 @@ public class UseForm extends Form {
 		Util.putAll(useCode.getExports().getMap(), toMap, action);
 	}
 
-	private String genUseCaseKey(int index, List<DataInfo> parseArgs) {
+	private String genUseCaseKey(int index, List<Data> parseArgs) {
 		String first = Constants.empty;
 		String sec = Constants.empty;
 
@@ -222,7 +222,7 @@ public class UseForm extends Form {
 		return first + ":" + sec;
 	}
 
-	private String getClassStr(DataInfo data) {
+	private String getClassStr(Data data) {
 		if (null == data.getValue()) {
 			return "null";
 		}

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import lava.constant.Constants;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 import lava.core.Sub;
 import lava.util.StringUtil;
@@ -33,7 +33,7 @@ public class KeyForm extends Form{
 		
 		Object result;
 		
-		List<DataInfo> parseArgs=this.parseFormArgs(this.args);
+		List<Data> parseArgs=this.parseFormArgs(this.args);
 		if(!(parseArgs.get(0).getValue() instanceof Map)){
 			Util.runtimeError(Util.getErrorStr(this, this.args.get(0)));
 		}
@@ -42,7 +42,7 @@ public class KeyForm extends Form{
 		if(StringUtil.isBlank(fieldName)){
 			result = map.get(parseArgs.get(1).getValue());
 			this.value=result;
-			this.type=DataInfo.getClass(result);
+			this.type=Data.getClass(result);
 		} else {
 			if(!(map.get(this.fieldName) instanceof Sub)){
 				Util.runtimeError(Util.getErrorStr(this, this.fieldName));

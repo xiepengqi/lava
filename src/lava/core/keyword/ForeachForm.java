@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 import lava.core.SysError;
 import lava.core.Sub;
@@ -29,7 +29,7 @@ public class ForeachForm extends Form {
 
 	@SuppressWarnings("rawtypes")
 	private void processFormForeach() throws Exception {
-		List<DataInfo> parseArgs = this.parseFormArgs(this.args);
+		List<Data> parseArgs = this.parseFormArgs(this.args);
 
 		if (parseArgs.get(parseArgs.size() - 1).getValue() instanceof Sub) {
 			Sub sub = (Sub) parseArgs.get(parseArgs.size() - 1).getValue();

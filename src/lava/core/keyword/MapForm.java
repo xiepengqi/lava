@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 
 public class MapForm extends Form {
@@ -25,7 +25,7 @@ public class MapForm extends Form {
 		super.run();
 
 		Map<Object, Object> map = new HashMap<Object, Object>();
-		List<DataInfo> parseArgs = parseFormArgs(this.args);
+		List<Data> parseArgs = parseFormArgs(this.args);
 
 		for (int i = 0; i < parseArgs.size() - 1; i += 2) {
 			map.put(parseArgs.get(i).getValue(), parseArgs.get(i + 1).getValue());

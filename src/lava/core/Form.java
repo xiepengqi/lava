@@ -10,7 +10,7 @@ import java.util.Map;
 import lava.Main;
 import lava.constant.Constants;
 import lava.constant.RegexConstants;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.keyword.FnForm;
 import lava.core.keyword.JavaForm;
 import lava.core.keyword.KeyForm;
@@ -149,21 +149,21 @@ public class Form {
 		Util.debug(this, Util.debug_when_form_begin);
 	}
 
-	protected List<DataInfo> parseFormArgs(List<String> oArgs) {
-		List<DataInfo> parseArgs = new ArrayList<DataMap.DataInfo>();
+	protected List<Data> parseFormArgs(List<String> oArgs) {
+		List<Data> parseArgs = new ArrayList<DataMap.Data>();
 		for (String arg : oArgs) {
 			parseArgs.add(parseFormArg(arg));
 		}
 		return parseArgs;
 	}
 
-	protected DataInfo parseFormArg(String arg){
-		DataMap.DataInfo data;
+	protected Data parseFormArg(String arg){
+		DataMap.Data data;
 
 		data = this.inCode.getStringMap().get(arg);
 		if (null != data) {
 			if(LString.class.equals(data.getType())){
-				data=new DataInfo(String.class,((LString)data.getValue()).parse(this),data.getSource());
+				data=new Data(String.class,((LString)data.getValue()).parse(this),data.getSource());
 			}
 			
 			return data;
@@ -176,7 +176,7 @@ public class Form {
 
 		Form form = this.inCode.getFormMap().get(arg);
 		if (null != form) {
-			return new DataMap.DataInfo(form.getType(), form.getValue());
+			return new DataMap.Data(form.getType(), form.getValue());
 		}
 
 		for (Sub sub : this.inSubSeq) {
@@ -198,7 +198,7 @@ public class Form {
 		throw new SysError(Util.getErrorStr(this,arg));
 	}
 
-	protected void runSub(Sub sub,List<DataInfo> parseArgs,List<Object> values) throws Exception {
+	protected void runSub(Sub sub,List<Data> parseArgs,List<Object> values) throws Exception {
 		List elems=new ArrayList();
 		List args=new ArrayList();
 		boolean isDataInfo=false;
@@ -226,7 +226,7 @@ public class Form {
 				List<Object> list=new ArrayList<Object>();
 				if(argName.startsWith(Constants.expand)){
 					do{
-						list.add(isDataInfo ? ((DataInfo)elems.get(i)).getValue():elems.get(i));
+						list.add(isDataInfo ? ((Data)elems.get(i)).getValue():elems.get(i));
 						i++;
 					}while((elems.size()-i) > subArgsName.size());	
 					temp.put("arg",list);
@@ -252,11 +252,11 @@ public class Form {
 			String argName=(String)elem.get("argName");
 			
 			if((Boolean)elem.get("isDataInfo")){
-				args.add(((DataInfo)arg).getValue());
-				dataMap.putData("$"+argIndex, (DataInfo)arg);
-				dataMap.putData("$-"+(argSize - argIndex), (DataInfo)arg);
+				args.add(((Data)arg).getValue());
+				dataMap.putData("$"+argIndex, (Data)arg);
+				dataMap.putData("$-"+(argSize - argIndex), (Data)arg);
 				if(argName != null){
-					dataMap.putData(argName, (DataInfo)arg);
+					dataMap.putData(argName, (Data)arg);
 				}
 			}else{
 				args.add(arg);
@@ -309,8 +309,8 @@ public class Form {
 		if(elems.size()==0){
 			temp.add(sub);
 			runSub((Sub)subLink,null,temp);
-		}else if(elems.get(0) instanceof DataInfo){
-			temp.add(new DataInfo(Sub.class,sub));
+		}else if(elems.get(0) instanceof Data){
+			temp.add(new Data(Sub.class,sub));
 			temp.addAll(elems);
 			runSub((Sub)subLink,temp,null);
 		}else{
@@ -355,7 +355,7 @@ public class Form {
 	}
 
 	private Sub findSub(DataMap dataMap, String fnName) {
-		DataInfo data = dataMap.get(Constants.subPrefix + fnName);
+		Data data = dataMap.get(Constants.subPrefix + fnName);
 		if (null == data) {
 			data = dataMap.get(fnName);
 		}

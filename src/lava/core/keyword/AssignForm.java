@@ -1,7 +1,7 @@
 package lava.core.keyword;
 
 import lava.constant.MsgConstants;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 import lava.util.StringUtil;
 import lava.util.Util;
@@ -33,10 +33,10 @@ public class AssignForm extends Form {
 	}
 
 	private void processFormAssign() {
-		DataInfo value = this.parseFormArg(this.args.get(this.args.size() - 1));
+		Data value = this.parseFormArg(this.args.get(this.args.size() - 1));
 
 		for (String arg : this.args.subList(0, this.args.size() - 1)) {
-			DataInfo data=this.parseFormArg(arg);
+			Data data=this.parseFormArg(arg);
 			data.setValue(value.getValue());
 			data.setType(value.getType());
 		}

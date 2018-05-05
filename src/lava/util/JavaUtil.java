@@ -1,7 +1,7 @@
 package lava.util;
 
 import lava.constant.Constants;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 
 import java.io.File;
@@ -35,7 +35,7 @@ public class JavaUtil {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static Object processMethod(Form form, List<DataInfo> args) throws Exception {
+	public static Object processMethod(Form form, List<Data> args) throws Exception {
 		List<Object> values = new ArrayList<Object>();
 		List<Class> types = new ArrayList<Class>();
 
@@ -71,7 +71,7 @@ public class JavaUtil {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static Object processNew(Form form, List<DataInfo> args) throws Exception {
+	public static Object processNew(Form form, List<Data> args) throws Exception {
 		List<Object> values = new ArrayList<Object>();
 		List<Class> types = new ArrayList<Class>();
 
@@ -88,7 +88,7 @@ public class JavaUtil {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public static Object processField(Form form, List<DataInfo> args) throws Exception {
+	public static Object processField(Form form, List<Data> args) throws Exception {
 		Class classObj;
 		Object obj;
 		Field field;

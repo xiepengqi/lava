@@ -1,6 +1,6 @@
 package lava.core.keyword;
 
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 
 public class OrForm extends Form {
@@ -34,7 +34,7 @@ public class OrForm extends Form {
 				runFormSeq(form.getFormSeqWhichRunBy(this),null);
 				flag = (Boolean) form.getValue();
 			} else {
-				DataInfo data = parseFormArg(arg);
+				Data data = parseFormArg(arg);
 				flag = (Boolean) data.getValue();
 			}
 			if (flag) {

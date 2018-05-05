@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lava.constant.RegexConstants;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.util.StringUtil;
 
 public class LString {
@@ -33,7 +33,7 @@ public class LString {
 			String[] strs=originSource.split(StringUtil.escapeReg(var),2);
 			
 			String originVar=var.substring(1,var.length()-1);
-			DataInfo data=form.parseFormArg(originVar);
+			Data data=form.parseFormArg(originVar);
 			result.append(strs[0]);
 			result.append(String.valueOf(data.getValue()));
 			

@@ -2,7 +2,7 @@ package lava.core.keyword;
 
 import java.util.List;
 
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 
 public class ReturnForm extends Form {
@@ -22,11 +22,11 @@ public class ReturnForm extends Form {
 	public void run() throws Exception {
 		super.run();
 
-		List<DataInfo> parseArgs = this.parseFormArgs(this.args);
+		List<Data> parseArgs = this.parseFormArgs(this.args);
 		this.inSubSeq.get(0).setIsReturn(true);
 
 		if(parseArgs.size()>0) {
-			DataInfo data = parseArgs.get(parseArgs.size() - 1);
+			Data data = parseArgs.get(parseArgs.size() - 1);
 			this.value = data.getValue();
 			this.type = data.getType();
 		}

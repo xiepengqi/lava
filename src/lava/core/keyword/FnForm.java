@@ -1,6 +1,6 @@
 package lava.core.keyword;
 
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 import lava.core.SysError;
 import lava.core.Sub;
@@ -30,13 +30,13 @@ public class FnForm extends Form {
 			throw new SysError(Util.getErrorStr(this, this.fnName));
 		}
 
-		List<DataInfo> newParseArgs=new ArrayList<DataInfo>();
+		List<Data> newParseArgs=new ArrayList<Data>();
 		for(String arg:this.args){
 			if(!arg.startsWith("*")){
-				newParseArgs.add(new DataInfo(this.parseFormArg(arg)));
+				newParseArgs.add(new Data(this.parseFormArg(arg)));
 				continue;
 			}
-			DataInfo args=new DataInfo(this.parseFormArg(arg.substring(1)));
+			Data args=new Data(this.parseFormArg(arg.substring(1)));
 
 			if(args.getValue()==null){
 				newParseArgs.add(args);
@@ -45,11 +45,11 @@ public class FnForm extends Form {
 
 			if(args.getValue() instanceof Object[]){
 				for(Object obj:(Object[])args.getValue()){
-					newParseArgs.add(new DataInfo(DataInfo.getClass(obj),obj));
+					newParseArgs.add(new Data(Data.getClass(obj),obj));
 				}
 			}else if(args.getValue() instanceof List){
 				for(Object obj:(List)args.getValue()){
-					newParseArgs.add(new DataInfo(DataInfo.getClass(obj),obj));
+					newParseArgs.add(new Data(Data.getClass(obj),obj));
 				}
 			}else{
 				newParseArgs.add(args);

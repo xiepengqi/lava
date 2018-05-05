@@ -2,7 +2,7 @@ package lava.core.keyword;
 
 import lava.constant.Constants;
 import lava.core.DataMap;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 import lava.core.SysError;
 import lava.util.StringUtil;
@@ -41,13 +41,13 @@ public class DefForm extends Form {
 
 	private void dealMoreArgs(DataMap dataMap) {
 		String arg = this.args.get(this.args.size() - 1);
-		DataInfo value = parseFormArg(arg);
+		Data value = parseFormArg(arg);
 
 		for (String var : this.args.subList(0, this.args.size() - 1)) {
             if (dataMap.getMap().containsKey(var)) {
                 throw new SysError(Util.getErrorStr(this, var));
             } else {
-                dataMap.putData(var, new DataInfo(value.getType(),value.getValue(),value.getSource()));
+                dataMap.putData(var, new Data(value.getType(),value.getValue(),value.getSource()));
             }
         }
 
@@ -60,7 +60,7 @@ public class DefForm extends Form {
             throw new SysError(Util.getErrorStr(this,parseFormArg(this.args.get(0)).getSource()));
         }
 
-		dataMap.putData(this.args.get(0), new DataInfo(void.class,null));
+		dataMap.putData(this.args.get(0), new Data(void.class,null));
 
 		this.value = null;
 		this.type = void.class;

@@ -1,7 +1,7 @@
 package lava.core.keyword;
 
 import lava.constant.MsgConstants;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 import lava.core.SysError;
 import lava.util.Util;
@@ -24,7 +24,7 @@ public class ThrowForm extends Form {
 	@Override
 	public void run() throws Exception {
 		super.run();
-		DataInfo data=parseFormArg(this.args.get(0));
+		Data data=parseFormArg(this.args.get(0));
 		if(data.getValue() instanceof Exception){
 			throw (Exception)data.getValue();
 		}else{

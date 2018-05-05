@@ -24,7 +24,7 @@ public class LinkForm extends Form {
     @Override
     public void run() throws Exception {
         super.run();
-        List<DataMap.DataInfo> parseArgs = this.parseFormArgs(this.args);
+        List<DataMap.Data> parseArgs = this.parseFormArgs(this.args);
 
         Object sub=parseArgs.get(0).getValue();
 

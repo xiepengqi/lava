@@ -3,7 +3,7 @@ package lava.core.keyword;
 import java.util.ArrayList;
 import java.util.List;
 
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 import lava.core.SysError;
 import lava.core.Sub;
@@ -27,7 +27,7 @@ public class ForForm extends Form {
 	}
 
 	private void processFormFor() throws Exception {
-		List<DataInfo> parseArgs = this.parseFormArgs(this.args);
+		List<Data> parseArgs = this.parseFormArgs(this.args);
 
 		if (parseArgs.get(0).getValue() instanceof Sub) {
 			Sub sub = (Sub) parseArgs.get(0).getValue();

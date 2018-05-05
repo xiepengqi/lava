@@ -1,6 +1,6 @@
 package lava.core.keyword;
 
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 
 public class IfForm extends Form {
@@ -36,7 +36,7 @@ public class IfForm extends Form {
 
 	private void processFormIf() throws Exception {
 		Form form = null;
-		DataInfo data=null;
+		Data data=null;
 		if ((Boolean) parseFormArg(this.args.get(0)).getValue()) {
 			form = this.inCode.getFormMap().get(this.args.get(1));
 			data = parseFormArg(this.args.get(1));
@@ -49,7 +49,7 @@ public class IfForm extends Form {
 
 		if (null == form) {
 			this.value = data==null ? null:data.getValue();
-			this.type = DataInfo.getType(data);
+			this.type = Data.getType(data);
 			return;
 		}
 

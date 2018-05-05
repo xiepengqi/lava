@@ -3,7 +3,7 @@ package lava.core;
 import lava.Main;
 import lava.constant.Constants;
 import lava.constant.RegexConstants;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.util.FileUtil;
 import lava.util.StringUtil;
 import lava.util.Util;
@@ -23,8 +23,8 @@ public class Code {
 	private DataMap					dataMap		= new DataMap();
 
 	private Map<String, Form>		formMap		= new HashMap<String, Form>();
-	private Map<String, DataInfo>	stringMap	= new HashMap<String, DataInfo>();
-	private Map<String, DataInfo>	numberMap	= new HashMap<String, DataInfo>();
+	private Map<String, Data>	stringMap	= new HashMap<String, Data>();
+	private Map<String, Data>	numberMap	= new HashMap<String, Data>();
 
 	private Class type=void.class;
 	private Object value=null;
@@ -63,11 +63,11 @@ public class Code {
 		this.debug = debug;
 	}
 
-	public Map<String, DataInfo> getNumberMap() {
+	public Map<String, Data> getNumberMap() {
 		return numberMap;
 	}
 
-	public Map<String, DataInfo> getStringMap() {
+	public Map<String, Data> getStringMap() {
 		return stringMap;
 	}
 
@@ -259,7 +259,7 @@ public class Code {
 			if(LString.class.equals(type)){
 				val=new LString(val);
 			}
-			this.stringMap.put(stringId, new DataInfo(type, val, stringSource));
+			this.stringMap.put(stringId, new Data(type, val, stringSource));
 
 			codeSource = codeSource.replaceFirst(reg, stringId);
 			stringSource = StringUtil.getFirstMatch(reg, codeSource);
@@ -282,7 +282,7 @@ public class Code {
 
 			String suffix = numberSource.substring(numberSource.length() - 1);
 			String content = numberSource.substring(0, numberSource.length() - 1);
-			DataInfo data = new DataInfo();
+			Data data = new Data();
 			data.setSource(numberSource);
 			if (StringUtil.isNotEmpty(suffix) && suffix.matches(RegexConstants.numberSuffix)) {
 				Object parser = Constants.numberParses.get(suffix);

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import lava.Main;
 import lava.core.Code;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 
 public class EvalForm extends Form {
@@ -25,13 +25,13 @@ public class EvalForm extends Form {
 	public void run() throws Exception {
 		super.run();
 
-		List<DataInfo> parseArgs = this.parseFormArgs(this.args);
+		List<Data> parseArgs = this.parseFormArgs(this.args);
 		List codeIds = null;
 		String cmd = null;
 
 		Map<String,Object> result = null;
 
-		for (DataInfo data : parseArgs) {
+		for (Data data : parseArgs) {
 			if (data.getValue() instanceof List) {
 				codeIds = (List) data.getValue();
 			} else {

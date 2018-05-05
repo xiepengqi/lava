@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lava.Main;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 
 public class LoadForm extends Form {
@@ -13,7 +13,7 @@ public class LoadForm extends Form {
 		super.parse();
 
 		List<String> paths = new ArrayList<String>();
-		for (DataInfo data : this.parseFormArgs(this.args)) {
+		for (Data data : this.parseFormArgs(this.args)) {
 			paths.add((String) data.getValue());
 		}
 

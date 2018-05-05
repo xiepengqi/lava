@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lava.constant.Constants;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.util.StringUtil;
 
 public class Sub {
@@ -186,7 +186,7 @@ public class Sub {
 
 			int argsSize = this.sub.asForm.getArgs().size();
 			if (argsSize > 0) {
-				DataInfo data = getSubReturnData(argsSize);
+				Data data = getSubReturnData(argsSize);
 
 				this.value = data.getValue();
 				this.type = data.getType();
@@ -196,13 +196,13 @@ public class Sub {
 			}
 		}
 
-		private DataInfo getSubReturnData(int argsSize) {
+		private Data getSubReturnData(int argsSize) {
 			List<String> argsList = this.sub.asForm.getArgs().subList(argsSize - 1, argsSize);
 			String args = argsList.get(0);
 
-			DataInfo data = this.dataMap.get(args);
+			Data data = this.dataMap.get(args);
 			if (null == data) {
-				List<DataInfo> parseArgs = this.sub.asForm.parseFormArgs(argsList);
+				List<Data> parseArgs = this.sub.asForm.parseFormArgs(argsList);
 				data = parseArgs.get(0);
 			}
 

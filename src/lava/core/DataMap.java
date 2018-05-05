@@ -4,32 +4,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DataMap {
-	private Map<String, DataInfo>	map	= new HashMap<String, DataInfo>();
+	private Map<String, Data>	map	= new HashMap<String, Data>();
 
 	public DataMap(){
 		
 	}
 	
-	public DataMap(Map<String,DataInfo> map){
+	public DataMap(Map<String,Data> map){
 		
 	}
 	
-	public static class DataInfo {
-		public DataInfo() {
+	public static class Data {
+		public Data() {
 		}
 
-		public DataInfo(DataInfo dataInfo) {
+		public Data(Data dataInfo) {
 			this.type = dataInfo.getType();
 			this.value = dataInfo.getValue();
 			this.source = dataInfo.getSource();
 		}
 		@SuppressWarnings("rawtypes")
-		public DataInfo(Class type, Object value) {
+		public Data(Class type, Object value) {
 			this.type = type;
 			this.value = value;
 		}
 		@SuppressWarnings("rawtypes")
-		public DataInfo(Class type, Object value, String source) {
+		public Data(Class type, Object value, String source) {
 			this.type = type;
 			this.value = value;
 			this.source = source;
@@ -73,30 +73,30 @@ public class DataMap {
 		public static Class getClass(Object obj){
 			return obj==null ? void.class:obj.getClass();
 		}
-		public static Class getType(DataInfo data){
+		public static Class getType(Data data){
 			return data==null ? void.class:data.getType();
 		}
 	}
 
 	public void put(String key, Object value) {
-		DataInfo data = this.map.get(key);
+		Data data = this.map.get(key);
 		if (null == data) {
-			data = new DataInfo();
+			data = new Data();
 		}
-		data.setType(DataInfo.getClass(value));
+		data.setType(Data.getClass(value));
 		data.setValue(value);
 		this.map.put(key, data);
 	}
 
-	public DataInfo get(String key) {
+	public Data get(String key) {
 		return this.map.get(key);
 	}
 
-	public void putData(String key, DataInfo data) {
+	public void putData(String key, Data data) {
 		this.map.put(key, data);
 	}
 
-	public Map<String, DataInfo> getMap() {
+	public Map<String, Data> getMap() {
 		return map;
 	}
 

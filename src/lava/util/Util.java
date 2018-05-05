@@ -4,7 +4,7 @@ import lava.Main;
 import lava.constant.Constants;
 import lava.constant.RegexConstants;
 import lava.core.Code;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 import lava.core.Sub;
 
@@ -76,8 +76,8 @@ public class Util {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public static void splitArgs(List<DataInfo> args, List<Object> values, List<Class> types) {
-		for (DataInfo arg : args) {
+	public static void splitArgs(List<Data> args, List<Object> values, List<Class> types) {
+		for (Data arg : args) {
 			if (values != null)
 				values.add(arg.getValue());
 			if (types != null)

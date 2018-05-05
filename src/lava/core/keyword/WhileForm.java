@@ -2,7 +2,7 @@ package lava.core.keyword;
 
 import java.util.List;
 
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 import lava.core.SysError;
 import lava.core.Sub;
@@ -26,7 +26,7 @@ public class WhileForm extends Form {
 	}
 
 	private void processFormWhile() throws Exception {
-		List<DataInfo> parseArgs = this.parseFormArgs(this.args);
+		List<Data> parseArgs = this.parseFormArgs(this.args);
 		Sub flagSub = null;
 		Sub bodySub = null;
 

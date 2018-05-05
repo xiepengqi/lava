@@ -2,7 +2,7 @@ package lava.core.keyword;
 
 import lava.Main;
 import lava.constant.MsgConstants;
-import lava.core.DataMap.DataInfo;
+import lava.core.DataMap.Data;
 import lava.core.Form;
 import lava.core.Sub;
 import lava.util.StringUtil;
@@ -41,7 +41,7 @@ public class DebugForm extends Form {
 	public void run() throws Exception {
 		super.run();
 
-		DataInfo data = parseFormArg(this.args.get(0));
+		Data data = parseFormArg(this.args.get(0));
 		Map<Object, Boolean> rollback = new HashMap<Object, Boolean>();
 		boolean mainDebug=Main.debug;
 		if (data.getValue() instanceof Map) {
