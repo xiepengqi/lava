@@ -87,6 +87,7 @@ public class Code {
 		dataMap.put("$config", Main.config);
 		dataMap.put("$codes", Main.codes);
 		dataMap.put("$codeId", this.getIdName());
+		dataMap.put("$subLinks", Main.subLinks);
 
 	}
 
