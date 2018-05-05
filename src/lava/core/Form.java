@@ -320,6 +320,9 @@ public class Form {
 		}
 
 		Main.subLinks.put(key,value);
+		
+		sub.getAsForm().setType(((Sub)subLink).getAsForm().getType());
+		sub.getAsForm().setValue(((Sub)subLink).getAsForm().getValue());
 		return use;
 	}
 

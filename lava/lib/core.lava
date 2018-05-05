@@ -33,12 +33,15 @@
 
 (/time:sub:*args
 	(def time1 (java.lang.System.currentTimeMillis))
+	(def value)
 	(if (def? args)
-		(sub *args)
-		(sub))
+		(share value (sub *args))
+		(share value (sub)))
 	
 	(def time2 (java.lang.System.currentTimeMillis))
 	(println (cal `{time2} - {time1}`))
+	
+	value
 )
 
 (export
