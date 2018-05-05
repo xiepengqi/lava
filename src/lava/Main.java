@@ -5,6 +5,7 @@ import lava.core.Code;
 import lava.core.SysError;
 import lava.util.FileUtil;
 import lava.util.JavaUtil;
+import lava.util.StringUtil;
 import lava.util.Util;
 
 import java.io.File;
@@ -25,7 +26,14 @@ public class Main {
 		for (String arg : args) {
 			if (arg.contains(Constants.configSplit)) {
 				String[] kv = arg.split(Constants.configSplit, 2);
-				config.put(kv[0], kv[1]);
+				if(kv.length < 2){
+					continue;
+				}
+				String key=kv[0].trim();
+				if(StringUtil.isBlank(key)){
+					continue;
+				}
+				config.put(key, kv[1].trim());
 			} else {
 				if (codePaths.size() > 0) {
 					ARGS.add(arg);
