@@ -54,7 +54,13 @@ public class Main {
 		initSource(initSourcePath);
 
 		if (codePaths.size() == 0) {
-			startRepl();
+			try {
+				startRepl();
+			}catch (SysError e) {
+				Util.runtimeError(e.getMessage());
+			} catch (Throwable t) {
+				Util.runtimeError("lava.repl:"+t.toString());
+			}
 			return;
 		}
 
@@ -74,7 +80,7 @@ public class Main {
 
 	}
 
-	public static void startRepl(){
+	public static void startRepl() throws Exception{
 		Main.repl = true;
 		Code code = new Code("lava.repl", null);
 		Main.codes.put(code.getIdName(), code);

@@ -458,11 +458,11 @@ public class Form {
 	}
 
 	public static void runFormSeq(List<Form> formSeq, Action action) throws Exception {
-		List<Form> safeFormSeq = new ArrayList<Form>();
-		if(!Main.syntaxError){
-			safeFormSeq.addAll(formSeq);
-		}
+		List<Form> safeFormSeq = new ArrayList<Form>(formSeq);
 		for (Form form : safeFormSeq) {
+			if(Main.syntaxError && !Main.repl){
+				continue;
+			}
 			if (action != null){
 				if(!action.beforeRun(form)){
 					continue;

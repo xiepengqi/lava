@@ -172,10 +172,6 @@ public class Code {
 		codeSource = extractForm(codeSource);
 
 		this.source = codeSource;
-
-		if (Main.syntaxError && !Main.repl) {
-			System.exit(1);
-		}
 	}
 
 	public void check() {
@@ -189,9 +185,6 @@ public class Code {
 				form.getInSubSeq().get(0).getFormSeq().add(form);
 			}
 			form.check();
-		}
-		if (Main.syntaxError && !Main.repl) {
-			System.exit(1);
 		}
 	}
 
