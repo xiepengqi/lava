@@ -14,6 +14,18 @@ public class StringUtil {
 		return obj==null ? "":obj.toString();
 	}
 
+	public static List<String> validSplit(String source,String flag){
+		String[] strs=toString(source).split(toString(flag));
+		List<String> list=new ArrayList<String>();
+		
+		for(String str:strs){
+			if(isNotBlank(str)){
+				list.add(str);
+			}
+		}
+		return list;
+	}
+	
 	public static boolean isInnerId(Form form, String str) {
 		if (isFormId(form, str)) {
 			return true;

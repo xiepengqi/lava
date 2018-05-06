@@ -147,8 +147,8 @@ public class Main {
 				continue;
 			}
 			try {
-				String evalResult=String.valueOf(code.eval("(repl " + line + " )").get("value"));
-				System.out.println(evalResult.replaceAll(",", Constants.newLine));
+				Object evalResult=code.eval("(repl " + line + " )").get("value");
+				System.out.println(evalResult);
 			}catch(SysError e){
 				Util.runtimeError(e.getMessage());
 			} catch (Throwable t) {

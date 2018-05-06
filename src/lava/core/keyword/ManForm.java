@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import lava.Main;
-import lava.core.DataMap.Data;
+import lava.constant.Constants;
 import lava.core.Form;
 import lava.core.Sub;
+import lava.util.StringUtil;
 import lava.util.Util;
 
 public class ManForm extends Form {
@@ -29,7 +30,7 @@ public class ManForm extends Form {
 
 		Map<String, Object> resources = new HashMap<String, Object>();
 		Map<String, Object> result = new HashMap<String, Object>();
-		
+
 		Util.Action action = new Util.Action() {
 			public boolean isOverAble() {
 				return false;
@@ -42,63 +43,59 @@ public class ManForm extends Form {
 		}
 
 		Util.putAll(this.inCode.getDataMap().getMap(), resources, action);
-		
-		if(this.args.size() == 0){
-			this.type=resources.getClass();
-			this.value=resources;
+
+		if (this.args.size() == 0) {
+			this.type = resources.getClass();
+			this.value = resources;
 			return;
 		}
-		
-		resources.putAll(Main.jarClass);
-	
-		for (String key : resources.keySet()) {
-			boolean isMatched = true;
-			boolean isGoodMatched = false;
-			List<String> fieldPattern = null;
-			for (Data data : this.parseFormArgs(this.args)) {
-				String pattern = String.valueOf(data.getValue());
-				if (fieldPattern != null) {
-					fieldPattern.add(pattern);
-				}
 
-				if (!key.toUpperCase()
-						.contains(pattern.toUpperCase())) {
+		resources.putAll(Main.jarClass);
+
+		for (String key : resources.keySet()) {
+			List<String> patternList = StringUtil.validSplit((String) this
+					.parseFormArg(this.args.get(0)).getValue(), "\\s+");
+			boolean isMatched = true;
+			for (String pattern : patternList) {
+				if (!key.toUpperCase().contains(pattern.toUpperCase())) {
 					isMatched = false;
 					break;
 				}
-				if (key.equals(pattern)) {
-					isGoodMatched = true;
-					fieldPattern = new ArrayList<String>();
-				}
 			}
 
-			if (isGoodMatched) {
-				result.put(key,
-						getMethodList(fieldPattern, resources.get(key)));
-			} else if (isMatched) {
-				result.put(key, resources.get(key));
+			if (isMatched) {
+				String pattern = this.args.size() > 1 ? (String) this
+						.parseFormArg(this.args.get(1)).getValue()
+						: null;
+				patternList = pattern == null ? null : StringUtil.validSplit(pattern, "\\s+");
+				result.put(key, getMethodList(patternList, resources.get(key)));
 			}
 		}
-		
+
 		this.type = result.getClass();
 		this.value = result;
 		return;
 
 	}
 
-	private List getMethodList(List<String> fieldPattern, Object clazz) {
+	private Object getMethodList(List<String> fieldPattern, Object clazz) {
 		if (clazz == null || !(clazz instanceof Class)) {
-			return null;
+			return clazz;
 		}
 
 		List<Object> list = new ArrayList<Object>();
-		list.addAll(Arrays.asList(((Class)clazz).getDeclaredMethods()));
-		list.addAll(Arrays.asList(((Class)clazz).getDeclaredFields()));
+		list.addAll(Arrays.asList(((Class) clazz).getDeclaredMethods()));
+		list.addAll(Arrays.asList(((Class) clazz).getDeclaredFields()));
 
 		List<Object> result = new ArrayList<Object>();
 
+		if(fieldPattern == null){
+			return result;
+		}
+		
 		for (Object obj : list) {
 			boolean isMatched = true;
+
 			for (String pattern : fieldPattern) {
 				if (!String.valueOf(obj).toUpperCase()
 						.contains(pattern.toUpperCase())) {
