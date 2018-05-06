@@ -126,10 +126,6 @@ public class Sub {
 			this.asForm.setType(ins.type);
 		}
 		instancePool.remove(ins);
-
-		if (instancePool.size() != 0) {
-			return;
-		}
 	}
 
 	class Instance {
