@@ -2,12 +2,12 @@ package lava.core.keyword;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import lava.Main;
-import lava.constant.Constants;
 import lava.core.Form;
 import lava.core.Sub;
 import lava.util.StringUtil;
@@ -67,8 +67,18 @@ public class ManForm extends Form {
 				String pattern = this.args.size() > 1 ? (String) this
 						.parseFormArg(this.args.get(1)).getValue()
 						: null;
-				patternList = pattern == null ? null : StringUtil.validSplit(pattern, "\\s+");
-				result.put(key, getMethodList(patternList, resources.get(key)));
+				List<String> methodPatternList = pattern == null ? null : StringUtil.validSplit(pattern, "\\s+");
+				
+				Object obj=getMethodList(methodPatternList, resources.get(key));
+				if((patternList.size() == 0 && 
+						methodPatternList !=null && 
+						methodPatternList.size() > 0 &&
+						((!(obj instanceof Collection)) ||
+							((Collection)obj).size() == 0))){
+					continue;
+				} 
+				
+				result.put(key, obj);
 			}
 		}
 
