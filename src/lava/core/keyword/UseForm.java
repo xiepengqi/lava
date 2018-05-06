@@ -147,13 +147,6 @@ public class UseForm extends Form {
 				}
 				return key;
 			}
-
-			@SuppressWarnings("unchecked")
-			@Override
-			public Iterable<Object> defUseKeys() {
-				return exportMap.keySet();
-			}
-
 		};
 
 		export(useCode, action);
