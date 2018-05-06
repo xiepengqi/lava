@@ -15,7 +15,7 @@ public class RegexConstants {
 	public static String	elemRightBorder	= "(?=[\\s\\)\\]\\}]|$)";
 
 	public static String    extractLString = "`[^`]*`";
-	public static String    extractLStringVar = "\\{[^{}]\\}";
+	public static String    extractLStringVar = "\\{[^{}]+\\}";
 	public static String	extractString	= "'[^']*'|\"[^\"]*\"";
 	public static String	extractNumber		= elemLeftBorder + RegexConstants.number + elemRightBorder;
 	public static String	extractForm		= "(" 
