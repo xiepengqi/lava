@@ -7,17 +7,15 @@ public class RegexConstants {
 	public static String	numberSuffix	= "[ilfdILFD]";
 	public static String	number			= "-?\\d+\\.?\\d*" + numberSuffix + "?";
 
-	public static String	avoidsChars		=StringUtil.escapeReg(Constants.sepOrObjChar + Constants.javaChar + Constants.subPrefix + "{}[]") ;
+	public static String	defVar				= "[^0-9" + StringUtil.escapeReg(Constants.avoidsChars)+ "][^" + Constants.avoidsChars + "]*";
 
-	public static String	var				= "[^0-9" + StringUtil.escapeReg(Constants.expand+Constants.systemVarPrefix)+ avoidsChars + "][^" + avoidsChars + "]*";
-
-	public static String	dataMapKey		= var.replaceFirst(Constants.subPrefix, "");
+	public static String	dataMapKey		= "[^0-9" + StringUtil.escapeReg(Constants.avoidsChars.replace(Constants.subPrefix, ""))+ "][^" + Constants.avoidsChars + "]*";
 
 	public static String	elemLeftBorder	= "(?<=[\\s\\(\\[\\{]|^)";
 	public static String	elemRightBorder	= "(?=[\\s\\)\\]\\}]|$)";
 
 	public static String    extractLString = "`[^`]*`";
-	public static String    extractLStringVar = "\\{"+var+"\\}";
+	public static String    extractLStringVar = "\\{[^{}]\\}";
 	public static String	extractString	= "'[^']*'|\"[^\"]*\"";
 	public static String	extractNumber		= elemLeftBorder + RegexConstants.number + elemRightBorder;
 	public static String	extractForm		= "(" 

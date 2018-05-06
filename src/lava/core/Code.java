@@ -251,8 +251,8 @@ public class Code {
 	}
 
 	private String extractString(String codeSource) {
-		codeSource=extractString(codeSource, RegexConstants.extractString, String.class);
 		codeSource=extractString(codeSource, RegexConstants.extractLString, LString.class);
+		codeSource=extractString(codeSource, RegexConstants.extractString, String.class);
 		
 		return codeSource;
 	}

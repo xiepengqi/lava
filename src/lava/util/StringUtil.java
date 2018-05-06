@@ -75,8 +75,8 @@ public class StringUtil {
 		return true;
 	}
 
-	public static boolean isVarAble(String str) {
-		if (!str.matches(RegexConstants.var)) {
+	public static boolean isDefVarAble(String str) {
+		if (!str.matches(RegexConstants.defVar)) {
 			return false;
 		}
 		if(isKeyWords(str)){

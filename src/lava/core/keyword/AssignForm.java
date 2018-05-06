@@ -20,7 +20,7 @@ public class AssignForm extends Form {
 		}
 
 		for(String arg:this.args.subList(0,this.args.size()-1)){
-			if(!StringUtil.isVarAble(arg)){
+			if(!StringUtil.isDefVarAble(arg)){
 				Util.syntaxError(this,arg+":"+MsgConstants.wrong_arg_name);
 			}
 		}

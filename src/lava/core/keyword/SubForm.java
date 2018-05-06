@@ -52,7 +52,7 @@ public class SubForm extends Form {
 			if(StringUtil.isBlank(argName)){
 				continue;
 			}
-			if(!StringUtil.isVarAble(argName)){
+			if(!StringUtil.isDefVarAble(argName)){
 				Util.syntaxError(this, argName);
 			}
 		}

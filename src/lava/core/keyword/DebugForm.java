@@ -31,7 +31,7 @@ public class DebugForm extends Form {
 		super.check();
 		if(this.args.size()<1){
 			Util.syntaxError(this, MsgConstants.wrong_args_num);
-		}else if((!StringUtil.isInnerId(this,this.args.get(0)))&&!StringUtil.isVarAble(this.args.get(0))){
+		}else if((!StringUtil.isInnerId(this,this.args.get(0)))&&!StringUtil.isDefVarAble(this.args.get(0))){
 			Util.syntaxError(this,MsgConstants.wrong_arg_name);
 		}
 	}
