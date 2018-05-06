@@ -139,12 +139,13 @@ public class UseForm extends Form {
 			@Override
 			public String defToKey(Object useKey) {
 				String key = (String) exportMap.get(useKey);
-				if(!StringUtil.isDataMapKeyAble(key)){
-					throw new SysError(form, key);
-				}
+				
 				if (null == key) {
 					key = (String) useKey;
+				} else if(!StringUtil.isDataMapKeyAble(key)){
+					throw new SysError(form, key);
 				}
+				
 				return key;
 			}
 		};
