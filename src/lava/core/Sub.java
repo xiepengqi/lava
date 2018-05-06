@@ -130,13 +130,6 @@ public class Sub {
 		if (instancePool.size() != 0) {
 			return;
 		}
-
-		for (String key : new ArrayList<String>(this.dataMap.getMap().keySet())) {
-			if (key.startsWith(Constants.subPrefix)) {
-				continue;
-			}
-			this.dataMap.getMap().remove(key);
-		}
 	}
 
 	class Instance {
