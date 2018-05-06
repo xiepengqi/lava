@@ -1,7 +1,9 @@
 package lava.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,6 +12,53 @@ import lava.constant.RegexConstants;
 import lava.core.Form;
 
 public class StringUtil {
+	
+	public static String toFmtString(Object obj, int... levelArray){
+		int level = 0;
+		if(levelArray !=null && levelArray.length > 0){
+			level = levelArray[0];
+		}
+		
+		StringBuilder sb=new StringBuilder();
+		if(obj instanceof Map){
+			sb.append("{");
+			for(Object key:((Map)obj).keySet()){
+				sb.append(Constants.newLine);
+				sb.append(toFmtString( key, level+1) + " : " + toFmtString(((Map)obj).get(key), level+1).trim());
+			}
+			if(sb.length() > 1){
+				sb.append(Constants.newLine + toFmtString("}", level));
+			} else {
+				sb.append("}");
+			}
+			
+		}else if(obj instanceof Collection){
+			sb.append("[");
+			for(Object item:(Collection)obj){
+				sb.append(Constants.newLine);
+				sb.append(toFmtString(item, level+1));
+			}
+			if(sb.length() > 1){
+				sb.append(Constants.newLine + toFmtString("]", level));
+			} else {
+				sb.append("]");
+			}
+		}else{
+			sb.append(getBlank(level * 4));
+			sb.append(obj);
+		}
+		
+		return sb.toString();
+	}
+	
+	public static String getBlank(int num){
+		StringBuilder sb=new StringBuilder();
+		for(int i = 0;i<num;i++){
+			sb.append(" ");
+		}
+		return sb.toString();
+	}
+	
 	public static String toString(Object obj){
 		return obj==null ? "":obj.toString();
 	}

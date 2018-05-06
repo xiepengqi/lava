@@ -92,7 +92,6 @@ public class Main {
 			} catch (SysError e) {
 				Util.runtimeError(e.getMessage());
 			} catch (Throwable t) {
-				t.printStackTrace();
 				Util.runtimeError("lava.repl:"+t.toString());
 			}
 			return;
@@ -148,7 +147,7 @@ public class Main {
 			}
 			try {
 				Object evalResult=code.eval("(repl " + line + " )").get("value");
-				System.out.println(evalResult);
+				System.out.println(StringUtil.toFmtString(evalResult));
 			}catch(SysError e){
 				Util.runtimeError(e.getMessage());
 			} catch (Throwable t) {

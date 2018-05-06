@@ -19,12 +19,25 @@ import lava.core.DataMap.Data;
 import lava.core.Form;
 
 public class JavaUtil {
+	
 	public static HashMap<String, Class> getJarLoaderClass(
 			final URLClassLoader classLoader) throws Exception {
 		final HashMap<String, Class> classMap = new HashMap<String, Class>();
 
 		for (URL url : classLoader.getURLs()) {
-			if (!new File(url.getFile()).isDirectory()) {
+			if (new File(url.getFile()).isDirectory()) {
+				FileUtil.traverseFolder(url.getFile(), new FileUtil.Action() {
+					public void action(File topFile, File file) {
+						if (file.getName().endsWith(".jar")) {
+							HashMap<String, Class> map = getJarClass(
+									file.getPath(), classLoader);
+							if (map != null) {
+								classMap.putAll(map);
+							}
+						}
+					}
+				});
+			} else {
 				HashMap<String, Class> map = getJarClass(url.getFile(),
 						classLoader);
 				if (map != null) {
