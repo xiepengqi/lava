@@ -1,41 +1,83 @@
 package lava.util;
 
-import lava.constant.Constants;
-import lava.core.DataMap.Data;
-import lava.core.Form;
-
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+
+import lava.constant.Constants;
+import lava.core.DataMap.Data;
+import lava.core.Form;
 
 public class JavaUtil {
-	public static JarLoader	jarLoader	= new JarLoader((URLClassLoader) ClassLoader.getSystemClassLoader());
+	public static HashMap<String, Class> getJarLoaderClass(
+			final URLClassLoader classLoader) throws Exception {
+		final HashMap<String, Class> classMap = new HashMap<String, Class>();
 
-	public static class JarLoader {
-		private URLClassLoader	urlClassLoader;
-
-		public JarLoader(URLClassLoader urlClassLoader) {
-			this.urlClassLoader = urlClassLoader;
+		for (URL url : classLoader.getURLs()) {
+			if (!new File(url.getFile()).isDirectory()) {
+				HashMap<String, Class> map = getJarClass(url.getFile(),
+						classLoader);
+				if (map != null) {
+					classMap.putAll(map);
+				}
+			}
 		}
 
-		public void loadJar(URL url) throws Exception {
-			Method addURL = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
-			addURL.setAccessible(true);
-			addURL.invoke(urlClassLoader, url);
-		}
+		return classMap;
 	}
 
-	public static void loadjar(File jarFile) throws Exception {
-		jarLoader.loadJar(jarFile.toURI().toURL());
+	public static HashMap<String, Class> getJarClass(String jarPath,
+			ClassLoader classLoader) {
+		HashMap<String, Class> classMap = new HashMap<String, Class>();
+		JarFile jar = null;
+		try {
+			jar = new JarFile(jarPath);
+		} catch (IOException e1) {
+			return null;
+		}
+		Enumeration e = jar.entries();
+		while (e.hasMoreElements()) {
+			JarEntry entry = (JarEntry) e.nextElement();
+			if (entry.getName().indexOf("META-INF") >= 0) {
+				continue;
+			}
+			String sName = entry.getName();
+			String substr[] = sName.split("/");
+			String pName = "";
+			for (int i = 0; i < substr.length - 1; i++) {
+				if (i > 0)
+					pName = pName + "/" + substr[i];
+				else
+					pName = substr[i];
+			}
+			if (sName.indexOf(".class") < 0) {
+				sName = sName.substring(0, sName.length() - 1);
+			} else {
+				String ppName = sName.replace("/", ".").replace(".class", "");
+				Class myClass = null;
+				try {
+					myClass = classLoader.loadClass(ppName);
+				} catch (ClassNotFoundException e1) {
+				}
+				classMap.put(ppName, myClass);
+			}
+		}
+		return classMap;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static Object processMethod(Form form, List<Data> args) throws Exception {
+	public static Object processMethod(Form form, List<Data> args)
+			throws Exception {
 		List<Object> values = new ArrayList<Object>();
 		List<Class> types = new ArrayList<Class>();
 
@@ -61,9 +103,11 @@ public class JavaUtil {
 			classObject = Class.forName(className);
 		}
 
-		method = classObject.getMethod(methodStr, types.toArray(new Class[types.size()]));
+		method = classObject.getMethod(methodStr,
+				types.toArray(new Class[types.size()]));
 		if (method == null) {
-			method = classObject.getDeclaredMethod(methodStr, types.toArray(new Class[types.size()]));
+			method = classObject.getDeclaredMethod(methodStr,
+					types.toArray(new Class[types.size()]));
 		}
 		method.setAccessible(true);
 		form.setType(method.getReturnType());
@@ -71,16 +115,19 @@ public class JavaUtil {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static Object processNew(Form form, List<Data> args) throws Exception {
+	public static Object processNew(Form form, List<Data> args)
+			throws Exception {
 		List<Object> values = new ArrayList<Object>();
 		List<Class> types = new ArrayList<Class>();
 
 		Util.splitArgs(args, values, types);
 
 		Class classObj = Class.forName((String) values.get(0));
-		Constructor con = classObj.getConstructor(types.subList(1, args.size()).toArray(new Class[types.size() - 1]));
+		Constructor con = classObj.getConstructor(types.subList(1, args.size())
+				.toArray(new Class[types.size() - 1]));
 		if (con == null) {
-			con = classObj.getDeclaredConstructor(types.subList(1, args.size()).toArray(new Class[types.size() - 1]));
+			con = classObj.getDeclaredConstructor(types.subList(1, args.size())
+					.toArray(new Class[types.size() - 1]));
 		}
 		con.setAccessible(true);
 		form.setType(classObj);
@@ -88,7 +135,8 @@ public class JavaUtil {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public static Object processField(Form form, List<Data> args) throws Exception {
+	public static Object processField(Form form, List<Data> args)
+			throws Exception {
 		Class classObj;
 		Object obj;
 		Field field;
@@ -96,15 +144,17 @@ public class JavaUtil {
 
 		Util.splitArgs(args, values, null);
 
-		if (args.size()>1) {
+		if (args.size() > 1) {
 			obj = values.get(0);
 			classObj = obj.getClass();
-			field=getField(classObj,(String)values.get(1));
-		}else{
-			String className = ((String)values.get(0)).replaceFirst("\\.[^\\.]+$", "");
+			field = getField(classObj, (String) values.get(1));
+		} else {
+			String className = ((String) values.get(0)).replaceFirst(
+					"\\.[^\\.]+$", "");
 			obj = null;
 			classObj = Class.forName(className);
-			field=getField(classObj,StringUtil.getFirstMatch("[^\\.]+$", (String)values.get(0)));
+			field = getField(classObj, StringUtil.getFirstMatch("[^\\.]+$",
+					(String) values.get(0)));
 		}
 
 		field.setAccessible(true);
@@ -112,7 +162,8 @@ public class JavaUtil {
 		return field.get(obj);
 	}
 
-	public static Field getField(Class classObj,String fieldName) throws NoSuchFieldException {
+	public static Field getField(Class classObj, String fieldName)
+			throws NoSuchFieldException {
 		Field field = classObj.getField(fieldName);
 		if (field == null) {
 			field = classObj.getDeclaredField(fieldName);

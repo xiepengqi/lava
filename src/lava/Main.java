@@ -1,5 +1,16 @@
 package lava;
 
+import java.io.File;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
 import lava.constant.Constants;
 import lava.core.Code;
 import lava.core.SysError;
@@ -8,19 +19,40 @@ import lava.util.JavaUtil;
 import lava.util.StringUtil;
 import lava.util.Util;
 
-import java.io.File;
-import java.util.*;
-
 public class Main {
 	public static final Map<String, Code> codes = new HashMap<String, Code>();
 	public static final Map<String, String> config = new HashMap<String, String>();
 	public static boolean syntaxError = false;
 	public static final List<String> ARGS = new ArrayList<String>();
 	public static final Map<Object,Object> subLinks=new HashMap<Object,Object>();
-
+	public static final Map<String, Class> jarClass = new HashMap<String, Class>();
+	
 	public static boolean debug=false;
 	public static boolean repl = false;
 
+	
+	public static final JarLoader jarLoader = new JarLoader(
+			(URLClassLoader) Main.class.getClassLoader());
+
+	public static class JarLoader {
+		private URLClassLoader urlClassLoader;
+
+		public JarLoader(URLClassLoader urlClassLoader) {
+			this.urlClassLoader = urlClassLoader;
+		}
+
+		public void loadJar(URL url) throws Exception {
+			Method addURL = URLClassLoader.class.getDeclaredMethod("addURL",
+					URL.class);
+			addURL.setAccessible(true);
+			addURL.invoke(urlClassLoader, url);
+			
+			if(repl){
+				jarClass.putAll(JavaUtil.getJarClass(url.getFile(), jarLoader.urlClassLoader));
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
 		List<String> codePaths = new ArrayList<String>();
 		for (String arg : args) {
@@ -55,10 +87,12 @@ public class Main {
 
 		if (codePaths.size() == 0) {
 			try {
+				jarClass.putAll(JavaUtil.getJarLoaderClass(jarLoader.urlClassLoader));
 				startRepl();
-			}catch (SysError e) {
+			} catch (SysError e) {
 				Util.runtimeError(e.getMessage());
 			} catch (Throwable t) {
+				t.printStackTrace();
 				Util.runtimeError("lava.repl:"+t.toString());
 			}
 			return;
@@ -113,7 +147,8 @@ public class Main {
 				continue;
 			}
 			try {
-				System.out.println(code.eval("(repl " + line + " )").get("value"));
+				String evalResult=String.valueOf(code.eval("(repl " + line + " )").get("value"));
+				System.out.println(evalResult.replaceAll(",", Constants.newLine));
 			}catch(SysError e){
 				Util.runtimeError(e.getMessage());
 			} catch (Throwable t) {
@@ -152,7 +187,7 @@ public class Main {
 			public void action(File topFile, File file) {
 				if (file.getName().endsWith(".jar")) {
 					try {
-						JavaUtil.loadjar(file);
+						jarLoader.loadJar(file.toURI().toURL());;
 					} catch (Throwable t) {
 						Util.runtimeError("fail to load jar file:" + file.getAbsolutePath()+":" + t.toString());
 					}
