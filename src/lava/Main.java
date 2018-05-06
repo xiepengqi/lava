@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -48,7 +49,7 @@ public class Main {
 			addURL.invoke(urlClassLoader, url);
 			
 			if(repl){
-				jarClass.putAll(JavaUtil.getJarClass(url.getFile(), jarLoader.urlClassLoader));
+				jarClass.putAll(JavaUtil.getJarClass(URLDecoder.decode(url.getFile()), jarLoader.urlClassLoader));
 			}
 		}
 	}

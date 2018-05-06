@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -25,8 +26,9 @@ public class JavaUtil {
 		final HashMap<String, Class> classMap = new HashMap<String, Class>();
 
 		for (URL url : classLoader.getURLs()) {
-			if (new File(url.getFile()).isDirectory()) {
-				FileUtil.traverseFolder(url.getFile(), new FileUtil.Action() {
+			String filePath=URLDecoder.decode(url.getFile());
+			if (new File(filePath).isDirectory()) {
+				FileUtil.traverseFolder(filePath, new FileUtil.Action() {
 					public void action(File topFile, File file) {
 						if (file.getName().endsWith(".jar")) {
 							HashMap<String, Class> map = getJarClass(
@@ -38,7 +40,7 @@ public class JavaUtil {
 					}
 				});
 			} else {
-				HashMap<String, Class> map = getJarClass(url.getFile(),
+				HashMap<String, Class> map = getJarClass(filePath,
 						classLoader);
 				if (map != null) {
 					classMap.putAll(map);
@@ -80,7 +82,7 @@ public class JavaUtil {
 				Class myClass = null;
 				try {
 					myClass = classLoader.loadClass(ppName);
-				} catch (ClassNotFoundException e1) {
+				} catch(Throwable t) {
 				}
 				classMap.put(ppName, myClass);
 			}
