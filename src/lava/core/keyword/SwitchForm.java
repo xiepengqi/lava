@@ -1,7 +1,7 @@
 package lava.core.keyword;
 
 import lava.core.Form;
-import lava.core.DataMap.Data;
+import lava.core.Data;
 
 public class SwitchForm extends Form{
 	@Override

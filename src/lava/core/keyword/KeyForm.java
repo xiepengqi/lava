@@ -5,12 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import lava.constant.Constants;
-import lava.core.DataMap.Data;
+import lava.core.Data;
 import lava.core.Form;
 import lava.core.Sub;
 import lava.core.SysError;
 import lava.util.StringUtil;
-import lava.util.Util;
 
 public class KeyForm extends Form{
 	private String fieldName=Constants.empty;

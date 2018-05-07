@@ -2,7 +2,7 @@ package lava.core.keyword;
 
 import lava.Main;
 import lava.constant.MsgConstants;
-import lava.core.DataMap.Data;
+import lava.core.Data;
 import lava.core.Form;
 import lava.core.Sub;
 import lava.util.StringUtil;

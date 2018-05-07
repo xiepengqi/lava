@@ -9,7 +9,6 @@ import java.util.Map;
 import lava.Main;
 import lava.constant.Constants;
 import lava.constant.RegexConstants;
-import lava.core.DataMap.Data;
 import lava.util.FileUtil;
 import lava.util.StringUtil;
 import lava.util.Util;
@@ -311,7 +310,7 @@ public class Code {
 
 	@Override
 	public String toString() {
-		return "Code [idName=" + idName + "]";
+		return StringUtil.join(Constants.empty,"Code [idName=", idName, "]");
 	}
 
 	public String see() {

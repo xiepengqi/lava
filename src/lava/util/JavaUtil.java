@@ -16,7 +16,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import lava.constant.Constants;
-import lava.core.DataMap.Data;
+import lava.core.Data;
 import lava.core.Form;
 
 public class JavaUtil {
@@ -67,17 +67,7 @@ public class JavaUtil {
 				continue;
 			}
 			String sName = entry.getName();
-			String substr[] = sName.split("/");
-			String pName = "";
-			for (int i = 0; i < substr.length - 1; i++) {
-				if (i > 0)
-					pName = pName + "/" + substr[i];
-				else
-					pName = substr[i];
-			}
-			if (sName.indexOf(".class") < 0) {
-				sName = sName.substring(0, sName.length() - 1);
-			} else {
+			if (sName.endsWith(".class")){
 				String ppName = sName.replace("/", ".").replace(".class", "");
 				Class myClass = null;
 				try {

@@ -1,7 +1,7 @@
 package lava.core.keyword;
 
 import lava.Main;
-import lava.core.DataMap;
+import lava.core.Data;
 import lava.core.Form;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class LinkForm extends Form {
     @Override
     public void run() throws Exception {
         super.run();
-        List<DataMap.Data> parseArgs = this.parseFormArgs(this.args);
+        List<Data> parseArgs = this.parseFormArgs(this.args);
 
         Object sub=parseArgs.get(0).getValue();
 

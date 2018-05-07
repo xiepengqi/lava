@@ -5,7 +5,7 @@ import java.util.Map;
 
 import lava.Main;
 import lava.core.Code;
-import lava.core.DataMap.Data;
+import lava.core.Data;
 import lava.core.Form;
 
 public class EvalForm extends Form {

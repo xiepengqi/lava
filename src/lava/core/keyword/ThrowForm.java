@@ -1,7 +1,7 @@
 package lava.core.keyword;
 
 import lava.constant.MsgConstants;
-import lava.core.DataMap.Data;
+import lava.core.Data;
 import lava.core.Form;
 import lava.core.SysError;
 import lava.util.Util;

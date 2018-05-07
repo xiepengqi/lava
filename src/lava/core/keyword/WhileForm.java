@@ -2,11 +2,10 @@ package lava.core.keyword;
 
 import java.util.List;
 
-import lava.core.DataMap.Data;
+import lava.core.Data;
 import lava.core.Form;
 import lava.core.SysError;
 import lava.core.Sub;
-import lava.util.Util;
 
 public class WhileForm extends Form {
 	@Override

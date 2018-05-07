@@ -3,11 +3,10 @@ package lava.core.keyword;
 import java.util.ArrayList;
 import java.util.List;
 
-import lava.core.DataMap.Data;
+import lava.core.Data;
 import lava.core.Form;
 import lava.core.Sub;
 import lava.core.SysError;
-import lava.util.Util;
 
 public class FnForm extends Form {
 	@Override

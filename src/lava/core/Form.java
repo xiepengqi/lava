@@ -10,7 +10,6 @@ import java.util.Map;
 import lava.Main;
 import lava.constant.Constants;
 import lava.constant.RegexConstants;
-import lava.core.DataMap.Data;
 import lava.core.keyword.FnForm;
 import lava.core.keyword.JavaForm;
 import lava.core.keyword.KeyForm;
@@ -144,7 +143,7 @@ public class Form {
 	}
 
 	protected List<Data> parseFormArgs(List<String> oArgs) {
-		List<Data> parseArgs = new ArrayList<DataMap.Data>();
+		List<Data> parseArgs = new ArrayList<Data>();
 		for (String arg : oArgs) {
 			parseArgs.add(parseFormArg(arg));
 		}
@@ -152,7 +151,7 @@ public class Form {
 	}
 
 	protected Data parseFormArg(String arg){
-		DataMap.Data data;
+		Data data;
 
 		data = this.inCode.getStringMap().get(arg);
 		if (null != data) {
@@ -170,7 +169,7 @@ public class Form {
 
 		Form form = this.inCode.getFormMap().get(arg);
 		if (null != form) {
-			return new DataMap.Data(form.getType(), form.getValue());
+			return new Data(form.getType(), form.getValue());
 		}
 
 		for (Sub sub : this.inSubSeq) {
@@ -521,4 +520,8 @@ public class Form {
 		return seeSource;
 	}
 
+	@Override
+	public String toString() {
+		return StringUtil.join(Constants.empty,"Form [idName=", this.getWhere(), "/", this.fnName, "]");
+	}
 }

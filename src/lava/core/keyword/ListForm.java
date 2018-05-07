@@ -3,7 +3,7 @@ package lava.core.keyword;
 import java.util.ArrayList;
 import java.util.List;
 
-import lava.core.DataMap.Data;
+import lava.core.Data;
 import lava.core.Form;
 
 public class ListForm extends Form {
