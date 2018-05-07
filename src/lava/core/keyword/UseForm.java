@@ -9,7 +9,6 @@ import lava.Main;
 import lava.constant.Constants;
 import lava.core.Code;
 import lava.core.Data;
-import lava.core.DataMap;
 import lava.core.Form;
 import lava.core.SysError;
 import lava.util.StringUtil;
@@ -181,7 +180,7 @@ public class UseForm extends Form {
 			toMap = this.inCode.getDataMap().getMap();
 		}
 
-		Util.putAll(new DataMap(useCode.getExports()).getMap(), toMap, action);
+		Util.putAll(useCode.getExports().getMap(), toMap, action);
 	}
 
 	private String genUseCaseKey(int index, List<Data> parseArgs) {

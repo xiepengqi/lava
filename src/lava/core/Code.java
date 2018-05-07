@@ -16,7 +16,7 @@ import lava.util.Util;
 public class Code {
 	private String					filePath;
 	private String					idName;
-	private Map<String,Object>		exports     = new HashMap<String, Object>();
+	private DataMap					exports     = new DataMap();
 	private List<Form>				formSeq		= new ArrayList<Form>();
 
 	private DataMap					dataMap		= new DataMap();
@@ -59,7 +59,7 @@ public class Code {
 		this.value = value;
 	}
 
-	public Map<String,Object> getExports() {
+	public DataMap getExports() {
 		return exports;
 	}
 
@@ -96,7 +96,10 @@ public class Code {
 		dataMap.put("$codes", Main.codes);
 		dataMap.put("$codeId", this.getIdName());
 		dataMap.put("$subLinks", Main.subLinks);
-		dataMap.putAll(Constants.baseTypes);
+
+		for(String key:Constants.baseTypes.keySet()){
+			dataMap.put(key, Constants.baseTypes.get(key));
+		}
 
 	}
 
