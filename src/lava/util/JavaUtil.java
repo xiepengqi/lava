@@ -108,8 +108,11 @@ public class JavaUtil {
 			classObject = Class.forName(className);
 		}
 
-		method = classObject.getMethod(methodStr,
-				types.toArray(new Class[types.size()]));
+		try {
+			method = classObject.getMethod(methodStr,
+					types.toArray(new Class[types.size()]));
+		} catch (NoSuchMethodException e) {
+		}
 		if (method == null) {
 			method = classObject.getDeclaredMethod(methodStr,
 					types.toArray(new Class[types.size()]));
@@ -128,8 +131,12 @@ public class JavaUtil {
 		Util.splitArgs(args, values, types);
 
 		Class classObj = Class.forName((String) values.get(0));
-		Constructor con = classObj.getConstructor(types.subList(1, args.size())
-				.toArray(new Class[types.size() - 1]));
+		Constructor con = null;
+		try {
+			con = classObj.getConstructor(types.subList(1, args.size())
+					.toArray(new Class[types.size() - 1]));
+		} catch (NoSuchMethodException e) {
+		}
 		if (con == null) {
 			con = classObj.getDeclaredConstructor(types.subList(1, args.size())
 					.toArray(new Class[types.size() - 1]));
@@ -169,7 +176,12 @@ public class JavaUtil {
 
 	public static Field getField(Class classObj, String fieldName)
 			throws NoSuchFieldException {
-		Field field = classObj.getField(fieldName);
+		Field field = null;
+		try {
+			field = classObj.getField(fieldName);
+		} catch (NoSuchFieldException e) {
+		}
+
 		if (field == null) {
 			field = classObj.getDeclaredField(fieldName);
 		}
