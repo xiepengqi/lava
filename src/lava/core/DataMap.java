@@ -1,10 +1,10 @@
 package lava.core;
 
-import lava.constant.Constants;
-import lava.util.StringUtil;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import lava.constant.Constants;
+import lava.util.StringUtil;
 
 public class DataMap {
 	private Map<String, Data>	map	= new HashMap<String, Data>();
@@ -38,5 +38,15 @@ public class DataMap {
 	@Override
 	public String toString() {
 		return StringUtil.join(Constants.empty,"DataMap [size=", map.size(), "]");
+	}
+
+	public void putAll(Map baseTypes) {
+		String keyStr=null;
+		for(Object key:baseTypes.keySet()){
+			keyStr=StringUtil.toString(key);
+			if(StringUtil.isNotBlank(keyStr)){
+				this.put(keyStr, baseTypes.get(key));
+			}
+		}
 	}
 }

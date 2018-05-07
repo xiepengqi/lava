@@ -1,7 +1,6 @@
 package lava.util;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -32,9 +31,20 @@ public class StringUtil {
 				sb.append("}");
 			}
 			
-		}else if(obj instanceof Collection){
+		}else if(obj instanceof Iterable){
 			sb.append("[");
-			for(Object item:(Collection)obj){
+			for(Object item:(Iterable)obj){
+				sb.append(Constants.newLine);
+				sb.append(toFmtString(item, level+1));
+			}
+			if(sb.length() > 1){
+				sb.append(Constants.newLine + toFmtString("]", level));
+			} else {
+				sb.append("]");
+			}
+		}else if(obj instanceof Object[]){
+			sb.append("[");
+			for(Object item:(Object[])obj){
 				sb.append(Constants.newLine);
 				sb.append(toFmtString(item, level+1));
 			}

@@ -2,10 +2,10 @@ package lava.core.keyword;
 
 import java.util.List;
 
-import lava.constant.Constants;
 import lava.constant.MsgConstants;
 import lava.core.Data;
 import lava.core.Form;
+import lava.util.StringUtil;
 import lava.util.Util;
 
 public class AsForm extends Form {
@@ -44,25 +44,14 @@ public class AsForm extends Form {
 		if (parseArgs.get(0).getValue() instanceof Class) {
 			classObj = (Class) parseArgs.get(0).getValue();
 		} else {
-			classObj = (Class) getClassByName(parseArgs.get(0).getValue().toString());
+			classObj = Class.forName(StringUtil.toString(parseArgs.get(0).getValue()));
 		}
-
+		
 		for (Data data : parseArgs.subList(1, parseArgs.size())) {
 			data.setType(classObj);
 		}
 
 		this.value = parseArgs.get(parseArgs.size() - 1).getValue();
 		this.type = classObj;
-	}
-
-	@SuppressWarnings("rawtypes")
-	private Class getClassByName(String className) throws ClassNotFoundException {
-		Class classObj = null;
-		if (null != Constants.baseTypes.get(className)) {
-			classObj = Constants.baseTypes.get(className);
-		} else {
-			classObj = Class.forName(className);
-		}
-		return classObj;
 	}
 }
