@@ -1,6 +1,7 @@
 package lava.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -42,22 +43,34 @@ public class StringUtil {
 			} else {
 				sb.append("]");
 			}
-		}else if(obj.getClass().isArray()){
-			sb.append("[");
-			for(Object item:(Object[])obj){
-				sb.append(Constants.newLine);
-				sb.append(toFmtString(item, level+1));
+		}else if(obj !=null && obj.getClass().isArray()){
+			String value=null;
+			
+			if(obj instanceof int[]){
+				value=Arrays.toString((int[]) obj);
+			}else if(obj instanceof float[]){
+				value=Arrays.toString((float[]) obj);
+			}else if(obj instanceof long[]){
+				value=Arrays.toString((long[]) obj);
+			}else if(obj instanceof double[]){
+				value=Arrays.toString((double[]) obj);
+			}else if(obj instanceof char[]){
+				value=Arrays.toString((char[]) obj);
+			}else if(obj instanceof byte[]){
+				value=Arrays.toString((byte[]) obj);
+			}else if(obj instanceof short[]){
+				value=Arrays.toString((short[]) obj);
+			}else if(obj instanceof boolean[]){
+				value=Arrays.toString((boolean[]) obj);
+			}else{
+				value=Arrays.deepToString((Object[]) obj);
 			}
-			if(sb.length() > 1){
-				sb.append(Constants.newLine + toFmtString("]", level));
-			} else {
-				sb.append("]");
-			}
+			sb.append(value);
 		}else{
 			sb.append(getBlank(level * 4));
 			sb.append(obj);
 		}
-		
+
 		return sb.toString();
 	}
 	
