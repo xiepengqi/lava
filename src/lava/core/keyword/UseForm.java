@@ -17,7 +17,7 @@ import lava.util.Util;
 public class UseForm extends Form {
 
 	private static Map<String, Integer>	useCase	= new HashMap<String, Integer>();
-    private List<Code> useCodes=new ArrayList<Code>();
+
 	static {
 		useCase.put("String:", 1);
 		useCase.put("String:String", 2);
@@ -30,45 +30,38 @@ public class UseForm extends Form {
 	public void parse() {
 		super.parse();
 
-		try{
-			Code useCode;
-			for (String arg : this.args) {
-				Data data=this.parseFormArg(arg);
-				useCode = Main.codes.get(data.getValue());
-				if (null == useCode) {
-					continue;
-				}
-				useCodes.add(useCode);
-				useCode.parse();
-			}
-		}catch (SysError e) {
-			Util.syntaxError(this, e.getMessage());
-		} catch (Throwable t) {
-			Util.syntaxError(this, t.toString());
-		}
-
 	}
 
 	@Override
 	public void check() {
 		super.check();
 
-		for (Code useCode : useCodes) {
-			useCode.check();
-		}
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void run() throws Exception {
 		super.run();
+		List<Code> useCodes=new ArrayList<Code>();
+		Code useCode;
+		for (String arg : this.args) {
+			Data data=this.parseFormArg(arg);
+			useCode = Main.codes.get(data.getValue());
+			if (null == useCode) {
+				throw new SysError(this, String.valueOf(data.getValue()));
+			}
+			useCodes.add(useCode);
+			useCode.parse();
+			useCode.check();
+			useCode.run();
+		}
+
 		if(useCodes.size() == 0){
 			return;
 		}
 		List<Data> parseArgs = parseFormArgs(this.args);
 		int index = 0;
 		boolean isLast;
-		Code useCode;
 		while (true) {
 			String key = genUseCaseKey(index, parseArgs);
 			Integer catchCase = useCase.get(key);
