@@ -12,6 +12,10 @@ public class DataMap {
 	public DataMap(){
 		
 	}
+	
+	public DataMap(Map map){
+		this.putAll(map);
+	}
 
 	public void put(String key, Object value) {
 		Data data = this.map.get(key);
@@ -40,12 +44,12 @@ public class DataMap {
 		return StringUtil.join(Constants.empty,"DataMap [size=", map.size(), "]");
 	}
 
-	public void putAll(Map baseTypes) {
+	public void putAll(Map map) {
 		String keyStr=null;
-		for(Object key:baseTypes.keySet()){
+		for(Object key:map.keySet()){
 			keyStr=StringUtil.toString(key);
 			if(StringUtil.isNotBlank(keyStr)){
-				this.put(keyStr, baseTypes.get(key));
+				this.put(keyStr, map.get(key));
 			}
 		}
 	}

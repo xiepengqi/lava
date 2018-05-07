@@ -16,7 +16,7 @@ import lava.util.Util;
 public class Code {
 	private String					filePath;
 	private String					idName;
-	private DataMap					exports     = new DataMap();
+	private Map<String,Object>		exports     = new HashMap<String, Object>();
 	private List<Form>				formSeq		= new ArrayList<Form>();
 
 	private DataMap					dataMap		= new DataMap();
@@ -59,7 +59,7 @@ public class Code {
 		this.value = value;
 	}
 
-	public DataMap getExports() {
+	public Map<String,Object> getExports() {
 		return exports;
 	}
 
@@ -213,9 +213,9 @@ public class Code {
 		};
 
 		Form.runFormSeq(this.formSeq,action);
-		Form lastForm=this.formSeq.get(this.formSeq.size()-1);
-		this.value=lastForm.value;
-		this.type=lastForm.type;
+		
+		this.type = Map.class;
+		this.value = this.exports;
 	}
 
 	private String extractForm(String codeSource){

@@ -23,7 +23,7 @@ public class ExportForm extends Form{
         super.run();
 
         for(String arg:this.args){
-            this.inCode.getExports().putData(arg,this.parseFormArg(arg));
+            this.inCode.getExports().put(arg,this.parseFormArg(arg));
         }
     }
 }
