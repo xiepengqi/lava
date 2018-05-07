@@ -1,5 +1,11 @@
 package lava.util;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import lava.Main;
 import lava.constant.Constants;
 import lava.constant.RegexConstants;
@@ -7,8 +13,6 @@ import lava.core.Code;
 import lava.core.Data;
 import lava.core.Form;
 import lava.core.Sub;
-
-import java.util.*;
 
 public class Util {
 	public static int debug_when_form_begin =0;
@@ -143,8 +147,8 @@ public class Util {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static void putAll(Map useMap, Map toMap, Action action) {
-
+	public static List<Object> putAll(Map useMap, Map toMap, Action action) {
+		List<Object> putKeys = new ArrayList<Object>();
 		Iterable<Object> useKeys = action.defUseKeys();
 
 		if (useKeys == null) {
@@ -165,7 +169,9 @@ public class Util {
 				continue;
 			}
 			toMap.put(toKey, useMap.get(useKey));
+			putKeys.add(toKey);
 		}
+		return putKeys;
 	}
 
 }

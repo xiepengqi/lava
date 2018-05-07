@@ -180,7 +180,7 @@ public class UseForm extends Form {
 			toMap = this.inCode.getDataMap().getMap();
 		}
 
-		Util.putAll(useCode.getExports().getMap(), toMap, action);
+		((List)useCode.getValue()).addAll(Util.putAll(useCode.getExports().getMap(), toMap, action));
 	}
 
 	private String genUseCaseKey(int index, List<Data> parseArgs) {

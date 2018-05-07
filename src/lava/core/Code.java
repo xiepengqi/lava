@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import lava.Main;
 import lava.constant.Constants;
@@ -218,8 +217,8 @@ public class Code {
 
 		Form.runFormSeq(this.formSeq,action);
 		
-		this.type = Set.class;
-		this.value = this.exports.getMap().keySet();
+		this.type = ArrayList.class;
+		this.value = new ArrayList<String>();
 	}
 
 	private String extractForm(String codeSource){
