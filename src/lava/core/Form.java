@@ -522,6 +522,6 @@ public class Form {
 
 	@Override
 	public String toString() {
-		return StringUtil.join(Constants.empty,"Form [idName=", this.getWhere(), "/", this.fnName, "]");
+		return StringUtil.join(Constants.empty,"Form [type=", this.getClass() ,", path=", this.getWhere(), "/", this.fnName, "]");
 	}
 }
