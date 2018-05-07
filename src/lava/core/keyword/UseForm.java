@@ -46,6 +46,9 @@ public class UseForm extends Form {
 		Code useCode;
 		for (String arg : this.args) {
 			Data data=this.parseFormArg(arg);
+			if(!(data.getValue() instanceof String)){
+				continue;
+			}
 			useCode = Main.codes.get(data.getValue());
 			if (null == useCode) {
 				throw new SysError(this, String.valueOf(data.getValue()));
