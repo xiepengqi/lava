@@ -42,7 +42,7 @@ public class StringUtil {
 			} else {
 				sb.append("]");
 			}
-		}else if(obj instanceof Object[]){
+		}else if(obj.getClass().isArray()){
 			sb.append("[");
 			for(Object item:(Object[])obj){
 				sb.append(Constants.newLine);
