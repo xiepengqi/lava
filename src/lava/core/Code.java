@@ -216,9 +216,9 @@ public class Code {
 		};
 
 		Form.runFormSeq(this.formSeq,action);
-		
-		this.type = ArrayList.class;
-		this.value = new ArrayList<String>();
+
+		this.type = DataMap.class;
+		this.value = this.exports;
 	}
 
 	private String extractForm(String codeSource){

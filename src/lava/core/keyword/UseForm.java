@@ -42,6 +42,9 @@ public class UseForm extends Form {
 	@Override
 	public void run() throws Exception {
 		super.run();
+		this.type = ArrayList.class;
+		this.value = new ArrayList<String>();
+
 		List<Code> useCodes=new ArrayList<Code>();
 		Code useCode;
 		for (String arg : this.args) {
@@ -122,27 +125,38 @@ public class UseForm extends Form {
 				break;
 			}
 		}
-		
-		Code lastCode=useCodes.get(useCodes.size()-1);
-		
-		this.value=lastCode.getValue();
-		this.type=lastCode.getType();
 	}
 
 	@SuppressWarnings("rawtypes")
 	private void exportMap(Code useCode, final Map exportMap,final Form form) {
 		Util.Action action = new Util.Action() {
+			private boolean isOverAble = false;
+
 			@Override
 			public String defToKey(Object useKey) {
-				String key = (String) exportMap.get(useKey);
+				String toKey = (String) exportMap.get(useKey);
 				
-				if (null == key) {
-					key = (String) useKey;
-				} else if(!StringUtil.isDataMapKeyAble(key)){
-					throw new SysError(form, key);
+				if (null == toKey) {
+					toKey = (String) useKey;
+				} else if(!StringUtil.isDataMapKeyAble(toKey)){
+					throw new SysError(form, toKey);
 				}
-				
-				return key;
+
+				if(exportMap.containsKey(useKey)){
+					isOverAble = true;
+				}
+
+				return toKey;
+			}
+
+			@Override
+			public boolean isOverAble() {
+				boolean result = false;
+				if(isOverAble){
+					result = true;
+					isOverAble = false;
+				}
+				return result;
 			}
 		};
 
@@ -183,7 +197,7 @@ public class UseForm extends Form {
 			toMap = this.inCode.getDataMap().getMap();
 		}
 
-		((List)useCode.getValue()).addAll(Util.putAll(useCode.getExports().getMap(), toMap, action));
+		((List)this.value).addAll(Util.putAll(useCode.getExports().getMap(), toMap, action));
 	}
 
 	private String genUseCaseKey(int index, List<Data> parseArgs) {
