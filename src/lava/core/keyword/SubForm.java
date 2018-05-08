@@ -1,12 +1,13 @@
 package lava.core.keyword;
 
+import java.util.Arrays;
+
 import lava.constant.Constants;
+import lava.core.DataMap;
 import lava.core.Form;
 import lava.core.Sub;
 import lava.util.StringUtil;
 import lava.util.Util;
-
-import java.util.Arrays;
 
 public class SubForm extends Form {
 
@@ -61,10 +62,18 @@ public class SubForm extends Form {
 			return;
 		}
 
+		DataMap dataMap = null;
 		if (this.inSubSeq.size() > 0) {
-			this.inSubSeq.get(0).getDataMap().put(this.fnName, this.asSub);
+			dataMap = this.inSubSeq.get(0).getDataMap();
+			
 		} else {
-			this.inCode.getDataMap().put(this.fnName, this.asSub);
+			dataMap = this.inCode.getDataMap();
+		}
+		
+		if(dataMap.getMap().containsKey(this.fnName)){
+			Util.syntaxError(this, this.fnName);
+		}else{
+			dataMap.put(this.fnName, this.asSub);
 		}
 	}
 
