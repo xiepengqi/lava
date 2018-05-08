@@ -1,6 +1,7 @@
 package lava.core.keyword;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class UseForm extends Form {
 	static {
 		useCase.put("String:", 1);
 		useCase.put("String:String", 2);
-		useCase.put("String:List", 3);
+		useCase.put("String:Collection", 3);
 		useCase.put("String:Map", 4);
 		useCase.put(":", 5);
 	}
@@ -93,9 +94,9 @@ public class UseForm extends Form {
 				case 3:
 					useCode = Main.codes.get(parseArgs.get(index).getValue());
 					useCode.run();
-					List exportList = (List) parseArgs.get(index + 1).getValue();
+					Collection exportCollection = (Collection) parseArgs.get(index + 1).getValue();
 
-					exportList(useCode, exportList);
+					exportCollection(useCode, exportCollection);
 					index += 2;
 					isLast = false;
 
@@ -164,12 +165,12 @@ public class UseForm extends Form {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void exportList(Code useCode, final List exportList) {
+	private void exportCollection(Code useCode, final Collection exportCollection) {
 		Util.Action action = new Util.Action() {
 			@SuppressWarnings("unchecked")
 			@Override
 			public Iterable<Object> defUseKeys() {
-				return exportList;
+				return exportCollection;
 			}
 
 		};
@@ -222,8 +223,8 @@ public class UseForm extends Form {
 		if (data.getValue().getClass().equals(String.class)) {
 			return "String";
 		}
-		if (data.getValue() instanceof List) {
-			return "List";
+		if (data.getValue() instanceof Collection) {
+			return "Collection";
 		}
 		if (data.getValue() instanceof Map) {
 			return "Map";
