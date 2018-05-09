@@ -167,7 +167,7 @@ public class Code {
 		try {
 			codeSource = FileUtil.readFile(this.filePath);
 		} catch (Throwable t) {
-			Util.runtimeError(this,t.toString());
+			Util.systemError(this,t.toString());
 		}
 
 		codeSource = extractString(codeSource);
@@ -295,7 +295,7 @@ public class Code {
 				try {
 					data.setValue(((Constructor) parser).newInstance(content));
 				} catch (Throwable t) {
-					Util.runtimeError(this,numberSource+":"+t.toString());
+					Util.systemError(this,numberSource+":"+t.toString());
 				}
 				data.setType(Constants.numberTypes.get(suffix));
 			} else {

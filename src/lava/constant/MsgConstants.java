@@ -20,7 +20,7 @@ public class MsgConstants {
             try {
                 field.set(null,field.getName());
             } catch (Throwable t) {
-                Util.runtimeError("lava start failed: " + t.toString());
+                Util.systemError("lava start failed: " + t.toString());
             }
         }
     }

@@ -115,7 +115,7 @@ public class Constants {
 			newFloat = Float.class.getConstructor(String.class);
 			newDouble = Double.class.getConstructor(String.class);
 		} catch (Throwable t) {
-			Util.runtimeError("lava start failed: " + t.toString());
+			Util.systemError("lava start failed: " + t.toString());
 		}
 
 		numberParses.put("i", newInteger);

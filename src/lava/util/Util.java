@@ -106,14 +106,14 @@ public class Util {
 		Main.syntaxError = true;
 	}
 
-	public static void runtimeError(Code code, String str) {
-		System.err.println("RUNTIME-ERROR:" + code.getIdName() + ":" + str);
+	public static void systemError(Code code, String str) {
+		System.err.println("SYSTEM-ERROR:" + code.getIdName() + ":" + str);
 		if (!Main.repl) {
 			System.exit(1);
 		}
 	}
-	public static void runtimeError(String str) {
-		System.err.println("RUNTIME-ERROR:" + str);
+	public static void systemError(String str) {
+		System.err.println("SYSTEM-ERROR:" + str);
 		if (!Main.repl) {
 			System.exit(1);
 		}

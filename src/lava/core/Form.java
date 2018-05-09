@@ -386,7 +386,7 @@ public class Form {
 			try {
 				form = (Form) formClass.newInstance();
 			} catch (Throwable t) {
-				Util.runtimeError(source+":"+t.toString());
+				Util.systemError(source+":"+t.toString());
 			}
 		} else if (elems.get(0).contains(Constants.javaChar)) {
 			form = new JavaForm();
