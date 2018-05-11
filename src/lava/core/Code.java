@@ -1,10 +1,7 @@
 package lava.core;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import lava.Main;
 import lava.constant.Constants;
@@ -217,8 +214,9 @@ public class Code {
 
 		Form.runFormSeq(this.formSeq,action);
 
-		this.type = DataMap.class;
-		this.value = this.exports;
+		Set keys = this.exports.getMap().keySet();
+		this.type = Data.getClass(keys);
+		this.value = keys;
 	}
 
 	private String extractForm(String codeSource){
