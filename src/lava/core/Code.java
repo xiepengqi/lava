@@ -12,6 +12,7 @@ import lava.util.Util;
 
 public class Code {
 	private String					filePath;
+	private String 					packagePath;
 	private String					idName;
 	private DataMap					exports     = new DataMap();
 	private List<Form>				formSeq		= new ArrayList<Form>();
@@ -83,6 +84,9 @@ public class Code {
 	public Code(String idName, String filePath) {
 		this.filePath = filePath;
 		this.idName = idName;
+		if(this.packagePath != null){
+			this.packagePath = filePath.substring(0, (filePath.length() - filePath.lastIndexOf(".")));
+		}
 
 		for (String key : Main.config.keySet()) {
 			dataMap.put(Constants.systemVarPrefix + key, Main.config.get(key));
