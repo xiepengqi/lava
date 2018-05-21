@@ -81,12 +81,10 @@ public class Code {
 		return formMap;
 	}
 
-	public Code(String idName, String filePath) {
+	public Code(String idName, String packagePath, String filePath) {
+		this.packagePath = packagePath;
 		this.filePath = filePath;
 		this.idName = idName;
-		if(this.packagePath != null){
-			this.packagePath = filePath.substring(0, (filePath.length() - filePath.lastIndexOf(".")));
-		}
 
 		for (String key : Main.config.keySet()) {
 			dataMap.put(Constants.systemVarPrefix + key, Main.config.get(key));

@@ -116,7 +116,7 @@ public class Main {
 
 	public static void startRepl() throws Exception{
 		Main.repl = true;
-		Code code = new Code("lava.repl", null);
+		Code code = new Code("lava.repl", null, null);
 		Main.codes.put(code.getIdName(), code);
 
 		String line = "(/repl (if (def? $-1) $-1  ''))";
@@ -207,7 +207,7 @@ public class Main {
 				if (codes.containsKey(idName)) {
 					list.remove(codes.get(idName));
 				}
-				Code code = new Code(idName, file.getAbsolutePath());
+				Code code = new Code(idName, topFile.getAbsolutePath() , file.getAbsolutePath());
 				codes.put(idName, code);
 				list.add(code);
 
