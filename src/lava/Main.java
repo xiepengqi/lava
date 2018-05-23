@@ -27,7 +27,8 @@ public class Main {
 	public static final List<String> ARGS = new ArrayList<String>();
 	public static final Map<Object,Object> subLinks=new HashMap<Object,Object>();
 	public static final Map<String, Class> jarClass = new HashMap<String, Class>();
-	
+	public static final List<String> urls = new ArrayList<String>();
+
 	public static boolean debug=false;
 	public static boolean repl = false;
 
@@ -205,6 +206,7 @@ public class Main {
 		};
 
 		for (String path : paths) {
+			urls.add(path);
 			FileUtil.traverseFolder(path, action);
 		}
 		return list;
