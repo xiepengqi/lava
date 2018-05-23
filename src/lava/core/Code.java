@@ -1,5 +1,6 @@
 package lava.core;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.*;
 
@@ -81,10 +82,22 @@ public class Code {
 		return formMap;
 	}
 
-	public Code(String idName, String packagePath, String filePath) {
+	public Code(String packagePath, String filePath, String idName) {
 		this.packagePath = packagePath;
 		this.filePath = filePath;
-		this.idName = idName;
+
+		if(StringUtil.isNotBlank(idName)){
+			this.idName = idName;
+		} else {
+			if (new File(packagePath).isDirectory()) {
+				this.idName = filePath.substring(packagePath.length()+1)
+						.replaceAll("\\.[^/\\.]+$", "")
+						.replaceAll("[/\\\\]+",".");
+			} else {
+				this.idName = new File(packagePath).getName()
+						.replaceFirst("\\.lava$", Constants.empty);
+			}
+		}
 
 		for (String key : Main.config.keySet()) {
 			dataMap.put(Constants.systemVarPrefix + key, Main.config.get(key));

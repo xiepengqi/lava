@@ -116,7 +116,7 @@ public class Main {
 
 	public static void startRepl() throws Exception{
 		Main.repl = true;
-		Code code = new Code("lava.repl", null, null);
+		Code code = new Code(null, null, "lava.repl");
 		Main.codes.put(code.getIdName(), code);
 
 		String line = "(/repl (if (def? $-1) $-1  ''))";
@@ -196,25 +196,10 @@ public class Main {
 				if (!file.getName().endsWith(".lava")) {
 					return;
 				}
-				String idName;
-				if (topFile.isDirectory()) {
-					idName = getIdName(topFile.getPath(), file.getAbsolutePath());
-				} else {
-					idName = topFile.getName().replaceFirst("\\.lava$",
-							Constants.empty);
-				}
 
-				if (codes.containsKey(idName)) {
-					list.remove(codes.get(idName));
-				}
-				Code code = new Code(idName, topFile.getAbsolutePath() , file.getAbsolutePath());
-				codes.put(idName, code);
+				Code code = new Code(topFile.getAbsolutePath() , file.getAbsolutePath(), null);
+				codes.put(code.getIdName(), code);
 				list.add(code);
-
-			}
-
-			private String getIdName(String homePath, String filePath) {
-				return filePath.substring(homePath.length()+1).replaceAll("\\.[^/\\.]+$", "").replaceAll("[/\\\\]+",".");
 			}
 
 		};
