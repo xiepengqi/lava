@@ -1,5 +1,6 @@
 package lava.core.keyword;
 
+import lava.core.Data;
 import lava.core.Form;
 
 /**
@@ -22,8 +23,15 @@ public class ExportForm extends Form{
     public void run() throws Exception {
         super.run();
 
+        if(this.args.size() == 0){
+        	this.inCode.getExports().getMap().putAll(this.inCode.getDataMap().getMap());
+        	return;
+        }
+        
         for(String arg:this.args){
-            this.inCode.getExports().putData(arg,this.parseFormArg(arg));
+        	Data data=this.parseFormArg(arg);
+        	
+            this.inCode.getExports().putData(arg, data);
         }
     }
 }
