@@ -3,6 +3,7 @@ package lava.core.keyword;
 import java.util.ArrayList;
 import java.util.List;
 
+import lava.constant.Constants;
 import lava.core.Data;
 import lava.core.Form;
 import lava.core.Sub;
@@ -31,7 +32,7 @@ public class FnForm extends Form {
 
 		List<Data> newParseArgs=new ArrayList<Data>();
 		for(String arg:this.args){
-			if(!arg.startsWith("*")){
+			if(!arg.startsWith(Constants.expand)){
 				newParseArgs.add(new Data(this.parseFormArg(arg)));
 				continue;
 			}

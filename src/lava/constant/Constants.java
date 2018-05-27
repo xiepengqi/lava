@@ -46,7 +46,7 @@ public class Constants {
 	public static String 					sepOrObjChar					= ":";
 	public static String 					expand				="*";
 
-	public static String	avoidsChars		=idMid + sepOrObjChar + javaChar +subPrefix + systemVarPrefix;
+	public static String	avoidsChars		=idMid + sepOrObjChar + javaChar +subPrefix + systemVarPrefix + expand;
 	
 	public static String					formIdSuffix		= idMid + "F";
 	public static String					stringIdSuffix		= idMid + "S";
