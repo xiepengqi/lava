@@ -69,7 +69,7 @@ public class ManForm extends Form {
 						: null;
 				List<String> methodPatternList = pattern == null ? null : StringUtil.validSplit(pattern, "\\s+");
 				
-				Object obj=getMethodList(methodPatternList, resources.get(key));
+				Object obj= getClassItemList(methodPatternList, resources.get(key));
 				if((patternList.size() == 0 && 
 						methodPatternList !=null && 
 						methodPatternList.size() > 0 &&
@@ -88,7 +88,7 @@ public class ManForm extends Form {
 
 	}
 
-	private Object getMethodList(List<String> fieldPattern, Object clazz) {
+	private Object getClassItemList(List<String> fieldPattern, Object clazz) {
 		if (clazz == null || !(clazz instanceof Class)) {
 			return clazz;
 		}
@@ -96,6 +96,7 @@ public class ManForm extends Form {
 		List<Object> list = new ArrayList<Object>();
 		list.addAll(Arrays.asList(((Class) clazz).getDeclaredMethods()));
 		list.addAll(Arrays.asList(((Class) clazz).getDeclaredFields()));
+		list.addAll(Arrays.asList(((Class) clazz).getDeclaredConstructors()));
 
 		List<Object> result = new ArrayList<Object>();
 
