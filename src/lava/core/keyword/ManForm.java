@@ -50,7 +50,9 @@ public class ManForm extends Form {
 			return;
 		}
 
-		resources.putAll(Main.jarClass);
+		if (this.args.size() > 1) {
+			resources.putAll(Main.jarClass);
+		}
 
 		for (String key : resources.keySet()) {
 			List<String> patternList = StringUtil.validSplit((String) this
@@ -84,8 +86,6 @@ public class ManForm extends Form {
 
 		this.type = result.getClass();
 		this.value = result;
-		return;
-
 	}
 
 	private Object getClassItemList(List<String> fieldPattern, Object clazz) {
@@ -94,9 +94,11 @@ public class ManForm extends Form {
 		}
 
 		List<Object> list = new ArrayList<Object>();
-		list.addAll(Arrays.asList(((Class) clazz).getDeclaredMethods()));
-		list.addAll(Arrays.asList(((Class) clazz).getDeclaredFields()));
-		list.addAll(Arrays.asList(((Class) clazz).getDeclaredConstructors()));
+		try {
+			list.addAll(Arrays.asList(((Class) clazz).getDeclaredMethods()));
+			list.addAll(Arrays.asList(((Class) clazz).getDeclaredFields()));
+			list.addAll(Arrays.asList(((Class) clazz).getDeclaredConstructors()));
+		} catch (Throwable ignored){}
 
 		List<Object> result = new ArrayList<Object>();
 
