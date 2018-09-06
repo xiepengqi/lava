@@ -1,9 +1,9 @@
 package lava.core.keyword;
 
 import lava.constant.MsgConstants;
+import lava.core.Catchee;
 import lava.core.Data;
 import lava.core.Form;
-import lava.core.SysError;
 import lava.util.Util;
 
 public class ThrowForm extends Form {
@@ -25,10 +25,6 @@ public class ThrowForm extends Form {
 	public void run() throws Exception {
 		super.run();
 		Data data=parseFormArg(this.args.get(0));
-		if(data.getValue() instanceof Throwable){
-			throw (Exception)data.getValue();
-		}else{
-			throw new SysError(this,this.args.get(0));
-		}
+		throw new Catchee(data.getValue());
 	}
 }
