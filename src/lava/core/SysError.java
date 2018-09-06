@@ -19,6 +19,6 @@ public class SysError extends RuntimeException{
 		String msg = this.getMessage() == null ? "" : this.getMessage().trim();
 
 		int index = msg.lastIndexOf(Constants.newLine);
-		return msg.substring(index+1);
+		return msg.substring(index+1).trim();
 	}
 }
