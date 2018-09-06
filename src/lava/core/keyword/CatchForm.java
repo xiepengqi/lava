@@ -1,7 +1,5 @@
 package lava.core.keyword;
 
-import lava.core.Catchee;
-import lava.core.Data;
 import lava.core.Form;
 
 /**
@@ -38,9 +36,6 @@ public class CatchForm extends Form {
             if (form != null) {
                 try{
                     runFormSeq(form.getFormSeqWhichRunBy(this), null);
-                } catch (Catchee e){
-                    this.value=e.getValue();
-                    this.type= Data.getClass(e.getValue());
                 } catch (Throwable t){
                     this.value=t;
                     this.type=t.getClass();
