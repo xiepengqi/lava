@@ -109,11 +109,6 @@ public class Code {
 		dataMap.put("$codeId", this.getIdName());
 		dataMap.put("$subLinks", Main.subLinks);
 		dataMap.put("$urls", Main.urls);
-
-		for(String key:Constants.baseTypes.keySet()){
-			dataMap.put(key, Constants.baseTypes.get(key));
-		}
-
 	}
 
 	public String getIdName() {

@@ -1,7 +1,9 @@
 package lava.core.keyword;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
+import lava.constant.Constants;
 import lava.constant.MsgConstants;
 import lava.core.Data;
 import lava.core.Form;
@@ -44,7 +46,13 @@ public class AsForm extends Form {
 		if (parseArgs.get(0).getValue() instanceof Class) {
 			classObj = (Class) parseArgs.get(0).getValue();
 		} else {
-			classObj = Class.forName(StringUtil.toString(parseArgs.get(0).getValue()));
+			String flag = StringUtil.toString(parseArgs.get(0).getValue());
+			if (flag.startsWith("[")) {
+				Object temp = Array.newInstance(getClassObj(flag.substring(1)));
+				classObj = temp.getClass();
+			}else {
+				classObj = getClassObj(flag);
+			}
 		}
 		
 		for (Data data : parseArgs.subList(1, parseArgs.size())) {
@@ -53,5 +61,12 @@ public class AsForm extends Form {
 
 		this.value = parseArgs.get(parseArgs.size() - 1).getValue();
 		this.type = classObj;
+	}
+
+	private Class getClassObj(String classFullName) throws ClassNotFoundException {
+		if (Constants.baseTypes.containsKey(classFullName)){
+			return Constants.baseTypes.get(classFullName);
+		}
+		return Class.forName(classFullName);
 	}
 }
