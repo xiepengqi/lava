@@ -48,7 +48,7 @@ public class AsForm extends Form {
 		} else {
 			String flag = StringUtil.toString(parseArgs.get(0).getValue());
 			if (flag.startsWith("[")) {
-				Object temp = Array.newInstance(getClassObj(flag.substring(1)));
+				Object temp = Array.newInstance(getClassObj(flag.substring(1)), 0);
 				classObj = temp.getClass();
 			}else {
 				classObj = getClassObj(flag);
