@@ -91,6 +91,7 @@ public class Constants {
 		baseTypes.put("float", float.class);
 		baseTypes.put("double", double.class);
 		baseTypes.put("boolean", boolean.class);
+		baseTypes.put("void", void.class);
 	}
 
 	static {
