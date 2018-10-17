@@ -505,6 +505,13 @@ public class Form {
 		return seeSource;
 	}
 
+	public String look() {
+		String seeSource = Util.seeNumber(this.inCode, this.source);
+		seeSource = Util.seeString(this.inCode, seeSource);
+
+		return seeSource;
+	}
+
 	private String seeForm() {
 		String seeSource = this.source;
 		String temp = null;

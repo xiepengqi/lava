@@ -12,8 +12,8 @@ public class SysError extends RuntimeException{
 	private static final long serialVersionUID = 1L;
 
 	public SysError(Form form, String msg){
-        super(form.getWhere() + ":" + form.see() + Constants.newLine + "	" + msg);
-    }
+		super(form.getWhere() + ":" + form.look() + Constants.newLine + "	" + msg);
+	}
 
 	public String getValue(){
 		String msg = this.getMessage() == null ? "" : this.getMessage().trim();

@@ -125,7 +125,7 @@ public class Util {
 		}
 		String msg=Constants.empty;
 		if(debugMode == debug_when_form_begin){
-			msg=StringUtil.join(Constants.sepOrObjChar,form.getFormId(),form.see());
+			msg=StringUtil.join(Constants.sepOrObjChar,form.getFormId(),form.look());
 		}
 		if(debugMode == debug_when_form_end){
 			msg=StringUtil.join(Constants.sepOrObjChar,form.getFormId(),form.getType(),form.getValue());
