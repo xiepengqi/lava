@@ -84,6 +84,10 @@ public class Main {
 			if (key.equalsIgnoreCase("lava_home")) {
 				initSourcePath.add(envs.get(key) + "/lib");
 			}
+			if (key.equalsIgnoreCase("lava_lib_")) {
+				initSourcePath.add(envs.get(key));
+			}
+			initSourcePath.add(System.getProperty("user.dir"));
 		}
 
 		initSource(initSourcePath);
