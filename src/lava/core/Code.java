@@ -109,6 +109,7 @@ public class Code {
 		dataMap.put("$codeId", this.getIdName());
 		dataMap.put("$subLinks", Main.subLinks);
 		dataMap.put("$urls", Main.urls);
+		dataMap.put("$jars", Main.jars);
 	}
 
 	public String getIdName() {
@@ -323,7 +324,7 @@ public class Code {
 
 	@Override
 	public String toString() {
-		return StringUtil.join(Constants.empty,"Code [idName=", idName, "]");
+		return StringUtil.join(Constants.empty,"Code [idName=", idName, " path=", filePath, "]");
 	}
 
 	public String see() {

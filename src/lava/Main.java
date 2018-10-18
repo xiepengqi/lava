@@ -29,6 +29,7 @@ public class Main {
 	public static final Map<Object,Object> subLinks=new HashMap<Object,Object>();
 	public static final Map<String, Class> jarClass = new HashMap<String, Class>();
 	public static final List<String> urls = new ArrayList<String>();
+	public static final List<String> jars = new ArrayList<String>();
 
 	public static boolean debug=false;
 	public static boolean repl = false;
@@ -206,6 +207,7 @@ public class Main {
 					} catch (Throwable t) {
 						Util.systemError("fail to load jar file:" + file.getAbsolutePath()+":" + t.toString());
 					}
+					jars.add(file.getPath());
 					return;
 				}
 				if (!file.getName().endsWith(".lava")) {
