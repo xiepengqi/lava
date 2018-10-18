@@ -31,6 +31,8 @@ public class Main {
 	public static final List<String> urls = new ArrayList<String>();
 	public static final List<String> jars = new ArrayList<String>();
 
+	public static final List tempList = new ArrayList();
+
 	public static boolean debug=false;
 	public static boolean repl = false;
 
@@ -93,9 +95,16 @@ public class Main {
 		}
 		initSourcePath.addAll(homePath);
 		initSourcePath.addAll(libPath);
-		initSourcePath.add(System.getProperty("user.dir"));
 
 		initSource(initSourcePath);
+
+		File file=new File(System.getProperty("user.dir"));
+		for (File subFile : file.listFiles()) {
+			if (subFile.isDirectory()) {
+				continue;
+			}
+			action.action(file, subFile);
+		}
 
 		if (codePaths.size() == 0) {
 			try {
@@ -172,8 +181,31 @@ public class Main {
 			}
 		}
 	}
+	private static FileUtil.Action action = new FileUtil.Action() {
 
+		@Override
+		public void action(File topFile, File file) {
+			if (file.getName().endsWith(".jar")) {
+				try {
+					jarLoader.loadJar(file.toURI().toURL());;
+				} catch (Throwable t) {
+					Util.systemError("fail to load jar file:" + file.getAbsolutePath()+":" + t.toString());
+				}
+				jars.add(file.getPath());
+				return;
+			}
+			if (!file.getName().endsWith(".lava")) {
+				return;
+			}
+
+			Code code = new Code(topFile.getAbsolutePath() , file.getAbsolutePath(), null);
+			codes.put(code.getIdName(), code);
+			tempList.add(code);
+		}
+
+	};
 	public static List<Code> initSource(List<String> codePath) {
+		tempList.clear();
 		List<String> paths = new ArrayList<String>();
 		for (String path : codePath) {
 			if (!path.contains(";")) {
@@ -196,36 +228,12 @@ public class Main {
 
 		});
 
-		final List<Code> list = new ArrayList<Code>();
-		FileUtil.Action action = new FileUtil.Action() {
-
-			@Override
-			public void action(File topFile, File file) {
-				if (file.getName().endsWith(".jar")) {
-					try {
-						jarLoader.loadJar(file.toURI().toURL());;
-					} catch (Throwable t) {
-						Util.systemError("fail to load jar file:" + file.getAbsolutePath()+":" + t.toString());
-					}
-					jars.add(file.getPath());
-					return;
-				}
-				if (!file.getName().endsWith(".lava")) {
-					return;
-				}
-
-				Code code = new Code(topFile.getAbsolutePath() , file.getAbsolutePath(), null);
-				codes.put(code.getIdName(), code);
-				list.add(code);
-			}
-
-		};
-
 		for (String path : paths) {
 			urls.add(path);
 			FileUtil.traverseFolder(path, action);
 		}
-		return list;
+
+		return tempList;
 	}
 
 }
