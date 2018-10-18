@@ -242,7 +242,7 @@ public class Form {
 		for (String argName : subArgsName) {
 			Map<String,Object> temp=new HashMap<String,Object>();
 			temp.put("argName", argName.startsWith(Constants.expand) ? argName.substring(1):argName);
-			temp.put("arg", argName.startsWith(Constants.expand) ? new ArrayList<>():null);
+			temp.put("arg", argName.startsWith(Constants.expand) ? new ArrayList():null);
 			temp.put("isDataInfo", false);
 			subArgs.add(temp);
 		}

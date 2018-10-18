@@ -1,10 +1,9 @@
 package lava.core.keyword;
 
+import java.util.List;
+
 import lava.core.Data;
 import lava.core.Form;
-
-import java.util.List;
-import java.util.Objects;
 
 public class QEqForm extends Form {
 
@@ -34,9 +33,8 @@ public class QEqForm extends Form {
 	private boolean isEqual(List<Data> parseArgs) {
 		Data obj = parseArgs.get(0);
 		for (Data o : parseArgs.subList(1, parseArgs.size())) {
-			if (Objects.equals(obj.getValue(), o.getValue())) {
-				obj = o;
-			} else {
+			if (!(obj.getValue() == o.getValue() ||
+					(obj.getValue() !=null && obj.getValue().equals(o.getValue())))){
 				return false;
 			}
 		}

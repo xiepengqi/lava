@@ -83,8 +83,8 @@ public class Main {
 
 		Map<String, String> envs = System.getenv();
 		List<String> initSourcePath = new ArrayList<String>();
-		List<String> homePath = new ArrayList<>();
-		List<String> libPath = new ArrayList<>();
+		List<String> homePath = new ArrayList<String>();
+		List<String> libPath = new ArrayList<String>();
 		for (String key : envs.keySet()) {
 			if (key.equalsIgnoreCase("lava_home")) {
 				homePath.add(envs.get(key) + "/lib");
