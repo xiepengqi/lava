@@ -324,7 +324,7 @@ public class Code {
 
 	@Override
 	public String toString() {
-		return StringUtil.join(Constants.empty,"Code [idName=", idName, " path=", filePath, "]");
+		return StringUtil.join(Constants.empty,"Code [idName=", idName, ", path=", filePath, "]");
 	}
 
 	public String see() {
