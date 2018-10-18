@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import lava.constant.Constants;
+import lava.constant.MsgConstants;
 import lava.core.Code;
 import lava.core.SysError;
 import lava.util.FileUtil;
@@ -100,7 +101,12 @@ public class Main {
 		}
 
 		List<Code> mainCodes = initSource(codePaths);
-
+		if (mainCodes.size() <1 && codePaths.size() > 0 && codes.containsKey(codePaths.get(0))) {
+			mainCodes.add(codes.get(codePaths.get(0)));
+		}
+		if (mainCodes.size() < 1) {
+			Util.systemError(MsgConstants.no_code_found);
+		}
 		for (Code code : mainCodes) {
 			try {
 				code.parse();
