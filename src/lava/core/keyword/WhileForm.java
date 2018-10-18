@@ -6,6 +6,7 @@ import lava.core.Data;
 import lava.core.Form;
 import lava.core.SysError;
 import lava.core.Sub;
+import lava.util.Util;
 
 public class WhileForm extends Form {
 	@Override
@@ -40,13 +41,11 @@ public class WhileForm extends Form {
 
 			runSub(flagSub,null,null);
 
-			while ((Boolean) flagSub.getAsForm().getValue()) {
+			while (Util.isValid(flagSub.getAsForm().getValue())) {
 				runSub(bodySub,null,null);
 
-				if (bodySub.getAsForm().getValue() instanceof Boolean) {
-					if (!(Boolean) bodySub.getAsForm().getValue()) {
-						break;
-					}
+				if (!Util.isValid(bodySub.getAsForm().getValue())) {
+					break;
 				}
 
 				runSub(flagSub,null,null);

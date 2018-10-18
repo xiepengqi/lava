@@ -8,6 +8,7 @@ import lava.core.Data;
 import lava.core.Form;
 import lava.core.SysError;
 import lava.core.Sub;
+import lava.util.Util;
 
 public class ForeachForm extends Form {
 	@Override
@@ -44,10 +45,8 @@ public class ForeachForm extends Form {
 
 					runSub(sub,null,values);
 
-					if (sub.getAsForm().getValue() instanceof Boolean) {
-						if (!(Boolean) sub.getAsForm().getValue()) {
-							break;
-						}
+					if (!Util.isValid(sub.getAsForm().getValue())) {
+						break;
 					}
 				}
 			}

@@ -47,7 +47,7 @@ public class DebugForm extends Form {
 		if (data.getValue() instanceof Map) {
 			Map map = (Map) data.getValue();
 			for (Object elem : map.keySet()) {
-				boolean set=(Boolean) map.get(elem);
+				boolean set=Util.isValid(map.get(elem));
 				if(elem instanceof Sub){
 					((Sub)elem).setIsDebug(set);
 				}else{
@@ -64,8 +64,8 @@ public class DebugForm extends Form {
 				}
 				rollback.put(elem, false);
 			}
-		} else if (data.getValue() instanceof Boolean){
-			Main.debug=(Boolean)data.getValue();
+		} else{
+			Main.debug=Util.isValid(data.getValue());
 		}
 
 		if (this.args.size() == 1) {

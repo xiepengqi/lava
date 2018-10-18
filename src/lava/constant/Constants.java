@@ -1,34 +1,11 @@
 package lava.constant;
 
+import lava.core.keyword.*;
+import lava.util.Util;
+
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
-
-import lava.core.keyword.AndForm;
-import lava.core.keyword.AsForm;
-import lava.core.keyword.AssignForm;
-import lava.core.keyword.CatchForm;
-import lava.core.keyword.DebugForm;
-import lava.core.keyword.DefForm;
-import lava.core.keyword.EvalForm;
-import lava.core.keyword.ExportForm;
-import lava.core.keyword.ForForm;
-import lava.core.keyword.ForeachForm;
-import lava.core.keyword.IfForm;
-import lava.core.keyword.LinkForm;
-import lava.core.keyword.LoadForm;
-import lava.core.keyword.ManForm;
-import lava.core.keyword.NewForm;
-import lava.core.keyword.OrForm;
-import lava.core.keyword.QDefForm;
-import lava.core.keyword.QEqForm;
-import lava.core.keyword.ReturnForm;
-import lava.core.keyword.SwitchForm;
-import lava.core.keyword.ThrowForm;
-import lava.core.keyword.TypeForm;
-import lava.core.keyword.UseForm;
-import lava.core.keyword.WhileForm;
-import lava.util.Util;
 
 @SuppressWarnings("rawtypes")
 public class Constants {
@@ -76,7 +53,6 @@ public class Constants {
 		keywords.put("debug", DebugForm.class);
 		keywords.put("eval", EvalForm.class);
 		keywords.put("catch", CatchForm.class);
-		keywords.put("link", LinkForm.class);
 		keywords.put("man", ManForm.class);
 		keywords.put("export", ExportForm.class);
 		keywords.put("?", SwitchForm.class);

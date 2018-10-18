@@ -9,7 +9,7 @@ public class SwitchForm extends Form{
 		super.parse();
 
 		
-		Form form;;
+		Form form;
 		for(String arg:this.args){
 			form = this.inCode.getFormMap().get(arg);
 			if(form !=null){

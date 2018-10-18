@@ -45,10 +45,10 @@ public class AndForm extends Form {
 			form = this.inCode.getFormMap().get(arg);
 			if (null != form) {
 				runFormSeq(form.getFormSeqWhichRunBy(this),null);
-				flag = (Boolean) form.getValue();
+				flag = Util.isValid(form.getValue());
 			} else {
 				Data data = parseFormArg(arg);
-				flag = (Boolean) data.getValue();
+				flag = Util.isValid(data.getValue()) ;
 			}
 			if (!flag) {
 				break;

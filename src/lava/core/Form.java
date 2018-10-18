@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import lava.Main;
 import lava.constant.Constants;
@@ -237,7 +238,15 @@ public class Form {
 				subArgs.add(temp);
 			}
 		}
-		
+
+		for (String argName : subArgsName) {
+			Map<String,Object> temp=new HashMap<String,Object>();
+			temp.put("argName", argName.startsWith(Constants.expand) ? argName.substring(1):argName);
+			temp.put("arg", argName.startsWith(Constants.expand) ? new ArrayList<>():null);
+			temp.put("isDataInfo", false);
+			subArgs.add(temp);
+		}
+
 		int argIndex=0;
 		int argSize=subArgs.size();
 		for(Map elem:subArgs){

@@ -2,6 +2,7 @@ package lava.core.keyword;
 
 import lava.core.Data;
 import lava.core.Form;
+import lava.util.Util;
 
 public class OrForm extends Form {
 	@Override
@@ -26,16 +27,16 @@ public class OrForm extends Form {
 	public void run() throws Exception {
 		super.run();
 
-		Form form = null;
+		Form form;
 		boolean flag = false;
 		for (String arg : this.args) {
 			form = this.inCode.getFormMap().get(arg);
 			if (null != form) {
 				runFormSeq(form.getFormSeqWhichRunBy(this),null);
-				flag = (Boolean) form.getValue();
+				flag = Util.isValid(form.getValue());
 			} else {
 				Data data = parseFormArg(arg);
-				flag = (Boolean) data.getValue();
+				flag = Util.isValid(data.getValue());
 			}
 			if (flag) {
 				break;

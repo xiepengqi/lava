@@ -2,6 +2,7 @@ package lava.core.keyword;
 
 import lava.core.Data;
 import lava.core.Form;
+import lava.util.Util;
 
 public class IfForm extends Form {
 
@@ -37,7 +38,7 @@ public class IfForm extends Form {
 	private void processFormIf() throws Exception {
 		Form form = null;
 		Data data=null;
-		if ((Boolean) parseFormArg(this.args.get(0)).getValue()) {
+		if (Util.isValid(parseFormArg(this.args.get(0)).getValue())) {
 			form = this.inCode.getFormMap().get(this.args.get(1));
 			data = parseFormArg(this.args.get(1));
 		} else {

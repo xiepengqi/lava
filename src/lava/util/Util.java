@@ -1,10 +1,6 @@
 package lava.util;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import lava.Main;
 import lava.constant.Constants;
@@ -18,6 +14,32 @@ public class Util {
 	public static int debug_when_form_begin =0;
 	public static int debug_when_form_end =1;
 
+	public static boolean isValid(Object obj){
+		if (obj == null) {
+			return false;
+		}
+		if (obj instanceof String) {
+			return ((String)obj).length() > 0;
+		}
+
+		if (obj.getClass().isArray()) {
+			return java.lang.reflect.Array.getLength(obj) > 0;
+		}
+
+		if (obj instanceof Collection) {
+			return ((Collection)obj).size() > 0;
+		}
+
+		if (obj instanceof Map) {
+			return ((Map)obj).size() > 0;
+		}
+
+		if (obj instanceof Boolean) {
+			return (Boolean)obj;
+		}
+
+		return true;
+	}
 
 	public static String seeNumber(Code inCode, String seeSource) {
 		String temp = null;
