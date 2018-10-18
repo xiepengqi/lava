@@ -38,8 +38,9 @@ public class Constants {
 		keywords.put("as", AsForm.class);
 		keywords.put("type", TypeForm.class);
 		keywords.put("def", DefForm.class);
-		keywords.put("share", AssignForm.class);
-		keywords.put("share?", QEqForm.class);
+		keywords.put("=", AssignForm.class);
+		keywords.put("==", QSameForm.class);
+		keywords.put("=?", QEqForm.class);
 		keywords.put("new", NewForm.class);
 		keywords.put("if", IfForm.class);
 		keywords.put("for", ForForm.class);

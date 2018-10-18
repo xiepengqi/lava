@@ -1,12 +1,11 @@
 package lava.core.keyword;
 
+import java.util.List;
+
 import lava.core.Data;
 import lava.core.Form;
 
-import java.util.List;
-import java.util.Objects;
-
-public class QEqForm extends Form {
+public class QSameForm extends Form {
 
 	@Override
 	public void parse() {
@@ -22,7 +21,7 @@ public class QEqForm extends Form {
 	public void run() throws Exception {
 		super.run();
 		List<Data> parseArgs = this.parseFormArgs(this.args);
-		if (isEqual(parseArgs)) {
+		if (isSame(parseArgs)) {
 			this.value = true;
 			this.type = this.value.getClass();
 		} else {
@@ -31,10 +30,10 @@ public class QEqForm extends Form {
 		}
 	}
 
-	private boolean isEqual(List<Data> parseArgs) {
+	private boolean isSame(List<Data> parseArgs) {
 		Data obj = parseArgs.get(0);
 		for (Data o : parseArgs.subList(1, parseArgs.size())) {
-			if (Objects.equals(obj.getValue(), o.getValue())) {
+			if (obj.getValue() == o.getValue()) {
 				obj = o;
 			} else {
 				return false;
