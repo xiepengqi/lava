@@ -3,6 +3,7 @@ package lava.core.keyword;
 import java.util.Arrays;
 
 import lava.constant.Constants;
+import lava.constant.MsgConstants;
 import lava.core.DataMap;
 import lava.core.Form;
 import lava.core.Sub;
@@ -46,18 +47,18 @@ public class SubForm extends Form {
 	public void check() {
 		super.check();
 
-		for(String argName:this.asSub.getArgs()){
-			if(argName.startsWith(Constants.expand)){
-				argName=argName.substring(1);
+		if(!StringUtil.isFnAble(this.asSub.getName())){
+			Util.syntaxError(this, this.asSub.getName()+":"+MsgConstants.wrong_fn_name);
+		}
+		for (String arg : this.asSub.getArgs()) {
+			if (arg.startsWith(Constants.expand)) {
+				arg = arg.substring(1);
 			}
-			if(StringUtil.isBlank(argName)){
-				continue;
-			}
-			if(!StringUtil.isDefVarAble(argName)){
-				Util.syntaxError(this, argName);
+			if (!StringUtil.isDefVarAble(arg)) {
+				Util.syntaxError(this, arg+":"+MsgConstants.wrong_args_num);
 			}
 		}
-		
+
 		if (StringUtil.isEmpty(this.asSub.getName())) {
 			return;
 		}

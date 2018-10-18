@@ -169,6 +169,19 @@ public class StringUtil {
 		return true;
 	}
 
+	public static boolean isFnAble(String str) {
+		if (StringUtil.isBlank(str)) {
+			return true;
+		}
+		if (!str.matches(RegexConstants.defFunc)) {
+			return false;
+		}
+		if (isKeyWords(str)){
+			return false;
+		}
+		return true;
+	}
+
 	public static boolean isKeyWords(String str) {
 		for (String key : Constants.keywords.keySet()) {
 			if (key.equals(str)) {

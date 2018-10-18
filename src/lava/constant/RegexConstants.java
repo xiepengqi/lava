@@ -7,9 +7,13 @@ public class RegexConstants {
 	public static String	numberSuffix	= "[ilfdILFD]";
 	public static String	number			= "-?\\d+\\.?\\d*" + numberSuffix + "?";
 
-	public static String	defVar				= "[^0-9" + StringUtil.escapeReg(Constants.avoidsChars)+ "][^" + Constants.avoidsChars + "]*";
-
-	public static String	dataMapKey		= "[^0-9" + StringUtil.escapeReg(Constants.avoidsChars.replace(Constants.subPrefix, ""))+ "][^" + Constants.avoidsChars + "]*";
+	public static String	defVar				= "[^0-9" + StringUtil.escapeReg(Constants.avoidsChars)+ "][^" + StringUtil.escapeReg(Constants.avoidsChars) + "]*";
+	public static String	defFunc				= "[^0-9" +
+			StringUtil.escapeReg(Constants.avoidsChars.replace(Constants.expand, ""))
+			+ "][^" + StringUtil.escapeReg(Constants.avoidsChars.replace(Constants.expand, "")) + "]*";
+	public static String	dataMapKey		= "[^0-9" +
+			StringUtil.escapeReg(Constants.avoidsChars.replace(Constants.subPrefix, ""))
+			+ "][^" + StringUtil.escapeReg(Constants.avoidsChars) + "]*";
 
 	public static String	elemLeftBorder	= "(?<=[\\s\\(\\[\\{]|^)";
 	public static String	elemRightBorder	= "(?=[\\s\\)\\]\\}]|$)";

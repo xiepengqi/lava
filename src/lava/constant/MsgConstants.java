@@ -11,7 +11,7 @@ public class MsgConstants {
     public static String wrong_args_num;
     public static String wrong_arg_name;
     public static String wrong_arg_type;
-
+    public static String wrong_fn_name;
 
     static {
         Field[] fields=MsgConstants.class.getDeclaredFields();
