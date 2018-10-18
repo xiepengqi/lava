@@ -80,15 +80,19 @@ public class Main {
 
 		Map<String, String> envs = System.getenv();
 		List<String> initSourcePath = new ArrayList<String>();
+		List<String> homePath = new ArrayList<>();
+		List<String> libPath = new ArrayList<>();
 		for (String key : envs.keySet()) {
 			if (key.equalsIgnoreCase("lava_home")) {
-				initSourcePath.add(envs.get(key) + "/lib");
+				homePath.add(envs.get(key) + "/lib");
 			}
 			if (key.equalsIgnoreCase("lava_lib_")) {
-				initSourcePath.add(envs.get(key));
+				libPath.add(envs.get(key));
 			}
-			initSourcePath.add(System.getProperty("user.dir"));
 		}
+		initSourcePath.addAll(homePath);
+		initSourcePath.addAll(libPath);
+		initSourcePath.add(System.getProperty("user.dir"));
 
 		initSource(initSourcePath);
 
