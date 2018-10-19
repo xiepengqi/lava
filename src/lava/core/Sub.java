@@ -200,7 +200,8 @@ public class Sub {
 
 	@Override
 	public String toString() {
-		return StringUtil.join(Constants.empty,"Sub [idName=",getIdName(),"]");
+		String args = StringUtil.join(Constants.sepOrObjChar, this.args);
+		return StringUtil.join(Constants.empty,"Sub [idName=",getIdName(), " ,args=", args ,"]");
 	}
 
 	public String see() {
