@@ -30,6 +30,7 @@ public class Main {
 	public static final Map<String, Class> jarClass = new HashMap<String, Class>();
 	public static final List<String> urls = new ArrayList<String>();
 	public static final List<String> jars = new ArrayList<String>();
+	public static final Map<String, Code> modules = new HashMap<String, Code>();
 
 	public static final List tempList = new ArrayList();
 
@@ -200,6 +201,9 @@ public class Main {
 
 			Code code = new Code(topFile.getAbsolutePath() , file.getAbsolutePath(), null);
 			codes.put(code.getIdName(), code);
+			if (code.getIdName().endsWith(".export")) {
+				modules.put(code.getIdName().substring(0, code.getIdName().length() - 7), code);
+			}
 			tempList.add(code);
 		}
 

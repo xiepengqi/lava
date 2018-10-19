@@ -1,24 +1,13 @@
 package lava.core;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import lava.Main;
 import lava.constant.Constants;
 import lava.constant.RegexConstants;
-import lava.core.keyword.FnForm;
-import lava.core.keyword.JavaForm;
-import lava.core.keyword.KeyForm;
-import lava.core.keyword.ListForm;
-import lava.core.keyword.MapForm;
-import lava.core.keyword.SubForm;
+import lava.core.keyword.*;
 import lava.util.StringUtil;
 import lava.util.Util;
+
+import java.util.*;
 
 public class Form {
 	protected Code			inCode;
@@ -401,7 +390,7 @@ public class Form {
 			form = new JavaForm();
 		} else if (elems.get(0).startsWith(Constants.subPrefix)) {
 			form = new SubForm();
-		} else if(elems.get(0).startsWith(Constants.sepOrObjChar)){ 
+		} else if(elems.get(0).startsWith(Constants.sepOrObjChar)){
 			form = new KeyForm();
 		} else {
 			form = new FnForm();

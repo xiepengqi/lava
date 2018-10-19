@@ -110,6 +110,7 @@ public class Code {
 		dataMap.put("$subLinks", Main.subLinks);
 		dataMap.put("$urls", Main.urls);
 		dataMap.put("$jars", Main.jars);
+		dataMap.put("$modules", Main.modules);
 	}
 
 	public String getIdName() {
