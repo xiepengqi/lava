@@ -37,7 +37,7 @@ public class Data {
     private String source;
     private Object value;
     @SuppressWarnings("rawtypes")
-    private Class type = void.class;
+    private Class type = Object.class;
 
     public String getSource() {
         return source;
@@ -66,10 +66,10 @@ public class Data {
     }
 
     public static Class getClass(Object obj) {
-        return obj == null ? void.class : obj.getClass();
+        return obj == null ? Object.class : obj.getClass();
     }
 
     public static Class getType(Data data) {
-        return data == null ? void.class : data.getType();
+        return data == null ? Object.class : data.getType();
     }
 }

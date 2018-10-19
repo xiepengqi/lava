@@ -133,7 +133,7 @@ public class Sub {
 		public DataMap	dataMap		= new DataMap();
 		public Object	value		= null;
 		@SuppressWarnings("rawtypes")
-		private Class	type		= void.class;
+		private Class	type		= Object.class;
 
 		private boolean	isReturn	= false;
 
@@ -179,7 +179,7 @@ public class Sub {
 				this.type = data.getType();
 			} else {
 				this.value = null;
-				this.type = void.class;
+				this.type = Object.class;
 			}
 		}
 

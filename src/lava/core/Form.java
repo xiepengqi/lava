@@ -19,7 +19,7 @@ public class Form {
 	protected String		source;
 	protected Object		value;
 	@SuppressWarnings("rawtypes")
-	protected Class			type		= void.class;
+	protected Class			type		= Object.class;
 	protected String		fnName;
 	protected Sub			asSub;
 	protected List<String>	args		= new ArrayList<String>();

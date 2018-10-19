@@ -70,7 +70,7 @@ public class DebugForm extends Form {
 
 		if (this.args.size() == 1) {
 			this.value = null;
-			this.type = void.class;
+			this.type = Object.class;
 			return;
 		}
 

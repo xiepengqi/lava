@@ -59,10 +59,10 @@ public class DefForm extends Form {
             throw new SysError(this,parseFormArg(this.args.get(0)).getSource());
         }
 
-		dataMap.putData(this.args.get(0), new Data(void.class,null));
+		dataMap.putData(this.args.get(0), new Data(Object.class,null));
 
 		this.value = null;
-		this.type = void.class;
+		this.type = Object.class;
 	}
 
 	private DataMap getDataMap() {

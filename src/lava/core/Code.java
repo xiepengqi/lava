@@ -25,7 +25,7 @@ public class Code {
 	private Map<String, Data>	numberMap	= new HashMap<String, Data>();
 	private boolean	isReturn	= false;
 	
-	private Class type=void.class;
+	private Class type=Object.class;
 	private Object value=null;
 	
 	private boolean					isParsed;

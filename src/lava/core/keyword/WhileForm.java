@@ -52,7 +52,7 @@ public class WhileForm extends Form {
 			}
 
 			this.value = null;
-			this.type = void.class;
+			this.type = Object.class;
 		} else {
 			throw new SysError(this, this.args.get(1));
 		}
