@@ -2,6 +2,8 @@ package lava.core.keyword;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import lava.constant.Constants;
 import lava.core.Data;
@@ -50,6 +52,11 @@ public class FnForm extends Form {
 			}else if(args.getValue() instanceof List){
 				for(Object obj:(List)args.getValue()){
 					newParseArgs.add(new Data(Data.getClass(obj),obj));
+				}
+			}else if(args.getValue() instanceof Map){
+				for(Map.Entry obj:(Set<Map.Entry>)((Map) args.getValue()).entrySet()){
+					newParseArgs.add(new Data(Data.getClass(obj.getKey()),obj.getKey()));
+					newParseArgs.add(new Data(Data.getClass(obj.getValue()),obj.getValue()));
 				}
 			}else{
 				newParseArgs.add(args);
