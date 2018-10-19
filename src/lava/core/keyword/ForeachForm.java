@@ -1,6 +1,7 @@
 package lava.core.keyword;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,9 @@ public class ForeachForm extends Form {
 				Object elems=parseArgs.get(i).getValue();
 				if(elems instanceof Map){
 					elems=((Map)elems).entrySet();
+				}
+				if (elems instanceof Object[]){
+					elems = Arrays.asList((Object[])elems);
 				}
 				for (Object j : (Iterable) elems) {
 					List<Object> values = new ArrayList<Object>();
