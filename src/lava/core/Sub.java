@@ -200,7 +200,6 @@ public class Sub {
 
 	@Override
 	public String toString() {
-		String args = StringUtil.join(Constants.sepOrObjChar, this.args);
 		return StringUtil.join(Constants.empty,"Sub [idName=",getIdName(), " ,args=", args ,"]");
 	}
 
