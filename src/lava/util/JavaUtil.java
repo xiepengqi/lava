@@ -88,7 +88,6 @@ public class JavaUtil {
 
 		Util.splitArgs(args, values, types);
 
-		Method method = null;
 		String fnName = form.getFnName();
 		String methodStr = null;
 		Object object = null;
@@ -97,7 +96,7 @@ public class JavaUtil {
 			methodStr = fnName.substring(1);
 
 			object = values.get(0);
-			classObject = object.getClass();
+			classObject = types.get(0);
 
 			values = values.subList(1, values.size());
 			types = types.subList(1, types.size());
@@ -108,15 +107,9 @@ public class JavaUtil {
 			classObject = Class.forName(className);
 		}
 
-		try {
-			method = classObject.getMethod(methodStr,
-					types.toArray(new Class[types.size()]));
-		} catch (NoSuchMethodException e) {
-		}
-		if (method == null) {
-			method = classObject.getDeclaredMethod(methodStr,
-					types.toArray(new Class[types.size()]));
-		}
+		Method method = classObject.getDeclaredMethod(methodStr,
+				types.toArray(new Class[types.size()]));
+
 		method.setAccessible(true);
 		form.setType(method.getReturnType());
 		return method.invoke(object, values.toArray());
@@ -131,16 +124,8 @@ public class JavaUtil {
 		Util.splitArgs(args, values, types);
 
 		Class classObj = Class.forName((String) values.get(0));
-		Constructor con = null;
-		try {
-			con = classObj.getConstructor(types.subList(1, args.size())
-					.toArray(new Class[types.size() - 1]));
-		} catch (NoSuchMethodException e) {
-		}
-		if (con == null) {
-			con = classObj.getDeclaredConstructor(types.subList(1, args.size())
-					.toArray(new Class[types.size() - 1]));
-		}
+		Constructor con = classObj.getDeclaredConstructor(types.subList(1, args.size())
+				.toArray(new Class[types.size() - 1]));
 		con.setAccessible(true);
 		form.setType(classObj);
 		return con.newInstance(values.subList(1, values.size()).toArray());
@@ -153,39 +138,25 @@ public class JavaUtil {
 		Object obj;
 		Field field;
 		List<Object> values = new ArrayList<Object>();
-
-		Util.splitArgs(args, values, null);
+		List<Class> types = new ArrayList<Class>();
+		Util.splitArgs(args, values, types);
 
 		if (args.size() > 1) {
 			obj = values.get(0);
-			classObj = obj.getClass();
-			field = getField(classObj, (String) values.get(1));
+			classObj = types.get(0);
+			field = classObj.getDeclaredField((String) values.get(1));
 		} else {
 			String className = ((String) values.get(0)).replaceFirst(
 					"\\.[^\\.]+$", "");
 			obj = null;
 			classObj = Class.forName(className);
-			field = getField(classObj, StringUtil.getFirstMatch("[^\\.]+$",
+			field = classObj.getDeclaredField(StringUtil.getFirstMatch("[^\\.]+$",
 					(String) values.get(0)));
 		}
 
 		field.setAccessible(true);
 		form.setType(field.getType());
 		return field.get(obj);
-	}
-
-	public static Field getField(Class classObj, String fieldName)
-			throws NoSuchFieldException {
-		Field field = null;
-		try {
-			field = classObj.getField(fieldName);
-		} catch (NoSuchFieldException e) {
-		}
-
-		if (field == null) {
-			field = classObj.getDeclaredField(fieldName);
-		}
-		return field;
 	}
 
 }
