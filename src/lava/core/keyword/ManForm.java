@@ -95,9 +95,12 @@ public class ManForm extends Form {
 
 		List<Object> list = new ArrayList<Object>();
 		try {
-			list.addAll(Arrays.asList(((Class) clazz).getDeclaredMethods()));
-			list.addAll(Arrays.asList(((Class) clazz).getDeclaredFields()));
-			list.addAll(Arrays.asList(((Class) clazz).getDeclaredConstructors()));
+			while (clazz !=null) {
+				list.addAll(Arrays.asList(((Class) clazz).getDeclaredMethods()));
+				list.addAll(Arrays.asList(((Class) clazz).getDeclaredFields()));
+				list.addAll(Arrays.asList(((Class) clazz).getDeclaredConstructors()));
+				clazz = ((Class) clazz).getSuperclass();
+			}
 		} catch (Throwable ignored){}
 
 		List<Object> result = new ArrayList<Object>();
