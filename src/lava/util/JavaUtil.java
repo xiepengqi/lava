@@ -113,6 +113,7 @@ public class JavaUtil {
 			try {
 				method = classObject.getDeclaredMethod(methodStr,
 						types.toArray(new Class[types.size()]));
+				classObject = null;
 			} catch (NoSuchMethodException e) {
 				if(ex == null) {
 					ex = e;
@@ -143,6 +144,7 @@ public class JavaUtil {
 			try {
 				con = classObj.getConstructor(types.subList(1, args.size())
 						.toArray(new Class[types.size() - 1]));
+				classObj = null;
 			} catch (NoSuchMethodException e) {
 				if(ex == null) {
 					ex = e;
@@ -184,6 +186,7 @@ public class JavaUtil {
 		while (classObj !=null) {
 			try {
 				field =  classObj.getDeclaredField(fieldStr);
+				classObj = null;
 			} catch (NoSuchFieldException e) {
 				if(ex == null) {
 					ex = e;
