@@ -96,7 +96,7 @@ public class JavaUtil {
 			methodStr = fnName.substring(1);
 
 			object = values.get(0);
-			classObject = types.get(0);
+			classObject = Data.getClass(object);
 
 			values = values.subList(1, values.size());
 			types = types.subList(1, types.size());
@@ -107,9 +107,22 @@ public class JavaUtil {
 			classObject = Class.forName(className);
 		}
 
-		Method method = classObject.getDeclaredMethod(methodStr,
-				types.toArray(new Class[types.size()]));
-
+		Method method = null;
+		Exception ex = null;
+		while (classObject!=null) {
+			try {
+				method = classObject.getDeclaredMethod(methodStr,
+						types.toArray(new Class[types.size()]));
+			} catch (NoSuchMethodException e) {
+				if(ex == null) {
+					ex = e;
+				}
+				classObject = classObject.getSuperclass();
+			}
+		}
+		if (method ==null && ex !=null) {
+			throw ex;
+		}
 		method.setAccessible(true);
 		form.setType(method.getReturnType());
 		return method.invoke(object, values.toArray());
@@ -124,8 +137,22 @@ public class JavaUtil {
 		Util.splitArgs(args, values, types);
 
 		Class classObj = Class.forName((String) values.get(0));
-		Constructor con = classObj.getDeclaredConstructor(types.subList(1, args.size())
-				.toArray(new Class[types.size() - 1]));
+		Constructor con = null;
+		Exception ex = null;
+		while (classObj !=null) {
+			try {
+				con = classObj.getConstructor(types.subList(1, args.size())
+						.toArray(new Class[types.size() - 1]));
+			} catch (NoSuchMethodException e) {
+				if(ex == null) {
+					ex = e;
+				}
+				classObj = classObj.getSuperclass();
+			}
+		}
+		if (con ==null && ex !=null) {
+			throw ex;
+		}
 		con.setAccessible(true);
 		form.setType(classObj);
 		return con.newInstance(values.subList(1, values.size()).toArray());
@@ -136,7 +163,7 @@ public class JavaUtil {
 			throws Exception {
 		Class classObj;
 		Object obj;
-		Field field;
+		String fieldStr;
 		List<Object> values = new ArrayList<Object>();
 		List<Class> types = new ArrayList<Class>();
 		Util.splitArgs(args, values, types);
@@ -144,16 +171,29 @@ public class JavaUtil {
 		if (args.size() > 1) {
 			obj = values.get(0);
 			classObj = types.get(0);
-			field = classObj.getDeclaredField((String) values.get(1));
+			fieldStr = (String) values.get(1);
 		} else {
 			String className = ((String) values.get(0)).replaceFirst(
 					"\\.[^\\.]+$", "");
 			obj = null;
 			classObj = Class.forName(className);
-			field = classObj.getDeclaredField(StringUtil.getFirstMatch("[^\\.]+$",
-					(String) values.get(0)));
+			fieldStr = StringUtil.getFirstMatch("[^\\.]+$",(String) values.get(0));
 		}
-
+		Field field = null;
+		Exception ex = null;
+		while (classObj !=null) {
+			try {
+				field =  classObj.getDeclaredField(fieldStr);
+			} catch (NoSuchFieldException e) {
+				if(ex == null) {
+					ex = e;
+				}
+				classObj = classObj.getSuperclass();
+			}
+		}
+		if (field ==null && ex !=null) {
+			throw ex;
+		}
 		field.setAccessible(true);
 		form.setType(field.getType());
 		return field.get(obj);
