@@ -118,6 +118,9 @@ public class ManForm extends Form {
 					break;
 				}
 			}
+			if (fieldPattern.size() == 0) {
+				isMatched = false;
+			}
 			if (isMatched) {
 				result.add(obj);
 			}
