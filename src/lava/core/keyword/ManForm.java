@@ -72,8 +72,7 @@ public class ManForm extends Form {
 				List<String> methodPatternList = pattern == null ? null : StringUtil.validSplit(pattern, "\\s+");
 				
 				Object obj= getClassItemList(methodPatternList, resources.get(key));
-				if((patternList.size() == 0 && 
-						methodPatternList !=null && 
+				if((methodPatternList !=null &&
 						methodPatternList.size() > 0 &&
 						((!(obj instanceof Collection)) ||
 							((Collection)obj).size() == 0))){
