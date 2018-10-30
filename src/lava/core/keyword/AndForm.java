@@ -23,16 +23,6 @@ public class AndForm extends Form {
 	@Override
 	public void check() {
 		super.check();
-
-		if(this.args.size()<2){
-			Util.syntaxError(this, MsgConstants.wrong_args_num);
-		}
-
-		for(String arg:this.args){
-			if(StringUtil.isNumberId(this,arg)||StringUtil.isStringId(this,arg)){
-				Util.syntaxError(this,arg+":"+MsgConstants.wrong_arg_type);
-			}
-		}
 	}
 
 	@Override
