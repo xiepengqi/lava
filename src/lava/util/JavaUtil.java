@@ -144,6 +144,7 @@ public class JavaUtil {
 			try {
 				con = classObj.getConstructor(types.subList(1, args.size())
 						.toArray(new Class[types.size() - 1]));
+				form.setType(classObj);
 				classObj = null;
 			} catch (NoSuchMethodException e) {
 				if(ex == null) {
@@ -156,7 +157,6 @@ public class JavaUtil {
 			throw ex;
 		}
 		con.setAccessible(true);
-		form.setType(classObj);
 		return con.newInstance(values.subList(1, values.size()).toArray());
 	}
 
