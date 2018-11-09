@@ -49,37 +49,23 @@ public class ManForm extends Form {
 			this.value = resources;
 			return;
 		}
-
+		String pattern1 = (String) this.parseFormArg(this.args.get(0)).getValue();
+		String pattern2 = null;
 		if (this.args.size() > 1) {
 			resources.putAll(Main.jarClass);
+			pattern2 =  (String) this.parseFormArg(this.args.get(1)).getValue();
 		}
 
 		for (String key : resources.keySet()) {
-			List<String> patternList = StringUtil.validSplit((String) this
-					.parseFormArg(this.args.get(0)).getValue(), "\\s+");
-			boolean isMatched = true;
-			for (String pattern : patternList) {
-				if (!key.toUpperCase().contains(pattern.toUpperCase())) {
-					isMatched = false;
-					break;
-				}
-			}
-
-			if (isMatched) {
-				String pattern = this.args.size() > 1 ? (String) this
-						.parseFormArg(this.args.get(1)).getValue()
-						: null;
-				List<String> methodPatternList = pattern == null ? null : StringUtil.validSplit(pattern, "\\s+");
-				
-				Object obj= getClassItemList(methodPatternList, resources.get(key));
-				if((methodPatternList !=null &&
-						methodPatternList.size() > 0 &&
-						((!(obj instanceof Collection)) ||
-							((Collection)obj).size() == 0))){
+			if (key.matches(pattern1)) {
+				if(StringUtil.isBlank(pattern2)){
+					result.put(key, resources.get(key));
 					continue;
-				} 
-				
-				result.put(key, obj);
+				}
+				List methods = getClassItemList(pattern2, resources.get(key));
+				if (methods.size() > 0) {
+					result.put(key, methods);
+				}
 			}
 		}
 
@@ -87,9 +73,10 @@ public class ManForm extends Form {
 		this.value = result;
 	}
 
-	private Object getClassItemList(List<String> fieldPattern, Object clazz) {
-		if (clazz == null || !(clazz instanceof Class)) {
-			return clazz;
+	private List<Object> getClassItemList(String fieldPattern, Object clazz) {
+		List<Object> result = new ArrayList<Object>();
+		if (StringUtil.isBlank(fieldPattern) || clazz == null || !(clazz instanceof Class)) {
+			return result;
 		}
 
 		List<Object> list = new ArrayList<Object>();
@@ -102,26 +89,8 @@ public class ManForm extends Form {
 			}
 		} catch (Throwable ignored){}
 
-		List<Object> result = new ArrayList<Object>();
-
-		if(fieldPattern == null){
-			return result;
-		}
-		
 		for (Object obj : list) {
-			boolean isMatched = true;
-
-			for (String pattern : fieldPattern) {
-				if (!String.valueOf(obj).toUpperCase()
-						.contains(pattern.toUpperCase())) {
-					isMatched = false;
-					break;
-				}
-			}
-			if (fieldPattern.size() == 0) {
-				isMatched = false;
-			}
-			if (isMatched) {
+			if (String.valueOf(obj).matches(fieldPattern)) {
 				result.add(obj);
 			}
 		}
