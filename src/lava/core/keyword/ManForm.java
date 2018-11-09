@@ -1,17 +1,12 @@
 package lava.core.keyword;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import lava.Main;
 import lava.core.Form;
 import lava.core.Sub;
 import lava.util.StringUtil;
 import lava.util.Util;
+
+import java.util.*;
 
 public class ManForm extends Form {
 	@Override
