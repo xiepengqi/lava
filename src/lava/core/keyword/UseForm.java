@@ -159,6 +159,11 @@ public class UseForm extends Form {
 				}
 				return result;
 			}
+
+			@Override
+			public Object defToValue(Object useValue) {
+				return new Data((Data) useValue);
+			}
 		};
 
 		export(useCode, action);
@@ -172,7 +177,10 @@ public class UseForm extends Form {
 			public Iterable<Object> defUseKeys() {
 				return exportCollection;
 			}
-
+			@Override
+			public Object defToValue(Object useValue) {
+				return new Data((Data) useValue);
+			}
 		};
 
 		export(useCode, action);
@@ -183,6 +191,10 @@ public class UseForm extends Form {
 			@Override
 			public boolean isOverAble() {
 				return false;
+			}
+			@Override
+			public Object defToValue(Object useValue) {
+				return new Data((Data) useValue);
 			}
 		};
 		export(useCode, action);

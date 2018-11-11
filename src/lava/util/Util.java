@@ -93,7 +93,11 @@ public class Util {
 		}
 
 		public Object defToKey(Object useKey) {
-			return null;
+			return useKey;
+		}
+
+		public Object defToValue(Object useValue) {
+			return useValue;
 		}
 
 		public Iterable<Object> defUseKeys() {
@@ -180,17 +184,11 @@ public class Util {
 			if (!action.isPutAble(useKey)) {
 				continue;
 			}
-
-			Object toKey = useKey;
-			Object temp = action.defToKey(useKey);
-			if (null != temp) {
-				toKey = temp;
-			}
-
+			Object toKey = action.defToKey(useKey);
 			if (toMap.containsKey(toKey) && !action.isOverAble()) {
 				continue;
 			}
-			toMap.put(toKey, useMap.get(useKey));
+			toMap.put(toKey, action.defToValue(useMap.get(useKey)));
 			putKeys.add(toKey);
 		}
 		return putKeys;

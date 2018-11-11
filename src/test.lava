@@ -1,4 +1,8 @@
-(use 'core.export')
 
+(def test 123)
 
-(if 3 (println 4))
+((/:xie
+	(= xie 345)
+) test )
+
+(.println (. 'java.lang.System.out') (as 'java.lang.Object' test) )
