@@ -53,12 +53,7 @@ public class FnForm extends Form {
 				for(Object obj:(List)args.getValue()){
 					newParseArgs.add(new Data(Data.getClass(obj),obj));
 				}
-			}else if(args.getValue() instanceof Map){
-				for(Map.Entry obj:(Set<Map.Entry>)((Map) args.getValue()).entrySet()){
-					newParseArgs.add(new Data(Data.getClass(obj.getKey()),obj.getKey()));
-					newParseArgs.add(new Data(Data.getClass(obj.getValue()),obj.getValue()));
-				}
-			}else{
+			} else {
 				newParseArgs.add(args);
 			}
 		}
