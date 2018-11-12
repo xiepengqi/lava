@@ -182,8 +182,11 @@ public class Form {
 	}
 
 	protected void runSub(Sub sub,List<Data> parseArgs,List<Object> values) throws Exception {
+		this.runSub(sub, parseArgs, values, null);
+	}
+
+	protected void runSub(Sub sub,List<Data> parseArgs,List<Object> values, Map argMap) throws Exception {
 		List elems=new ArrayList();
-		List args=new ArrayList();
 		boolean isDataInfo=false;
 		if(parseArgs!=null){
 			isDataInfo=true;
@@ -238,10 +241,11 @@ public class Form {
 
 		int argIndex=0;
 		int argSize=subArgs.size();
+		List<Object> args=new ArrayList<Object>();
 		for(Map elem:subArgs){
 			Object arg=elem.get("arg");
 			String argName=(String)elem.get("argName");
-			
+
 			if((Boolean)elem.get("isDataInfo")){
 				args.add(((Data)arg).getValue());
 				dataMap.putData("$"+argIndex, (Data)arg);
@@ -256,6 +260,14 @@ public class Form {
 				if(argName != null){
 					dataMap.put(argName, arg);
 				}
+			}
+			if (argName != null && argMap != null && argMap.containsKey(argName)) {
+				arg = argMap.get(argName);
+				args.remove(args.size() - 1);
+				args.add(arg);
+				dataMap.put("$"+argIndex, arg);
+				dataMap.put("$-"+(argSize - argIndex), arg);
+				dataMap.put(argName, arg);
 			}
 			argIndex++;
 		}
