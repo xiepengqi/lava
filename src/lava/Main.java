@@ -55,7 +55,7 @@ public class Main {
 			addURL.invoke(urlClassLoader, url);
 			
 			if(repl){
-				jarClass.putAll(JavaUtil.getJarClass(URLDecoder.decode(url.getFile()), jarLoader.urlClassLoader));
+				jarClass.putAll(JavaUtil.getJarClass(URLDecoder.decode(url.getFile(),"utf-8"), jarLoader.urlClassLoader));
 			}
 		}
 	}

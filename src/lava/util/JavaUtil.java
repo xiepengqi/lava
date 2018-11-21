@@ -26,7 +26,7 @@ public class JavaUtil {
 		final HashMap<String, Class> classMap = new HashMap<String, Class>();
 
 		for (URL url : classLoader.getURLs()) {
-			String filePath=URLDecoder.decode(url.getFile());
+			String filePath=URLDecoder.decode(url.getFile(), "utf-8");
 			if (new File(filePath).isDirectory()) {
 				FileUtil.traverseFolder(filePath, new FileUtil.Action() {
 					public void action(File topFile, File file) {
