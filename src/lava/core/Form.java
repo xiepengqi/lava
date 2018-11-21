@@ -239,8 +239,6 @@ public class Form {
 			subArgs.add(temp);
 		}
 
-		int argIndex=0;
-		int argSize=subArgs.size();
 		List<Object> args=new ArrayList<Object>();
 		for(Map elem:subArgs){
 			Object arg=elem.get("arg");
@@ -248,15 +246,11 @@ public class Form {
 
 			if((Boolean)elem.get("isDataInfo")){
 				args.add(((Data)arg).getValue());
-				dataMap.putData("$"+argIndex, (Data)arg);
-				dataMap.putData("$-"+(argSize - argIndex), (Data)arg);
 				if(argName != null){
 					dataMap.putData(argName, (Data)arg);
 				}
 			}else{
 				args.add(arg);
-				dataMap.put("$"+argIndex, arg);
-				dataMap.put("$-"+(argSize - argIndex), arg);
 				if(argName != null){
 					dataMap.put(argName, arg);
 				}
@@ -265,11 +259,8 @@ public class Form {
 				arg = argMap.get(argName);
 				args.remove(args.size() - 1);
 				args.add(arg);
-				dataMap.put("$"+argIndex, arg);
-				dataMap.put("$-"+(argSize - argIndex), arg);
 				dataMap.put(argName, arg);
 			}
-			argIndex++;
 		}
 
 		dataMap.put("$args", args);

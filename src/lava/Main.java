@@ -145,7 +145,7 @@ public class Main {
 		Code code = new Code(null, null, "lava.repl");
 		Main.codes.put(code.getIdName(), code);
 
-		String line = "(/repl (if (def? $-1) $-1  ''))";
+		String line = "(/repl:code (if code code  ''))";
 		try {
 			code.eval(line);
 		}catch (SysError e) {

@@ -45,7 +45,6 @@ public class Constants {
 		keywords.put("if", IfForm.class);
 		keywords.put("for", ForForm.class);
 		keywords.put("while", WhileForm.class);
-		keywords.put("def?", QDefForm.class);
 		keywords.put("foreach", ForeachForm.class);
 		keywords.put("throw", ThrowForm.class);
 		keywords.put("return", ReturnForm.class);
