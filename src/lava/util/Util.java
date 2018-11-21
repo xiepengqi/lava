@@ -151,13 +151,13 @@ public class Util {
 		}
 		String msg=Constants.empty;
 		if(debugMode == debug_when_form_begin){
-			msg=StringUtil.join(Constants.sepOrObjChar,form.getFormId(),form.look());
+			msg=StringUtil.join(Constants.sepChar,form.getFormId(),form.look());
 		}
 		if(debugMode == debug_when_form_end){
-			msg=StringUtil.join(Constants.sepOrObjChar,form.getFormId(),form.getType(),form.getValue());
+			msg=StringUtil.join(Constants.sepChar,form.getFormId(),form.getType(),form.getValue());
 		}
 
-		System.out.println(StringUtil.join(Constants.sepOrObjChar,form.getWhere(),msg));
+		System.out.println(StringUtil.join(Constants.sepChar,form.getWhere(),msg));
 	}
 
 	public static boolean isDebug(Form form){

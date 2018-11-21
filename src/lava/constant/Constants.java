@@ -20,10 +20,10 @@ public class Constants {
 	public static String					javaChar			= ".";
 	public static String					idMid				= "@";
 	public static String					systemVarPrefix		= "$";
-	public static String 					sepOrObjChar					= ":";
+	public static String sepChar = ":";
 	public static String 					expand				="*";
 
-	public static String	avoidsChars		=idMid + sepOrObjChar + javaChar +subPrefix + systemVarPrefix + expand;
+	public static String	avoidsChars		=idMid + sepChar + javaChar +subPrefix + systemVarPrefix + expand;
 	
 	public static String					formIdSuffix		= idMid + "F";
 	public static String					stringIdSuffix		= idMid + "S";

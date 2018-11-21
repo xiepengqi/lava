@@ -393,8 +393,6 @@ public class Form {
 			form = new JavaForm();
 		} else if (elems.get(0).startsWith(Constants.subPrefix)) {
 			form = new SubForm();
-		} else if(elems.get(0).startsWith(Constants.sepOrObjChar)){
-			form = new KeyForm();
 		} else {
 			form = new FnForm();
 		}

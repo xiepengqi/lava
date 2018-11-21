@@ -18,11 +18,11 @@ public class SubForm extends Form {
 
 		Sub sub = new Sub();
 
-		String[] nameArgs=this.fnName.split(Constants.sepOrObjChar,2);
+		String[] nameArgs=this.fnName.split(Constants.sepChar,2);
 		this.fnName= nameArgs[0];
 
 		if(nameArgs.length > 1){
-			sub.getArgs().addAll(Arrays.asList(nameArgs[1].split(Constants.sepOrObjChar)));
+			sub.getArgs().addAll(Arrays.asList(nameArgs[1].split(Constants.sepChar)));
 		}
 
 		sub.setName(this.fnName.replaceFirst(Constants.subPrefix, Constants.empty));
