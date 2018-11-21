@@ -38,7 +38,7 @@ public class Util {
 			return (Boolean)obj;
 		}
 
-		return true;
+		return String.valueOf(obj).length() > 0;
 	}
 
 	public static String seeNumber(Code inCode, String seeSource) {
