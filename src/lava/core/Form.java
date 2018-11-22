@@ -425,7 +425,7 @@ public class Form {
 		}
 
 		for (String arg : this.getElems()) {
-			Form form = this.inCode.getFormMap().get(arg);
+			Form form = this.inCode.getFormMap().get(arg.startsWith(Constants.expand) ? arg.substring(1):arg);
 			if (null != form) {
 				form.markRunBy(runByForm);
 			}
