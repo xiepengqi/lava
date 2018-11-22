@@ -214,7 +214,8 @@ public class Form {
 					do{
 						list.add(isDataInfo ? ((Data)elems.get(i)).getValue():elems.get(i));
 						i++;
-					}while((elems.size()-i) > subArgsName.size());	
+					}while(elems.size()-i > subArgsName.size());
+					i--;
 					temp.put("arg",list);
 					temp.put("argName", argName.substring(1));
 					temp.put("isDataInfo", false);

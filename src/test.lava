@@ -1,16 +1,4 @@
 (use 'core.export')
-(def text '
-1 建码库表
-2 码库路由
-
-3 主流程调用 码库路由
-4 向码库插入记录
-
-')
-(debug ['test'])
-(def map {})
-(/eachLine:line
-	(if line (put map *(.split line '\s+'))) 1)
-(foreach (.split text '\n') /eachLine)
-
-(println (toFmtStr map))
+(/test:*xie
+	(println xie))
+	(test 1 2 3)
