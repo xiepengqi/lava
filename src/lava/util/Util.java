@@ -128,7 +128,7 @@ public class Util {
 	}
 
 	public static void syntaxError(Form form, String str) {
-		System.err.println("SYNTAX-ERROR:" + form.getWhere() + ":" + form.see() + ":" + str);
+		System.err.println("SYNTAX-ERROR:" + form.getWhere() + ":" + form.look() + ":" + str);
 		Main.syntaxError = true;
 	}
 

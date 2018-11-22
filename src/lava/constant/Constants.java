@@ -23,7 +23,7 @@ public class Constants {
 	public static String sepChar = ":";
 	public static String 					expand				="*";
 
-	public static String	avoidsChars		=idMid + sepChar + javaChar +subPrefix + systemVarPrefix + expand;
+	public static String	avoidsChars		=idMid + sepChar + javaChar +subPrefix + expand;
 	
 	public static String					formIdSuffix		= idMid + "F";
 	public static String					stringIdSuffix		= idMid + "S";

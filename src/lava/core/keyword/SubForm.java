@@ -55,7 +55,7 @@ public class SubForm extends Form {
 			if (arg.startsWith(Constants.expand)) {
 				arg = arg.substring(1);
 			}
-			if (!StringUtil.isDefVarAble(arg)) {
+			if (StringUtil.isNotBlank(arg) && !StringUtil.isDefVarAble(arg)) {
 				Util.syntaxError(this, arg+":"+MsgConstants.wrong_args_num);
 			}
 		}

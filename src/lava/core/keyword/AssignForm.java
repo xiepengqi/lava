@@ -1,5 +1,6 @@
 package lava.core.keyword;
 
+import lava.constant.Constants;
 import lava.constant.MsgConstants;
 import lava.core.Data;
 import lava.core.Form;
@@ -20,6 +21,9 @@ public class AssignForm extends Form {
 		}
 
 		for(String arg:this.args.subList(0,this.args.size()-1)){
+			if (arg.startsWith(Constants.systemVarPrefix)) {
+				Util.syntaxError(this,arg+":"+MsgConstants.no_assign);
+			}
 			if(!StringUtil.isDefVarAble(arg)){
 				Util.syntaxError(this,arg+":"+MsgConstants.wrong_arg_name);
 			}

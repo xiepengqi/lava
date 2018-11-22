@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 public class MsgConstants {
     public static String wrong_args_num;
     public static String wrong_arg_name;
+    public static String no_assign;
     public static String wrong_arg_type;
     public static String wrong_fn_name;
     public static String no_code_found;
