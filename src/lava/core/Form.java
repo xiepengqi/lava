@@ -445,7 +445,7 @@ public class Form {
 			return formSeq;
 		}
 		for (String arg : this.getElems()) {
-			Form form1 = this.getInCode().getFormMap().get(arg);
+			Form form1 = this.getInCode().getFormMap().get(arg.startsWith(Constants.expand) ? arg.substring(1):arg);
 
 			if (null != form1) {
 				form1.getFormSeqWhichRunBy(runBy, formSeq);

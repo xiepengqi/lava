@@ -1,8 +1,16 @@
+(use 'core.export')
+(def text '
+1 建码库表
+2 码库路由
 
-(def test 123)
+3 主流程调用 码库路由
+4 向码库插入记录
 
-((/:xie
-	(= xie 345)
-) test )
+')
+(debug ['test'])
+(def map {})
+(/eachLine:line
+	(if line (put map *(.split line '\s+'))) 1)
+(foreach (.split text '\n') /eachLine)
 
-(.println (. 'java.lang.System.out') (as 'java.lang.Object' test) )
+(println (toFmtStr map))

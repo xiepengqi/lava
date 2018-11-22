@@ -36,6 +36,7 @@ public class SubForm extends Form {
 
 	private void markScopeForForm(Form form, Sub func) {
 		for (String arg : form.getElems()) {
+			arg = arg.startsWith(Constants.expand) ? arg.substring(1):arg;
 			if (null != this.inCode.getFormMap().get(arg)) {
 				this.inCode.getFormMap().get(arg).getInSubSeq().add(func);
 				markScopeForForm(this.inCode.getFormMap().get(arg), func);
