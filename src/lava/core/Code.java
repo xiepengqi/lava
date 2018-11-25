@@ -227,9 +227,8 @@ public class Code {
 
 		Form.runFormSeq(this.formSeq,action);
 
-		Set keys = this.exports.getMap().keySet();
-		this.type = Data.getClass(keys);
-		this.value = keys;
+		this.type = Map.class;
+		this.value = this.exports.getMap();
 	}
 
 	private String extractForm(String codeSource){

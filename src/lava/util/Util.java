@@ -173,8 +173,8 @@ public class Util {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static List<Object> putAll(Map useMap, Map toMap, Action action) {
-		List<Object> putKeys = new ArrayList<Object>();
+	public static Map putAll(Map useMap, Map toMap, Action action) {
+		Map puts = new HashMap();
 		Iterable<Object> useKeys = action.defUseKeys();
 
 		if (useKeys == null) {
@@ -188,10 +188,11 @@ public class Util {
 			if (toMap.containsKey(toKey) && !action.isOverAble()) {
 				continue;
 			}
-			toMap.put(toKey, action.defToValue(useMap.get(useKey)));
-			putKeys.add(toKey);
+			Object toValue = action.defToValue(useMap.get(useKey));
+			toMap.put(toKey, toValue);
+			puts.put(toKey, toValue);
 		}
-		return putKeys;
+		return puts;
 	}
 
 }

@@ -30,7 +30,7 @@ public class FnForm extends Form {
 		}
 
 		List<Data> newParseArgs=new ArrayList<Data>();
-		Map argMap = null;
+		Map argMap = new HashMap();
 		for(String arg:this.args){
 			if(!arg.startsWith(Constants.expand)){
 				newParseArgs.add(new Data(this.parseFormArg(arg)));
@@ -52,7 +52,7 @@ public class FnForm extends Form {
 					newParseArgs.add(new Data(Data.getClass(obj),obj));
 				}
 			}else if(args.getValue() instanceof Map){
-				argMap = (Map) args.getValue();
+				argMap.putAll((Map) args.getValue());
 			}else{
 				newParseArgs.add(args);
 			}

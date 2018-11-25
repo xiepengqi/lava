@@ -43,8 +43,8 @@ public class UseForm extends Form {
 	@Override
 	public void run() throws Exception {
 		super.run();
-		this.type = ArrayList.class;
-		this.value = new ArrayList<String>();
+		this.value = new HashMap();
+		this.type = Map.class;
 
 		List<Code> useCodes=new ArrayList<Code>();
 		Code useCode;
@@ -210,7 +210,7 @@ public class UseForm extends Form {
 			toMap = this.inCode.getDataMap().getMap();
 		}
 
-		((List)this.value).addAll(Util.putAll(useCode.getExports().getMap(), toMap, action));
+		this.value = Util.putAll(useCode.getExports().getMap(), toMap, action);
 	}
 
 	private String genUseCaseKey(int index, List<Data> parseArgs) {
