@@ -1,10 +1,6 @@
 package lava.core.keyword;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import lava.Main;
 import lava.constant.Constants;
@@ -210,7 +206,9 @@ public class UseForm extends Form {
 			toMap = this.inCode.getDataMap().getMap();
 		}
 
-		this.value = Util.putAll(useCode.getExports().getMap(), toMap, action);
+		for (Map.Entry entry : (Set<Map.Entry>)Util.putAll(useCode.getExports().getMap(), toMap, action).entrySet()) {
+			((Map)this.value).put(entry.getKey(), ((Data)entry.getValue()).getValue());
+		}
 	}
 
 	private String genUseCaseKey(int index, List<Data> parseArgs) {

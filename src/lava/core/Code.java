@@ -24,9 +24,9 @@ public class Code {
 	private Map<String, Data>	stringMap	= new HashMap<String, Data>();
 	private Map<String, Data>	numberMap	= new HashMap<String, Data>();
 	private boolean	isReturn	= false;
-	
-	private Class type=Object.class;
-	private Object value=null;
+
+	private Class type=Map.class;
+	private Object value=new HashMap<>();
 	
 	private boolean					isParsed;
 	private boolean					isChecked;
@@ -227,8 +227,9 @@ public class Code {
 
 		Form.runFormSeq(this.formSeq,action);
 
-		this.type = Map.class;
-		this.value = this.exports.getMap();
+		for (Map.Entry entry : this.exports.getMap().entrySet()) {
+			((Map)this.value).put(entry.getKey(), ((Data)entry.getValue()).getValue());
+		}
 	}
 
 	private String extractForm(String codeSource){
