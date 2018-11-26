@@ -1,5 +1,3 @@
-(use "core.export")
-(/test
-    (use {"a" 1 "b" 2} [ "a" ])
-    (println a))
-(test)
+(def code
+                (.get $codes (as 'java.lang.Object' "core.common")))
+(. code 'packagePath')

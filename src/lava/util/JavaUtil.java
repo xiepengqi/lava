@@ -172,7 +172,7 @@ public class JavaUtil {
 
 		if (args.size() > 1) {
 			obj = values.get(0);
-			classObj = types.get(0);
+			classObj = Data.getClass(obj);
 			fieldStr = (String) values.get(1);
 		} else {
 			String className = ((String) values.get(0)).replaceFirst(
