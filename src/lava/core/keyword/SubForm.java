@@ -36,7 +36,6 @@ public class SubForm extends Form {
 
 	private void markScopeForForm(Form form, Sub func) {
 		for (String arg : form.getElems()) {
-			arg = arg.startsWith(Constants.expand) ? arg.substring(1):arg;
 			if (null != this.inCode.getFormMap().get(arg)) {
 				this.inCode.getFormMap().get(arg).getInSubSeq().add(func);
 				markScopeForForm(this.inCode.getFormMap().get(arg), func);
@@ -52,9 +51,6 @@ public class SubForm extends Form {
 			Util.syntaxError(this, this.asSub.getName()+":"+MsgConstants.wrong_fn_name);
 		}
 		for (String arg : this.asSub.getArgs()) {
-			if (arg.startsWith(Constants.expand)) {
-				arg = arg.substring(1);
-			}
 			if (StringUtil.isNotBlank(arg) && !StringUtil.isDefVarAble(arg)) {
 				Util.syntaxError(this, arg+":"+MsgConstants.wrong_args_num);
 			}
