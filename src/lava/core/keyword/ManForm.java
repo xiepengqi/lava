@@ -50,10 +50,10 @@ public class ManForm extends Form {
 			resources.putAll(Main.jarClass);
 			pattern2 =  (String) this.parseFormArg(this.args.get(1)).getValue();
 		}
-
+		boolean blank2 = StringUtil.isBlank(pattern2);
 		for (String key : resources.keySet()) {
-			if (key.matches(pattern1)) {
-				if(StringUtil.isBlank(pattern2)){
+			if ((blank2 && key.toUpperCase().contains(pattern1.toUpperCase())) || key.matches(pattern1)) {
+				if(blank2){
 					result.put(key, resources.get(key));
 					continue;
 				}
