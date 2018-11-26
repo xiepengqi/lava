@@ -21,6 +21,10 @@ public class UseForm extends Form {
 		useCase.put("String:Collection", 3);
 		useCase.put("String:Map", 4);
 		useCase.put(":", 5);
+		useCase.put("Map:", 1);
+		useCase.put("Map:String", 2);
+		useCase.put("Map:Collection", 3);
+		useCase.put("Map:Map", 4);
 	}
 
 	@Override
@@ -42,73 +46,69 @@ public class UseForm extends Form {
 		this.value = new HashMap();
 		this.type = Map.class;
 
-		List<Code> useCodes=new ArrayList<Code>();
 		Code useCode;
 		for (String arg : this.args) {
 			Data data=this.parseFormArg(arg);
-			if(!(data.getValue() instanceof String)){
+			Object value = data.getValue();
+			if(!(value instanceof String)){
 				continue;
 			}
 			useCode = Main.codes.get(data.getValue());
 			if (null == useCode) {
 				throw new SysError(this, String.valueOf(data.getValue()));
 			}
-			useCodes.add(useCode);
 			useCode.parse();
 			useCode.check();
 			useCode.run();
 		}
 
-		if(useCodes.size() == 0){
-			return;
-		}
 		List<Data> parseArgs = parseFormArgs(this.args);
 		int index = 0;
 		boolean isLast;
+		Map dataMap = null;
 		while (true) {
 			String key = genUseCaseKey(index, parseArgs);
 			Integer catchCase = useCase.get(key);
 			if (null == catchCase) {
 				catchCase = 0;
 			}
+			if (catchCase == 5) {
+				break;
+			}
+
+			Object value = parseArgs.get(index).getValue();
+			if(value instanceof Map) {
+				dataMap = (Map)value;
+			}
+			if (value instanceof String) {
+				useCode = Main.codes.get(value);
+				if (useCode !=null) {
+					dataMap = useCode.getExports().getMap();
+				}
+			}
 			switch (catchCase) {
 				case 1:
-					useCode = Main.codes.get(parseArgs.get(index).getValue());
-					useCode.run();
-
-					exportAll(useCode);
+					exportAll(dataMap);
 					isLast = true;
 					break;
 				case 2:
-					useCode = Main.codes.get(parseArgs.get(index).getValue());
-					useCode.run();
-
-					exportAll(useCode);
+					exportAll(dataMap);
 					index += 1;
 					isLast = false;
 					break;
 				case 3:
-					useCode = Main.codes.get(parseArgs.get(index).getValue());
-					useCode.run();
 					Collection exportCollection = (Collection) parseArgs.get(index + 1).getValue();
 
-					exportCollection(useCode, exportCollection);
+					exportCollection(dataMap, exportCollection);
 					index += 2;
 					isLast = false;
 
 					break;
 				case 4:
-					useCode = Main.codes.get(parseArgs.get(index).getValue());
-					useCode.run();
-
 					Map exportMap = (Map) parseArgs.get(index + 1).getValue();
-					exportMap(useCode, exportMap, this);
+					exportMap(dataMap, exportMap, this);
 					index += 2;
 					isLast = false;
-
-					break;
-				case 5:
-					isLast = true;
 
 					break;
 				default:
@@ -125,7 +125,7 @@ public class UseForm extends Form {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void exportMap(Code useCode, final Map exportMap,final Form form) {
+	private void exportMap(Map fromMap, final Map exportMap,final Form form) {
 		Util.Action action = new Util.Action() {
 			private boolean isOverAble = false;
 
@@ -158,15 +158,19 @@ public class UseForm extends Form {
 
 			@Override
 			public Object defToValue(Object useValue) {
-				return new Data((Data) useValue);
+				if (useValue instanceof Data) {
+					return new Data((Data) useValue);
+				} else {
+					return new Data(useValue);
+				}
 			}
 		};
 
-		export(useCode, action);
+		export(fromMap, action);
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void exportCollection(Code useCode, final Collection exportCollection) {
+	private void exportCollection(Map fromMap, final Collection exportCollection) {
 		Util.Action action = new Util.Action() {
 			@SuppressWarnings("unchecked")
 			@Override
@@ -175,14 +179,18 @@ public class UseForm extends Form {
 			}
 			@Override
 			public Object defToValue(Object useValue) {
-				return new Data((Data) useValue);
+				if (useValue instanceof Data) {
+					return new Data((Data) useValue);
+				} else {
+					return new Data(useValue);
+				}
 			}
 		};
 
-		export(useCode, action);
+		export(fromMap, action);
 	}
 
-	private void exportAll(Code useCode) {
+	private void exportAll(Map fromMap) {
 		Util.Action action = new Util.Action() {
 			@Override
 			public boolean isOverAble() {
@@ -190,14 +198,18 @@ public class UseForm extends Form {
 			}
 			@Override
 			public Object defToValue(Object useValue) {
-				return new Data((Data) useValue);
+				if (useValue instanceof Data) {
+					return new Data((Data) useValue);
+				} else {
+					return new Data(useValue);
+				}
 			}
 		};
-		export(useCode, action);
+		export(fromMap, action);
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void export(Code useCode, Util.Action action) {
+	private void export(Map fromMap, Util.Action action) {
 		Map toMap;
 
 		if (this.inSubSeq.size() > 0) {
@@ -206,7 +218,7 @@ public class UseForm extends Form {
 			toMap = this.inCode.getDataMap().getMap();
 		}
 
-		for (Map.Entry entry : (Set<Map.Entry>)Util.putAll(useCode.getExports().getMap(), toMap, action).entrySet()) {
+		for (Map.Entry entry : (Set<Map.Entry>)Util.putAll(fromMap, toMap, action).entrySet()) {
 			((Map)this.value).put(entry.getKey(), ((Data)entry.getValue()).getValue());
 		}
 	}

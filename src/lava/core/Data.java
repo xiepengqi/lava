@@ -20,7 +20,11 @@ public class Data {
         this.value = dataInfo.getValue();
         this.source = dataInfo.getSource();
     }
-
+    @SuppressWarnings("rawtypes")
+    public Data(Object value) {
+        this.type = getClass(value);
+        this.value = value;
+    }
     @SuppressWarnings("rawtypes")
     public Data(Class type, Object value) {
         this.type = type;
