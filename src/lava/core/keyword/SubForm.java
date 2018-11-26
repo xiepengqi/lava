@@ -51,8 +51,11 @@ public class SubForm extends Form {
 			Util.syntaxError(this, this.asSub.getName()+":"+MsgConstants.wrong_fn_name);
 		}
 		for (String arg : this.asSub.getArgs()) {
+			if (arg.startsWith(Constants.expand)) {
+				arg = arg.substring(1);
+			}
 			if (StringUtil.isNotBlank(arg) && !StringUtil.isDefVarAble(arg)) {
-				Util.syntaxError(this, arg+":"+MsgConstants.wrong_args_num);
+				Util.syntaxError(this, arg+":"+MsgConstants.wrong_arg_name);
 			}
 		}
 
