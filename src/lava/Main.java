@@ -32,7 +32,7 @@ public class Main {
 	public static final List<String> jars = new ArrayList<String>();
 	public static final Map<String, Code> modules = new HashMap<String, Code>();
 
-	public static final List tempList = new ArrayList();
+	public static final List<Code> tempList = new ArrayList<Code>();
 
 	public static boolean debug=false;
 	public static boolean repl = false;
@@ -224,10 +224,7 @@ public class Main {
 			@Override
 			public boolean isRemoveAble(Object o) {
 				String path = (String) o;
-				if (path.trim().length() > 0) {
-					return false;
-				}
-				return true;
+				return path.trim().length() <= 0;
 			}
 
 		});
@@ -237,7 +234,7 @@ public class Main {
 			FileUtil.traverseFolder(path, action);
 		}
 
-		return tempList;
+		return new ArrayList<Code>(tempList);
 	}
 
 }
