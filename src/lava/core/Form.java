@@ -178,7 +178,7 @@ public class Form {
 			return data;
 		}
 
-		throw new SysError(this,arg);
+		return new Data(String.class, arg, arg);
 	}
 
 	protected void runSub(Sub sub,List<Data> parseArgs,List<Object> values) throws Exception {
