@@ -219,7 +219,7 @@ public class UseForm extends Form {
 		}
 
 		for (Map.Entry entry : (Set<Map.Entry>)Util.putAll(fromMap, toMap, action).entrySet()) {
-			((Map)this.value).put(entry.getKey(), ((Data)entry.getValue()).getValue());
+			((Map)this.value).put(entry.getKey(), entry.getValue());
 		}
 	}
 

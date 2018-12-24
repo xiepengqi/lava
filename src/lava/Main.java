@@ -1,25 +1,17 @@
 package lava;
 
-import java.io.File;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-
 import lava.constant.Constants;
 import lava.constant.MsgConstants;
 import lava.core.Code;
+import lava.core.JarLoader;
 import lava.core.SysError;
 import lava.util.FileUtil;
 import lava.util.JavaUtil;
 import lava.util.StringUtil;
 import lava.util.Util;
+
+import java.io.File;
+import java.util.*;
 
 public class Main {
 	public static final Map<String, Code> codes = new HashMap<String, Code>();
@@ -32,33 +24,12 @@ public class Main {
 	public static final List<String> jars = new ArrayList<String>();
 	public static final Map<String, Code> modules = new HashMap<String, Code>();
 
-	public static final List<Code> tempList = new ArrayList<Code>();
+	private static final List<Code> tempList = new ArrayList<Code>();
 
 	public static boolean debug=false;
 	public static boolean repl = false;
 
-	
-	public static final JarLoader jarLoader = new JarLoader(
-			(URLClassLoader) Main.class.getClassLoader());
-
-	public static class JarLoader {
-		private URLClassLoader urlClassLoader;
-
-		public JarLoader(URLClassLoader urlClassLoader) {
-			this.urlClassLoader = urlClassLoader;
-		}
-
-		public void loadJar(URL url) throws Exception {
-			Method addURL = URLClassLoader.class.getDeclaredMethod("addURL",
-					URL.class);
-			addURL.setAccessible(true);
-			addURL.invoke(urlClassLoader, url);
-			
-			if(repl){
-				jarClass.putAll(JavaUtil.getJarClass(URLDecoder.decode(url.getFile(),"utf-8"), jarLoader.urlClassLoader));
-			}
-		}
-	}
+	private static final JarLoader jarLoader = new JarLoader();
 	
 	public static void main(String[] args) {
 		List<String> codePaths = new ArrayList<String>();
@@ -109,7 +80,7 @@ public class Main {
 
 		if (codePaths.size() == 0) {
 			try {
-				jarClass.putAll(JavaUtil.getJarLoaderClass(jarLoader.urlClassLoader));
+				jarClass.putAll(JavaUtil.getJarLoaderClass(jarLoader));
 				startRepl();
 			} catch (SysError e) {
 				Util.systemError(e.getMessage());
@@ -140,7 +111,7 @@ public class Main {
 
 	}
 
-	public static void startRepl() throws Exception{
+	private static void startRepl() throws Exception{
 		Main.repl = true;
 		Code code = new Code(null, null, "lava.repl");
 		Main.codes.put(code.getIdName(), code);

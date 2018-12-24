@@ -226,10 +226,8 @@ public class Code {
 		};
 
 		Form.runFormSeq(this.formSeq,action);
-
-		for (Map.Entry entry : this.exports.getMap().entrySet()) {
-			((Map)this.value).put(entry.getKey(), ((Data)entry.getValue()).getValue());
-		}
+		
+		this.value = this.exports.getMap();
 	}
 
 	private String extractForm(String codeSource){
