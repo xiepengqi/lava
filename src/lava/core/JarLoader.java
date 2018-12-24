@@ -1,6 +1,5 @@
 package lava.core;
 
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 
@@ -10,13 +9,6 @@ import java.net.URLClassLoader;
 public class JarLoader extends URLClassLoader {
     public JarLoader() {
         super(new URL[] {}, findParentClassLoader());
-    }
-
-    public void loadJar(URL url) throws Exception {
-        Method addURL = URLClassLoader.class.getDeclaredMethod("addURL",
-                URL.class);
-        addURL.setAccessible(true);
-        addURL.invoke(this, url);
     }
 
     private static ClassLoader findParentClassLoader() {

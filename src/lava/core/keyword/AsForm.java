@@ -1,14 +1,15 @@
 package lava.core.keyword;
 
-import java.lang.reflect.Array;
-import java.util.List;
-
 import lava.constant.Constants;
 import lava.constant.MsgConstants;
 import lava.core.Data;
 import lava.core.Form;
+import lava.util.JavaUtil;
 import lava.util.StringUtil;
 import lava.util.Util;
+
+import java.lang.reflect.Array;
+import java.util.List;
 
 public class AsForm extends Form {
 
@@ -67,6 +68,6 @@ public class AsForm extends Form {
 		if (Constants.baseTypes.containsKey(classFullName)){
 			return Constants.baseTypes.get(classFullName);
 		}
-		return Class.forName(classFullName);
+		return JavaUtil.forName(classFullName);
 	}
 }

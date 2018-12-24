@@ -28,8 +28,6 @@ public class Main {
 
 	public static boolean debug=false;
 	public static boolean repl = false;
-
-	private static final JarLoader jarLoader = new JarLoader();
 	
 	public static void main(String[] args) {
 		List<String> codePaths = new ArrayList<String>();
@@ -80,7 +78,7 @@ public class Main {
 
 		if (codePaths.size() == 0) {
 			try {
-				jarClass.putAll(JavaUtil.getJarLoaderClass(jarLoader));
+				jarClass.putAll(JavaUtil.getJarLoaderClass());
 				startRepl();
 			} catch (SysError e) {
 				Util.systemError(e.getMessage());
@@ -159,7 +157,7 @@ public class Main {
 		public void action(File topFile, File file) {
 			if (file.getName().endsWith(".jar")) {
 				try {
-					jarLoader.loadJar(file.toURI().toURL());;
+					JavaUtil.loadJar(file.toURI().toURL());
 				} catch (Throwable t) {
 					Util.systemError("fail to load jar file:" + file.getAbsolutePath()+":" + t.toString());
 				}

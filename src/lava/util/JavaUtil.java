@@ -1,5 +1,10 @@
 package lava.util;
 
+import lava.constant.Constants;
+import lava.core.Data;
+import lava.core.Form;
+import lava.core.JarLoader;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -15,24 +20,31 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import lava.constant.Constants;
-import lava.core.Data;
-import lava.core.Form;
-
 public class JavaUtil {
-	
-	public static HashMap<String, Class> getJarLoaderClass(
-			final URLClassLoader classLoader) throws Exception {
+	private static final JarLoader jarLoader = new JarLoader();
+
+	public static void loadJar(URL url) throws Exception {
+		Method addURL = URLClassLoader.class.getDeclaredMethod("addURL",
+				URL.class);
+		addURL.setAccessible(true);
+		addURL.invoke(jarLoader, url);
+	}
+
+	public static Class forName(String className) throws ClassNotFoundException {
+		return Class.forName(className, true, jarLoader);
+	}
+
+	public static HashMap<String, Class> getJarLoaderClass() throws Exception {
 		final HashMap<String, Class> classMap = new HashMap<String, Class>();
 
-		for (URL url : classLoader.getURLs()) {
+		for (URL url : jarLoader.getURLs()) {
 			String filePath=URLDecoder.decode(url.getFile(), "utf-8");
 			if (new File(filePath).isDirectory()) {
 				FileUtil.traverseFolder(filePath, new FileUtil.Action() {
 					public void action(File topFile, File file) {
 						if (file.getName().endsWith(".jar")) {
 							HashMap<String, Class> map = getJarClass(
-									file.getPath(), classLoader);
+									file.getPath(), jarLoader);
 							if (map != null) {
 								classMap.putAll(map);
 							}
@@ -41,7 +53,7 @@ public class JavaUtil {
 				});
 			} else {
 				HashMap<String, Class> map = getJarClass(filePath,
-						classLoader);
+						jarLoader);
 				if (map != null) {
 					classMap.putAll(map);
 				}
@@ -51,7 +63,7 @@ public class JavaUtil {
 		return classMap;
 	}
 
-	public static HashMap<String, Class> getJarClass(String jarPath,
+	private static HashMap<String, Class> getJarClass(String jarPath,
 			ClassLoader classLoader) {
 		HashMap<String, Class> classMap = new HashMap<String, Class>();
 		JarFile jar = null;
@@ -104,7 +116,7 @@ public class JavaUtil {
 			methodStr = StringUtil.getFirstMatch("[^\\.]+$", fnName);
 			String className = fnName.replaceFirst("\\.[^\\.]+$", "");
 			object = null;
-			classObject = Class.forName(className);
+			classObject = forName(className);
 		}
 
 		Method method = null;
@@ -137,7 +149,7 @@ public class JavaUtil {
 
 		Util.splitArgs(args, values, types);
 
-		Class classObj = Class.forName((String) values.get(0));
+		Class classObj = forName((String) values.get(0));
 		Constructor con = null;
 		Exception ex = null;
 		while (classObj !=null) {
@@ -178,7 +190,7 @@ public class JavaUtil {
 			String className = ((String) values.get(0)).replaceFirst(
 					"\\.[^\\.]+$", "");
 			obj = null;
-			classObj = Class.forName(className);
+			classObj = forName(className);
 			fieldStr = StringUtil.getFirstMatch("[^\\.]+$",(String) values.get(0));
 		}
 		Field field = null;
