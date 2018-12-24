@@ -11,6 +11,10 @@ import java.util.Map;
 public class Constants {
 	public static String					newLine				= System.getProperty("line.separator", "\n");
 
+	public static  String   leftBorder = "([{";
+	public static  String   rightBorder = ")]}";
+	public static  String   border = leftBorder + rightBorder;
+
 	public static Map<String, Class>		keywords			= new HashMap<String, Class>();
 	public static Map<String, Class>		baseTypes			= new HashMap<String, Class>();
 	public static Map<String, Class>		numberTypes			= new HashMap<String, Class>();

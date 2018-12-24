@@ -15,20 +15,20 @@ public class RegexConstants {
 			StringUtil.escapeReg(Constants.avoidsChars.replace(Constants.subPrefix, ""))
 			+ "][^" + StringUtil.escapeReg(Constants.avoidsChars) + "]*";
 
-	public static String	elemLeftBorder	= "(?<=[\\s\\(\\[\\{]|^)";
-	public static String	elemRightBorder	= "(?=[\\s\\)\\]\\}]|$)";
+	public static String	elemLeftBorder	= "(?<=[\\s"+StringUtil.escapeReg(Constants.leftBorder)+"]|^)";
+	public static String	elemRightBorder	= "(?=[\\s"+StringUtil.escapeReg(Constants.rightBorder)+"]|$)";
 
 	public static String    extractLString = "`[^`]*`";
 	public static String    extractLStringVar = "\\{[^{}]+\\}";
 	public static String	extractString	= "'[^']*'|\"[^\"]*\"";
 	public static String	extractNumber		= elemLeftBorder + RegexConstants.number + elemRightBorder;
 	public static String	extractForm		= "(" 
-				+ "\\([^\\(\\)\\[\\]\\{\\}]*\\)|" 
-				+ "\\[[^\\(\\)\\[\\]\\{\\}]*\\]|"
-				+ "\\{[^\\(\\)\\[\\]\\{\\}]*\\}" 
+				+ "\\([^"+StringUtil.escapeReg(Constants.border)+"]*\\)|"
+				+ "\\[[^"+StringUtil.escapeReg(Constants.border)+"]*\\]|"
+				+ "\\{[^"+StringUtil.escapeReg(Constants.border)+"]*\\}"
 				+ ")";
 
-	public static String	formBorder		= "^[\\(\\[\\{]|[\\)\\]\\}]$";
+	public static String	formBorder		= "^["+StringUtil.escapeReg(Constants.leftBorder)+"]|["+StringUtil.escapeReg(Constants.rightBorder)+"]$";
 
 	public static String	formId			= "\\d+" + Constants.formIdSuffix;
 	public static String	stringId		= "\\d+" + Constants.stringIdSuffix;
