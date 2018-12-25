@@ -364,7 +364,6 @@ public class Form {
 	@SuppressWarnings("rawtypes")
 	public static Form createdForm(String source) {
 		Form form = null;
-		List<String> elems = null;
 
 		if (source.startsWith("{")) {
 			form = new MapForm();
@@ -372,7 +371,7 @@ public class Form {
 			form = new ListForm();
 		}
 
-		elems = parseForm(source);
+		List<String> elems = parseForm(source);
 
 		if (null != form) {
 			form.setArgs(elems);
@@ -384,14 +383,14 @@ public class Form {
 			return new Form();
 		}
 		Class formClass = Constants.keywords.get(elems.get(0));
-		if (null != formClass) {
+		if (source.startsWith("<")) {
+			form = new JavaForm();
+		} else if (null != formClass) {
 			try {
 				form = (Form) formClass.newInstance();
 			} catch (Throwable t) {
 				Util.systemError(source+":"+t.toString());
 			}
-		} else if (elems.get(0).contains(Constants.javaChar)) {
-			form = new JavaForm();
 		} else if (elems.get(0).startsWith(Constants.subPrefix)) {
 			form = new SubForm();
 		} else {

@@ -22,11 +22,24 @@ public class RegexConstants {
 	public static String    extractLStringVar = "\\{[^{}]+\\}";
 	public static String	extractString	= "'[^']*'|\"[^\"]*\"";
 	public static String	extractNumber		= elemLeftBorder + RegexConstants.number + elemRightBorder;
-	public static String	extractForm		= "(" 
-				+ "\\([^"+StringUtil.escapeReg(Constants.border)+"]*\\)|"
-				+ "\\[[^"+StringUtil.escapeReg(Constants.border)+"]*\\]|"
-				+ "\\{[^"+StringUtil.escapeReg(Constants.border)+"]*\\}"
-				+ ")";
+
+	public static String	extractForm;
+	static {
+		StringBuilder sb = new StringBuilder();
+		sb.append("(");
+		char[] leftChars = Constants.leftBorder.toCharArray();
+		char[] rightChars = Constants.rightBorder.toCharArray();
+		for (int i = 0; i < leftChars.length; i++) {
+			sb.append(StringUtil.escapeReg(String.valueOf(leftChars[i])));
+			sb.append("[^"+StringUtil.escapeReg(Constants.border)+"]*");
+			sb.append(StringUtil.escapeReg(String.valueOf(rightChars[i])));
+			if (i < leftChars.length - 1) {
+				sb.append("|");
+			}
+		}
+		sb.append(")");
+		extractForm = sb.toString();
+	}
 
 	public static String	formBorder		= "^["+StringUtil.escapeReg(Constants.leftBorder)+"]|["+StringUtil.escapeReg(Constants.rightBorder)+"]$";
 

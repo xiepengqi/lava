@@ -1,3 +1,1 @@
-(def code
-                (.get $codes (as 'java.lang.Object' "core.common")))
-(. code 'packagePath')
+<.println <. java.lang.System.out> 123>

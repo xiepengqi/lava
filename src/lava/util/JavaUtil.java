@@ -93,14 +93,13 @@ public class JavaUtil {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static Object processMethod(Form form, List<Data> args)
+	public static Object processMethod(String fnName, List<Data> args)
 			throws Exception {
 		List<Object> values = new ArrayList<Object>();
 		List<Class> types = new ArrayList<Class>();
 
 		Util.splitArgs(args, values, types);
 
-		String fnName = form.getFnName();
 		String methodStr = null;
 		Object object = null;
 		Class classObject = null;
@@ -137,12 +136,11 @@ public class JavaUtil {
 			throw ex;
 		}
 		method.setAccessible(true);
-		form.setType(method.getReturnType());
 		return method.invoke(object, values.toArray());
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static Object processNew(Form form, List<Data> args)
+	public static Object processNew(List<Data> args)
 			throws Exception {
 		List<Object> values = new ArrayList<Object>();
 		List<Class> types = new ArrayList<Class>();
@@ -156,7 +154,6 @@ public class JavaUtil {
 			try {
 				con = classObj.getConstructor(types.subList(1, args.size())
 						.toArray(new Class[types.size() - 1]));
-				form.setType(classObj);
 				classObj = null;
 			} catch (NoSuchMethodException e) {
 				if(ex == null) {
@@ -173,7 +170,7 @@ public class JavaUtil {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public static Object processField(Form form, List<Data> args)
+	public static Object processField(List<Data> args)
 			throws Exception {
 		Class classObj;
 		Object obj;
@@ -210,7 +207,6 @@ public class JavaUtil {
 			throw ex;
 		}
 		field.setAccessible(true);
-		form.setType(field.getType());
 		return field.get(obj);
 	}
 

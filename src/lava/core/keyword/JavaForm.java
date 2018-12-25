@@ -23,12 +23,14 @@ public class JavaForm extends Form {
 	public void run() throws Exception {
 		super.run();
 		List<Data> parseArgs = this.parseFormArgs(this.args);
-		if (Constants.javaChar.equals(this.fnName)) {
-
-			this.value = JavaUtil.processField(this, parseArgs);
+		String fnName = (String)this.parseFormArg(this.fnName).getValue();
+		if (Constants.javaChar.equals(fnName)) {
+			this.value = JavaUtil.processField(parseArgs);
+			this.type = Data.getClass(this.value);
 			return;
 		}
 
-		this.value = JavaUtil.processMethod(this, parseArgs);
+		this.value = JavaUtil.processMethod(fnName, parseArgs);
+		this.type = Data.getClass(this.value);
 	}
 }

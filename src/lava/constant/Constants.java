@@ -11,8 +11,8 @@ import java.util.Map;
 public class Constants {
 	public static String					newLine				= System.getProperty("line.separator", "\n");
 
-	public static  String   leftBorder = "([{";
-	public static  String   rightBorder = ")]}";
+	public static  String   leftBorder = "([{<";
+	public static  String   rightBorder = ")]}>";
 	public static  String   border = leftBorder + rightBorder;
 
 	public static Map<String, Class>		keywords			= new HashMap<String, Class>();
@@ -32,7 +32,7 @@ public class Constants {
 	public static String					formIdSuffix		= idMid + "F";
 	public static String					stringIdSuffix		= idMid + "S";
 	public static String					numberIdSuffix		= idMid + "N";
-	public static String					replPrefix			= ">";
+	public static String					replPrefix			= "#";
 	public static String					empty				= "";
 	public static String					configSplit			= "=";
 	
