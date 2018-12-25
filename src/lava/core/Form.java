@@ -383,9 +383,7 @@ public class Form {
 			return new Form();
 		}
 		Class formClass = Constants.keywords.get(elems.get(0));
-		if (source.startsWith("<")) {
-			form = new JavaForm();
-		} else if (null != formClass) {
+		if (null != formClass) {
 			try {
 				form = (Form) formClass.newInstance();
 			} catch (Throwable t) {

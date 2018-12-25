@@ -1,12 +1,15 @@
 package lava.core.keyword;
 
-import java.util.*;
-
 import lava.constant.Constants;
 import lava.core.Data;
 import lava.core.Form;
 import lava.core.Sub;
-import lava.core.SysError;
+import lava.util.JavaUtil;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FnForm extends Form {
 	@Override
@@ -24,10 +27,6 @@ public class FnForm extends Form {
 	public void run() throws Exception {
 		super.run();
 		Sub sub = getSubFromScope(this.fnName);
-
-		if(sub==null){
-			throw new SysError(this, this.fnName);
-		}
 
 		List<Data> newParseArgs=new ArrayList<Data>();
 		Map argMap = new HashMap();
@@ -58,9 +57,21 @@ public class FnForm extends Form {
 			}
 		}
 
-		runSub(sub,newParseArgs,null, argMap);
-		this.type=(sub).getAsForm().getType();
-		this.value=(sub).getAsForm().getValue();
+		if(sub==null){
+			String fnName = (String)this.parseFormArg(this.fnName).getValue();
+			if (Constants.javaChar.equals(fnName)) {
+				this.value = JavaUtil.processField(newParseArgs);
+				this.type = Data.getClass(this.value);
+				return;
+			}
+
+			this.value = JavaUtil.processMethod(fnName, newParseArgs);
+			this.type = Data.getClass(this.value);
+		} else {
+			runSub(sub,newParseArgs,null, argMap);
+			this.type=(sub).getAsForm().getType();
+			this.value=(sub).getAsForm().getValue();
+		}
 	}
 
 }
