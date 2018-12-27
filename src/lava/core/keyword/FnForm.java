@@ -6,6 +6,7 @@ import lava.core.Form;
 import lava.core.Sub;
 import lava.core.SysError;
 import lava.util.JavaUtil;
+import lava.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,13 +58,13 @@ public class FnForm extends Form {
 			}
 		}
 
-		Object fnValue = this.parseFormArg(this.fnName).getValue();
+		Object fnValue = StringUtil.isDefVarAble(this.fnName) ? this.parseFormArg(this.fnName).getValue() : this.fnName;
 		if((fnValue instanceof String) && ((String)fnValue).contains(Constants.javaChar)){
 			Data data;
 			if (Constants.javaChar.equals(fnName)) {
 				data = JavaUtil.processField(newParseArgs);
 			} else {
-				data = JavaUtil.processMethod(fnName, newParseArgs);
+				data = JavaUtil.processMethod((String)fnValue, newParseArgs);
 			}
 			this.value = data.getValue();
 			this.type = data.getType();
