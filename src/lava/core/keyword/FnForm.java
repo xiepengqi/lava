@@ -4,6 +4,7 @@ import lava.constant.Constants;
 import lava.core.Data;
 import lava.core.Form;
 import lava.core.Sub;
+import lava.core.SysError;
 import lava.util.JavaUtil;
 
 import java.util.ArrayList;
@@ -56,8 +57,8 @@ public class FnForm extends Form {
 			}
 		}
 
-		String fnName = (String)this.parseFormArg(this.fnName).getValue();
-		if(fnName.contains(Constants.javaChar)){
+		Object fnValue = this.parseFormArg(this.fnName).getValue();
+		if((fnValue instanceof String) && ((String)fnValue).contains(Constants.javaChar)){
 			Data data;
 			if (Constants.javaChar.equals(fnName)) {
 				data = JavaUtil.processField(newParseArgs);
@@ -68,6 +69,9 @@ public class FnForm extends Form {
 			this.type = data.getType();
 		} else {
 			Sub sub = getSubFromScope(this.fnName);
+			if(sub==null){
+				throw new SysError(this, this.fnName);
+			}
 			runSub(sub,newParseArgs,null, argMap);
 			this.type=(sub).getAsForm().getType();
 			this.value=(sub).getAsForm().getValue();
