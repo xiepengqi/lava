@@ -26,7 +26,6 @@ public class FnForm extends Form {
 	@Override
 	public void run() throws Exception {
 		super.run();
-		Sub sub = getSubFromScope(this.fnName);
 
 		List<Data> newParseArgs=new ArrayList<Data>();
 		Map argMap = new HashMap();
@@ -57,17 +56,18 @@ public class FnForm extends Form {
 			}
 		}
 
-		if(sub==null){
-			String fnName = (String)this.parseFormArg(this.fnName).getValue();
+		String fnName = (String)this.parseFormArg(this.fnName).getValue();
+		if(fnName.contains(Constants.javaChar)){
+			Data data;
 			if (Constants.javaChar.equals(fnName)) {
-				this.value = JavaUtil.processField(newParseArgs);
-				this.type = Data.getClass(this.value);
-				return;
+				data = JavaUtil.processField(newParseArgs);
+			} else {
+				data = JavaUtil.processMethod(fnName, newParseArgs);
 			}
-
-			this.value = JavaUtil.processMethod(fnName, newParseArgs);
-			this.type = Data.getClass(this.value);
+			this.value = data.getValue();
+			this.type = data.getType();
 		} else {
+			Sub sub = getSubFromScope(this.fnName);
 			runSub(sub,newParseArgs,null, argMap);
 			this.type=(sub).getAsForm().getType();
 			this.value=(sub).getAsForm().getValue();

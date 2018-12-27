@@ -93,7 +93,7 @@ public class JavaUtil {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static Object processMethod(String fnName, List<Data> args)
+	public static Data processMethod(String fnName, List<Data> args)
 			throws Exception {
 		List<Object> values = new ArrayList<Object>();
 		List<Class> types = new ArrayList<Class>();
@@ -136,7 +136,7 @@ public class JavaUtil {
 			throw ex;
 		}
 		method.setAccessible(true);
-		return method.invoke(object, values.toArray());
+		return new Data(method.getReturnType(), method.invoke(object, values.toArray()));
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -150,10 +150,12 @@ public class JavaUtil {
 		Class classObj = forName((String) values.get(0));
 		Constructor con = null;
 		Exception ex = null;
+		Class typeTemp = null;
 		while (classObj !=null) {
 			try {
 				con = classObj.getConstructor(types.subList(1, args.size())
 						.toArray(new Class[types.size() - 1]));
+				typeTemp = classObj;
 				classObj = null;
 			} catch (NoSuchMethodException e) {
 				if(ex == null) {
@@ -166,11 +168,11 @@ public class JavaUtil {
 			throw ex;
 		}
 		con.setAccessible(true);
-		return con.newInstance(values.subList(1, values.size()).toArray());
+		return new Data(typeTemp, con.newInstance(values.subList(1, values.size()).toArray()));
 	}
 
 	@SuppressWarnings("rawtypes")
-	public static Object processField(List<Data> args)
+	public static Data processField(List<Data> args)
 			throws Exception {
 		Class classObj;
 		Object obj;
@@ -192,9 +194,11 @@ public class JavaUtil {
 		}
 		Field field = null;
 		Exception ex = null;
+		Class typeTemp = null;
 		while (classObj !=null) {
 			try {
 				field =  classObj.getDeclaredField(fieldStr);
+				typeTemp = classObj;
 				classObj = null;
 			} catch (NoSuchFieldException e) {
 				if(ex == null) {
@@ -207,7 +211,7 @@ public class JavaUtil {
 			throw ex;
 		}
 		field.setAccessible(true);
-		return field.get(obj);
+		return new Data(typeTemp, field.get(obj));
 	}
 
 }
