@@ -194,11 +194,9 @@ public class JavaUtil {
 		}
 		Field field = null;
 		Exception ex = null;
-		Class typeTemp = null;
 		while (classObj !=null) {
 			try {
 				field =  classObj.getDeclaredField(fieldStr);
-				typeTemp = classObj;
 				classObj = null;
 			} catch (NoSuchFieldException e) {
 				if(ex == null) {
@@ -211,7 +209,7 @@ public class JavaUtil {
 			throw ex;
 		}
 		field.setAccessible(true);
-		return new Data(typeTemp, field.get(obj));
+		return new Data(field.getType(), field.get(obj));
 	}
 
 }
