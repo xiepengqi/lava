@@ -67,7 +67,7 @@ public class FnForm extends Form {
 			if (Constants.javaChar.equals(fnName)) {
 				data = JavaUtil.processField(newParseArgs);
 			} else {
-				data = JavaUtil.processMethod((String)fnValue, newParseArgs);
+				data = JavaUtil.processMethod(((String) fnValue).trim(), newParseArgs);
 			}
 			this.value = data.getValue();
 			this.type = data.getType();
