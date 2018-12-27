@@ -140,7 +140,7 @@ public class JavaUtil {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static Object processNew(List<Data> args)
+	public static Data processNew(List<Data> args)
 			throws Exception {
 		List<Object> values = new ArrayList<Object>();
 		List<Class> types = new ArrayList<Class>();

@@ -21,8 +21,8 @@ public class NewForm extends Form {
 	public void run() throws Exception {
 		super.run();
 		List<Data> parseArgs = this.parseFormArgs(this.args);
-
-		this.value = JavaUtil.processNew(parseArgs);
-		this.type = Data.getClass(this.value);
+		Data data = JavaUtil.processNew(parseArgs);
+		this.value = data.getValue();
+		this.type = data.getType();
 	}
 }
