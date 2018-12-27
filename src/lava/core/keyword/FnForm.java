@@ -58,7 +58,10 @@ public class FnForm extends Form {
 			}
 		}
 
-		Object fnValue = StringUtil.isDefVarAble(this.fnName) ? this.parseFormArg(this.fnName).getValue() : this.fnName;
+		Object fnValue = StringUtil.isDefVarAble(this.fnName) ||
+				StringUtil.isFormId(this, this.fnName) ||
+				StringUtil.isStringId(this, this.fnName)
+				? this.parseFormArg(this.fnName).getValue() : this.fnName;
 		if((fnValue instanceof String) && ((String)fnValue).contains(Constants.javaChar)){
 			Data data;
 			if (Constants.javaChar.equals(fnName)) {
