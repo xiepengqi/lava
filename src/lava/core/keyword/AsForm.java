@@ -39,8 +39,12 @@ public class AsForm extends Form {
 
 		Class classObj;
 		if (this.args.size() == 1) {
-			this.value = parseArgs.get(0).getValue();
-			this.type = Data.getClass(parseArgs.get(0).getValue());
+			Data data = parseArgs.get(0);
+
+			this.value =data.getValue();
+			this.type = Data.getClass(data.getValue());
+
+			data.setType(this.type);
 			return;
 		}
 
