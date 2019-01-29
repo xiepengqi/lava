@@ -125,7 +125,13 @@ public class Form {
 	}
 
 	public void check() {
-
+		for(String elem:this.elems){
+			if (elem.startsWith(Constants.expand)) {
+				if (StringUtil.isFormId(this, elem.substring(1))) {
+					Util.syntaxError(this, elem);
+				}
+			}
+		}
 	}
 
 	public void run() throws Exception {
