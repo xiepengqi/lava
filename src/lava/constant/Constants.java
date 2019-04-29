@@ -34,7 +34,7 @@ public class Constants {
 	public static String					numberIdSuffix		= idMid + "N";
 	public static String					replPrefix			= ">";
 	public static String					empty				= "";
-	public static String					configSplit			= "=";
+	public static String					configSplit			= ":=";
 	
     static {
 		keywords.put("load", LoadForm.class);
