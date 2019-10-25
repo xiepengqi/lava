@@ -7,3 +7,7 @@
 (def decimal java.math.BigDecimal)
 
 (println (*system.currentTimeMillis))
+
+
+
+(println (catch (throw "xie")))

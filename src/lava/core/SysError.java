@@ -15,4 +15,10 @@ public class SysError extends RuntimeException{
 		super(form.getWhere() + ":" + form.look() + Constants.newLine + "	" + msg);
 	}
 
+	public String getValue(){
+		String msg = this.getMessage() == null ? "" : this.getMessage().trim();
+
+		int index = msg.lastIndexOf(Constants.newLine);
+		return msg.substring(index+1).trim();
+	}
 }
