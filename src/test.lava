@@ -1,1 +1,9 @@
-(.println (. java.lang.System.out) 123)
+(def system java.lang.System)
+
+(/println:str
+    (.println (. java.lang.System.out) (.toString str)))
+
+
+(def decimal java.math.BigDecimal)
+
+(println (*system.currentTimeMillis))

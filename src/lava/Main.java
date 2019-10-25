@@ -3,7 +3,6 @@ package lava;
 import lava.constant.Constants;
 import lava.constant.MsgConstants;
 import lava.core.Code;
-import lava.core.JarLoader;
 import lava.core.SysError;
 import lava.util.FileUtil;
 import lava.util.JavaUtil;
