@@ -52,7 +52,10 @@ public class ManForm extends Form {
 		}
 		boolean blank2 = StringUtil.isBlank(pattern2);
 		for (String key : resources.keySet()) {
-			if ((blank2 && key.toUpperCase().contains(pattern1.toUpperCase())) || key.matches(pattern1)) {
+			if (key.toUpperCase().trim()
+					.matches(".*" + pattern1.toUpperCase().trim() + ".*"
+							.replaceAll("^\\.\\*(?=\\^)", "")
+							.replaceAll("(?=\\$)\\.\\*$", ""))) {
 				if(blank2){
 					result.put(key, resources.get(key));
 					continue;
@@ -85,7 +88,10 @@ public class ManForm extends Form {
 		} catch (Throwable ignored){}
 
 		for (Object obj : list) {
-			if (String.valueOf(obj).matches(fieldPattern)) {
+			if (String.valueOf(obj).toUpperCase().trim()
+					.matches(".*" + fieldPattern.toUpperCase().trim() + ".*"
+							.replaceAll("^\\.\\*(?=\\^)", "")
+							.replaceAll("(?=\\$)\\.\\*$", ""))){
 				result.add(obj);
 			}
 		}

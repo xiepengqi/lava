@@ -11,3 +11,5 @@
 
 
 (println (catch (throw "xie")))
+
+(println $codes)
