@@ -7,7 +7,6 @@ public class SwitchForm extends Form{
 	@Override
 	public void parse() {
 		super.parse();
-
 		
 		Form form;
 		for(String arg:this.args){
@@ -35,25 +34,25 @@ public class SwitchForm extends Form{
 		for(String arg:this.args){
 			i++;
 			if(i == 0){
-				main=getParseArg(arg);
+				main=runAndParseFormArg(arg);
 				continue;
 			}
 			if(i%2 ==  1){
-				key=getParseArg(arg);
+				key=runAndParseFormArg(arg);
 				continue;
 			}
 			if(i%2 == 0){
 				if((main.getValue() == null && key.getValue() == null)){
-					value=getParseArg(arg);
+					value=runAndParseFormArg(arg);
 					break;
 				}
 				if(main.getValue() !=null){
 					if(main.getValue().equals(key.getValue())){
-						value=getParseArg(arg);
+						value=runAndParseFormArg(arg);
 						break;
 					}
 				}else if(key.getValue().equals(main.getValue())){
-					value=getParseArg(arg);
+					value=runAndParseFormArg(arg);
 					break;
 				}
 			}
@@ -66,16 +65,5 @@ public class SwitchForm extends Form{
 			this.value=key.getValue();
 		}
 	}
-	
-	private Data getParseArg(String arg) throws Exception{
-		Form form=this.inCode.getFormMap().get(arg);
-		Data data;
-		if(form!=null){
-			runFormSeq(form.getFormSeqWhichRunBy(this),null);
-			data=new Data(form.getType(),form.getValue());
-		}else{
-			data=this.parseFormArg(arg);
-		}
-		return data;
-	}
+
 }

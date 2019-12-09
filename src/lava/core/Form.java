@@ -140,6 +140,26 @@ public class Form {
 		return parseArgs;
 	}
 
+	protected List<Data> runAndParseFormArgs(List<String> oArgs) {
+		List<Data> parseArgs = new ArrayList<Data>();
+		for (String arg : oArgs) {
+			parseArgs.add(runAndParseFormArg(arg));
+		}
+		return parseArgs;
+	}
+
+	protected Data runAndParseFormArg(String arg) {
+		Form form=this.inCode.getFormMap().get(arg);
+		Data data;
+		if(form!=null){
+			runFormSeq(form.getFormSeqWhichRunBy(this),null);
+			data=new Data(form.getType(),form.getValue());
+		}else{
+			data=this.parseFormArg(arg);
+		}
+		return data;
+	}
+
 	protected Data parseFormArg(String arg){
 		Data data;
 
@@ -453,7 +473,7 @@ public class Form {
 		return formSeq;
 	}
 
-	public static void runFormSeq(List<Form> formSeq, Action action) throws Exception {
+	public static void runFormSeq(List<Form> formSeq, Action action) {
 		List<Form> safeFormSeq = new ArrayList<Form>(formSeq);
 		for (Form form : safeFormSeq) {
 			if(Main.syntaxError && !Main.repl){

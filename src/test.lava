@@ -1,15 +1,8 @@
-(def system java.lang.System)
-
-(/println:str
-    (.println (. java.lang.System.out) (.toString str)))
-
-
-(def decimal java.math.BigDecimal)
-
-(println (*system.currentTimeMillis))
+(use core.export)
 
 
 
-(println (catch (throw "xie")))
+(println (if false 1
+true 2
 
-(println $codes)
+))

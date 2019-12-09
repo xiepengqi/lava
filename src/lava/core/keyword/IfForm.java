@@ -9,16 +9,11 @@ public class IfForm extends Form {
 	@Override
 	public void parse() {
 		super.parse();
-		if (this.args.size() < 2 || this.args.size() > 3) {
-			return;
-		}
-		Form form = this.inCode.getFormMap().get(this.args.get(1));
-		if (null != form) {
-			form.markRunBy(this);
-		}
-		if (this.args.size() == 3) {
-			form = this.inCode.getFormMap().get(this.args.get(2));
-			if (null != form) {
+
+		Form form;
+		for(String arg:this.args){
+			form = this.inCode.getFormMap().get(arg);
+			if(form !=null){
 				form.markRunBy(this);
 			}
 		}
@@ -32,32 +27,29 @@ public class IfForm extends Form {
 	@Override
 	public void run() throws Exception {
 		super.run();
-		processFormIf();
-	}
 
-	private void processFormIf() throws Exception {
-		Form form = null;
-		Data data=null;
-		if (Util.isValid(parseFormArg(this.args.get(0)).getValue())) {
-			form = this.inCode.getFormMap().get(this.args.get(1));
-			data = parseFormArg(this.args.get(1));
-		} else {
-			if (this.args.size() == 3) {
-				form = this.inCode.getFormMap().get(this.args.get(2));
-				data = parseFormArg(this.args.get(2));
+		int i=0;
+		Data key = null;
+		Data value = null;
+		for(String arg:this.args){
+			i++;
+
+			if(i%2 ==  1){
+				key=runAndParseFormArg(arg);
+				continue;
+			}
+			if(i%2 == 0 && Util.isValid(key.getValue())){
+				value = runAndParseFormArg(arg);
+				break;
 			}
 		}
-
-		if (null == form) {
-			this.value = data==null ? null:data.getValue();
-			this.type = Data.getType(data);
-			return;
+		if(value !=null){
+			this.type=value.getType();
+			this.value=value.getValue();
+		}else if(i%2 == 1){
+			this.type=key.getType();
+			this.value=key.getValue();
 		}
-
-		runFormSeq(form.getFormSeqWhichRunBy(this),null);
-
-		this.value = form.getValue();
-		this.type = form.getType();
 	}
 
 }
