@@ -498,7 +498,7 @@ public class Form {
 			}catch(SysError e){
 				throw new SysError(form, e.getMessage());
 			}catch (Throwable t){
-				throw new SysError(form ,t.toString());
+				throw new SysError(form ,toString(t));
 			}
 
 			if (action != null){
@@ -507,6 +507,15 @@ public class Form {
 				}
 			}
 		}
+	}
+
+	private static String toString(Throwable t) {
+		StringBuilder sb = new StringBuilder(t.toString());
+		while (t.getCause() != null) {
+			t = t.getCause();
+			sb.append(Constants.newLine + "	" + t.toString());
+		}
+		return sb.toString();
 	}
 
 	public interface Action {

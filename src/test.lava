@@ -1,8 +1,0 @@
-(use core.export)
-
-
-
-(println (if false 1
-true 2
-
-))
